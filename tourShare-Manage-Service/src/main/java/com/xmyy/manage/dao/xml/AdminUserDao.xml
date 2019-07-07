@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.manage.dao.AdminUserDao">
+
+    <!-- 分页查询开始 -->
+    <sql id="queryForListFilter">
+        <where>
+            <if test="account != null">
+                u.account = #{account}
+            </if>
+            <if test="userName != null">
+                AND u.user_name LIKE CONCAT ('%', #{userName} ,'%')
+            </if>
+            <if test="roleId != null">
+                AND r.id_ = #{roleId}
+            </if>
+            <if test="gender != null">
+                AND u.gender = #{gender}
+            </if>
+            <if test="mobile != null">
+                AND u.mobile LIKE CONCAT('%', #{mobile}, '%')
+            </if>
+            <if test="staffNo != null">
+                AND u.staff_no LIKE CONCAT('%', #{staffNo}, '%')
+            </if>
+        </where>
+    </sql>
+    <select id="queryForList" parameterType="com.xmyy.manage.vo.ManageAdminUserQueryParam" resultType="com.xmyy.manage.vo.ManageAdminUserQueryResult">
+        SELECT
+            u.id_ as id, u.remark_ as remark, u.enable_ as enable, u.create_by as createBy, u.create_time as createTime,
+            u.update_by as updateBy, u.update_time as updateTime, u.account as account, null as password,
+            u.user_name as userName, u.gender as gender, u.staff_no as staffNo, u.mobile as mobile, GROUP_CONCAT(r.role_name) as roleNames
+        FROM admin_user u
+        LEFT JOIN admin_user_role ur ON u.id_ = ur.user_id_
+        LEFT JOIN admin_role r ON r.id_ = ur.role_id_
+        <include refid="queryForListFilter" />
+        GROUP BY u.id_
+        LIMIT ${(current-1)*size}, ${size}
+    </select>
+
+    <select id="countForList" parameterType="com.xmyy.manage.vo.ManageAdminUserQueryParam" resultType="java.lang.Integer">
+        SELECT COUNT(DISTINCT u.id_)
+        FROM admin_user u
+        LEFT JOIN admin_user_role ur ON u.id_ = ur.user_id_
+        LEFT JOIN admin_role r ON r.id_ = ur.role_id_
+        <include refid="queryForListFilter" />
+    </select>
+    <!-- 分页查询结束 -->
+</mapper>

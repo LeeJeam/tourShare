@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.dao.DgRegionDao">
+    <resultMap id="treeRegionMap" type="com.xmyy.circle.vo.RegionTreeListResult">
+        <result  property="idxcode" column="idxcode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result  property="ccode" column="ccode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="cname" column="cname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="parentCode" column="parentcode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="prefixPhone" column="prefix_phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="nationalFlag" column="national_flag" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="getTreeList" resultMap="treeRegionMap" parameterType="com.xmyy.circle.vo.RegionTreeListParam">
+        select ccode,cname,parentcode,prefix_phone,idxcode,national_flag from dg_region
+        <where>
+            <if test="cname!=null and cname!=''">
+                and cname=#{cname}
+            </if>
+            <if test="ccode!=null and ccode!=''">
+                and ccode=#{ccode}
+            </if>
+            <if test="parentcode!=null and parentcode!=''">
+                and parentcode=#{parentcode}
+            </if>
+            <if test="language!=null and language!=''">
+                and language=#{language}
+            </if>
+            <if test="isHot!=null">
+                and is_hot=#{isHot}
+            </if>
+            <if test="grade!=null">
+                and grade=#{grade}
+            </if>
+        </where>
+        order by ccode asc
+    </select>
+
+    <select id="getFlagList" resultType="com.xmyy.circle.vo.ApiRegionFlagResult" parameterType="com.xmyy.circle.vo.ApiRegionFlagListParam">
+        select cname as cname,national_flag as nationalFlag from dg_region
+        <where>
+            <if test="language!=null and language!=''">
+                and language=#{language}
+            </if>
+            <if test="grade!=null">
+                and grade=#{grade}
+            </if>
+            <if test="isHot!=null">
+                and is_hot=#{isHot}
+            </if>
+        </where>
+        order by ccode asc
+    </select>
+</mapper>

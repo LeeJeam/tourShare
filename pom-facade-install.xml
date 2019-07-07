@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.xmyy</groupId>
+		<artifactId>tourShare</artifactId>
+		<version>1.0.0</version>
+		<relativePath>pom.xml</relativePath>
+	</parent>
+	<artifactId>tourshare-facade-install</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	<!--<name>接口及公共快捷打包</name>-->
+
+	<url>http://maven.apache.org</url>
+
+	<modules>
+		<module>tourShare-Common</module>
+        <module>tourShare-Cert-Facade</module>
+		<module>tourShare-Circle-Facade</module>
+        <module>tourShare-Demand-Facade</module>
+        <module>tourShare-LiveVideo-Facade</module>
+		<module>tourShare-Manage-Facade</module>
+		<module>tourShare-Member-Facade</module>
+		<module>tourShare-Order-Facade</module>
+		<module>tourShare-Pay-Facade</module>
+        <module>tourShare-Product-Facade</module>
+        <module>tourShare-Search-Facade</module>
+	</modules>
+</project>

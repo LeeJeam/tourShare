@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xmyy.search.dao.SellerDao" >
+  
+  <select id="countValidSellers" resultType="int">
+    SELECT
+	  COUNT(prd.ID_)
+	FROM 
+      uc_seller prd
+	<include refid="FindValidSellers_Where_Cause"></include>
+  </select>
+  
+  <select id="findValidSellers" resultType="com.xmyy.search.vo.SellerData">
+    SELECT
+    	<include refid="Sellers_Column_List"></include>
+    FROM
+      uc_seller prd
+
+	<include refid="FindValidSellers_Where_Cause"></include>
+  </select>
+  
+  <sql id="FindValidSellers_Where_Cause">
+    WHERE 1=1
+  	<if test="lastIndexTime != null">
+  		AND prd.update_time > #{lastIndexTime}
+  	</if>
+  </sql>
+  
+  <sql id="Sellers_Column_List">
+    prd.id_ as id,
+    prd.uuid as uuid,
+    prd.mobile as mobile,
+    prd.personalized_signature as personalizedSignature,
+    prd.often_place as oftenPlace,
+    prd.real_name as realName,
+    prd.nick_name as nickName,
+    prd.avatar_rsurl as avatarRsurl,
+    prd.trust_value as trustValue,
+    prd.is_pass_identity as isPassIdentity,
+    prd.is_pass_passport as isPassPassport,
+    prd.is_pass_zhima as isPassZhima,
+    prd.invitation_code as invitationCode,
+    prd.is_self as isSelf,
+    prd.real_state as realState,
+    prd.live_country as liveCountry,
+    prd.birthday as birthday,
+    prd.gender as gender,
+    prd.source as source,
+    prd.is_top as isTop,
+    prd.top_time as topTime,
+    prd.top_end_time as topEndTime,
+    prd.classify_tags as classifyTags,
+    prd.trade_count as tradeCount,
+    prd.tour_time as tourTime,
+    prd.tour_count as tourCount,
+    prd.seller_no as sellerNo,
+    prd.id_card_number as idCardNumber,
+    prd.state as state,
+    prd.live_country_short_code as liveCountryShortCode,
+    (select group_concat(p.cover) from pt_product p where p.create_by = prd.id_ and p.is_sale=1 and p.enable_=1 order by create_time LIMIT 3) as productRsurl
+  </sql>
+
+  
+</mapper>

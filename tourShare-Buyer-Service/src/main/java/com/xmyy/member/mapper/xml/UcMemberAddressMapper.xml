@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.member.mapper.UcMemberAddressMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from uc_member_address
+		<where>
+			<if test="cm.buyerId != null and cm.buyerId != ''">
+					and buyer_id_=#{cm.buyerId}
+			</if>
+			<if test="cm.name != null and cm.name != ''">
+					and name=#{cm.name}
+			</if>
+			<if test="cm.areaCode != null and cm.areaCode != ''">
+					and area_code=#{cm.areaCode}
+			</if>
+			<if test="cm.areaName != null and cm.areaName != ''">
+					and area_name=#{cm.areaName}
+			</if>
+			<if test="cm.address != null and cm.address != ''">
+					and address=#{cm.address}
+			</if>
+			<if test="cm.mobile != null and cm.mobile != ''">
+					and mobile=#{cm.mobile}
+			</if>
+			<if test="cm.isDefault != null and cm.isDefault != ''">
+					and is_default=#{cm.isDefault}
+			</if>
+			<if test="cm.zipCode != null and cm.zipCode != ''">
+					and zip_code=#{cm.zipCode}
+			</if>
+			<if test="cm.streetName != null and cm.streetName != ''">
+					and street_name=#{cm.streetName}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or buyer_id_ like CONCAT('%',#{cm.keyword},'%')
+					or name like CONCAT('%',#{cm.keyword},'%')
+					or area_code like CONCAT('%',#{cm.keyword},'%')
+					or area_name like CONCAT('%',#{cm.keyword},'%')
+					or address like CONCAT('%',#{cm.keyword},'%')
+					or mobile like CONCAT('%',#{cm.keyword},'%')
+					or is_default like CONCAT('%',#{cm.keyword},'%')
+					or zip_code like CONCAT('%',#{cm.keyword},'%')
+					or street_name like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.mapper.PtAttrTypeMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from pt_series_attr_type
+		<where>
+			<if test="cm.ptBrandId != null and cm.ptBrandId != ''">
+					and pt_brand_id=#{cm.ptBrandId}
+			</if>
+			<if test="cm.ptCategoryId != null and cm.ptCategoryId != ''">
+					and pt_category_id=#{cm.ptCategoryId}
+			</if>
+			<if test="cm.ptCategoryId2 != null and cm.ptCategoryId2 != ''">
+					and pt_category_id2=#{cm.ptCategoryId2}
+			</if>
+			<if test="cm.name != null and cm.name != ''">
+					and name=#{cm.name}
+			</if>
+			<if test="cm.showType != null and cm.showType != ''">
+					and show_type=#{cm.showType}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or pt_brand_id like CONCAT('%',#{cm.keyword},'%')
+					or pt_category_id like CONCAT('%',#{cm.keyword},'%')
+					or pt_category_id2 like CONCAT('%',#{cm.keyword},'%')
+					or name like CONCAT('%',#{cm.keyword},'%')
+					or show_type like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

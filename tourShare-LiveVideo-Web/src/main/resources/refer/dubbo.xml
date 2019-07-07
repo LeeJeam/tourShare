@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- LiveVideo -->
+	<dubbo:reference id="cloudLiveVideoService" interface="com.xmyy.livevideo.serivce.CloudLiveVideoService" />
+	<dubbo:reference id="liveVideoService" interface="com.xmyy.livevideo.serivce.LiveVideoService"/>
+	<dubbo:reference id="liveVideoRoomService" interface="com.xmyy.livevideo.serivce.LiveVideoRoomService" />
+
+	<!-- Manage -->
+	<dubbo:reference id="sysEventService" interface="com.xmyy.manage.service.SysEventService" check="false" />
+
+	<!-- Product -->
+	<dubbo:reference id="ptProductService" interface="com.xmyy.product.service.PtProductService"  />
+
+</beans>

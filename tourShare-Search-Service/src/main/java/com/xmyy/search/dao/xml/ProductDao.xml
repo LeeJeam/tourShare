@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xmyy.search.dao.ProductDao" >
+  
+  <select id="countValidProducts" resultType="java.lang.Integer">
+    SELECT COUNT(p.id_) FROM pt_product p
+	<include refid="Product_Cause"/>
+  </select>
+  
+  <select id="findValidProducts" resultType="com.xmyy.search.vo.ProductData">
+    SELECT <include refid="Product_Column_List" />,s.id_ as sellerId,s.nick_name as nickName,s.avatar_rsurl as avatarRsurl FROM pt_product p
+    LEFT JOIN uc_seller s ON p.create_by = s.id_
+	<include refid="Product_Cause"/>
+  </select>
+  
+  <sql id="Product_Cause">
+    WHERE p.enable_=1
+  	<if test="lastIndexTime != null">
+  		AND p.update_time > #{lastIndexTime}
+  	</if>
+  </sql>
+  
+  <sql id="Product_Column_List">
+      p.id_ as id,
+      p.dg_tour_id as dgTourId,
+      p.pt_brand_id as ptBrandId,
+      p.pt_series_id as ptSeriesId,
+      p.pt_category_id as ptCategoryId,
+      p.pt_category_id2 as ptCategoryId2,
+      p.remark_ as remark,
+      p.enable_ as enable,
+      p.create_by as createBy,
+      p.create_time as createTime,
+      p.update_by as updateBy,
+      p.update_time as updateTime,
+      p.name as name,
+      p.product_no as productNo,
+      p.market_price as marketPrice,
+      p.max_price as maxPrice,
+      p.min_price as minPrice,
+      p.is_sale as isSale,
+      p.is_hot as isHot,
+      p.is_recommend as isRecommend,
+      p.product_desc as productDesc,
+      p.cover as cover,
+      p.images as images,
+      p.express_type as expressType,
+      p.expires_time as expiresTime,
+      p.shop_name as shopName,
+      p.title as title,
+      p.tags as tags,
+      p.service_desc as serviceDesc,
+      p.product_type as productType,
+      p.order_count as orderCount,
+      p.collect_count as collectCount,
+      p.refund_count as refundCount,
+      p.is_top as isTop,
+      p.top_begin_time as topBeginTime,
+      p.top_end_time as topEndTime,
+      p.top_op_id as topOpId,
+      p.top_op_time as topOpTime,
+      p.click_count as clickCount,
+      p.video_click_count as videoClickCount,
+      p.favorable as favorable,
+      p.buy_region as buyRegion,
+      p.buy_region_logo as buyRegionLogo,
+      p.buy_region_currency as buyRegionCurrency,
+      p.buy_region_currency_code as buyRegionCurrencyCode,
+      p.currency as currency,
+      p.currency_code as currencyCode
+  </sql>
+  
+</mapper>

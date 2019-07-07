@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!-- JMS连接工厂 -->
+    <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <description>JMS连接工厂</description>
+        <property name="targetConnectionFactory">
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="${mq.brokerURL}"/>
+                <property name="userName" value="${mq.userName}"/>
+                <property name="password" value="${mq.password}"/>
+            </bean>
+        </property>
+        <property name="sessionCacheSize" value="${mq.sessionCacheSize}"/>
+    </bean>
+
+    <!-- 队列模式JmsTemplate -->
+    <bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <description>队列模式模型</description>
+        <constructor-arg ref="connectionFactory"/>
+        <property name="receiveTimeout" value="${mq.receiveTimeout}"/>
+        <property name="pubSubDomain" value="false"/>
+    </bean>
+
+    <!-- 订阅模式JmsTemplate -->
+    <bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <description>订阅模式模型</description>
+        <constructor-arg ref="connectionFactory"/>
+        <property name="receiveTimeout" value="${mq.receiveTimeout}"/>
+        <property name="pubSubDomain" value="true"/>
+    </bean>
+
+    <!-- 发送者，用于发送消息 -->
+    <bean id="queueSender" class="top.ibase4j.core.support.mq.QueueSender"/>
+    <bean id="topicSender" class="top.ibase4j.core.support.mq.TopicSender"/>
+
+</beans>

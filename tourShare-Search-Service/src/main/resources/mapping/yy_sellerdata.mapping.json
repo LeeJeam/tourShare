@@ -1,0 +1,33 @@
+{
+	"settings": {
+        "analysis": {
+            "analyzer": {
+                "fulltextAnalyzer": {
+                    "type": "custom",
+                    "char_filter": ["html_strip"],
+                    "tokenizer": "ik_smart",
+                    "filter": ["trim", "lowercase"]
+                },
+                "fulltextAnalyzerMax": {
+                    "type": "custom",
+                    "char_filter": ["html_strip"],
+                    "tokenizer": "ik_max_word",
+                    "filter": ["trim", "lowercase"]
+                },
+                "limit2FulltextAnalyzer": {
+                    "type": "custom",
+                    "char_filter": ["html_strip"],
+                    "tokenizer": "ik_smart",
+                    "filter": ["trim", "lowercase", "limit2Filter"]
+                }
+            },
+            "filter": {
+            	"limit2Filter": {
+                    "type": "length",
+                    "min": 2
+                }
+            }
+        }
+    }
+	
+}

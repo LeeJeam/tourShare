@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.member.mapper.UcBuyerMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from uc_buyer
+		<where>
+			<if test="cm.passwordId != null and cm.passwordId != ''">
+					and password_id_=#{cm.passwordId}
+			</if>
+			<if test="cm.uuid != null and cm.uuid != ''">
+					and uuid=#{cm.uuid}
+			</if>
+			<if test="cm.state != null and cm.state != ''">
+					and state=#{cm.state}
+			</if>
+			<if test="cm.mobile != null and cm.mobile != ''">
+					and mobile=#{cm.mobile}
+			</if>
+			<if test="cm.personalizedSignature != null and cm.personalizedSignature != ''">
+					and personalized_signature=#{cm.personalizedSignature}
+			</if>
+			<if test="cm.weixinOpenid != null and cm.weixinOpenid != ''">
+					and weixin_openid=#{cm.weixinOpenid}
+			</if>
+			<if test="cm.oftenPlace != null and cm.oftenPlace != ''">
+					and often_place=#{cm.oftenPlace}
+			</if>
+			<if test="cm.realName != null and cm.realName != ''">
+					and real_name=#{cm.realName}
+			</if>
+			<if test="cm.nickName != null and cm.nickName != ''">
+					and nick_name=#{cm.nickName}
+			</if>
+			<if test="cm.avatarRsurl != null and cm.avatarRsurl != ''">
+					and avatar_rsurl=#{cm.avatarRsurl}
+			</if>
+			<if test="cm.trustValue != null and cm.trustValue != ''">
+					and trust_value=#{cm.trustValue}
+			</if>
+			<if test="cm.isPassIdentity != null and cm.isPassIdentity != ''">
+					and is_pass_identity=#{cm.isPassIdentity}
+			</if>
+			<if test="cm.isPassPassport != null and cm.isPassPassport != ''">
+					and is_pass_passport=#{cm.isPassPassport}
+			</if>
+			<if test="cm.isPassZhima != null and cm.isPassZhima != ''">
+					and is_pass_zhima=#{cm.isPassZhima}
+			</if>
+			<if test="cm.realState != null and cm.realState != ''">
+					and real_state=#{cm.realState}
+			</if>
+			<if test="cm.classifyTags != null and cm.classifyTags != ''">
+					and classify_tags=#{cm.classifyTags}
+			</if>
+			<if test="cm.gender != null and cm.gender != ''">
+					and gender=#{cm.gender}
+			</if>
+			<if test="cm.liveCountry != null and cm.liveCountry != ''">
+					and live_country=#{cm.liveCountry}
+			</if>
+			<if test="cm.isPack != null and cm.isPack != ''">
+					and is_pack=#{cm.isPack}
+			</if>
+			<if test="cm.source != null and cm.source != ''">
+					and source=#{cm.source}
+			</if>
+			<if test="cm.tourCount != null and cm.tourCount != ''">
+					and tour_count=#{cm.tourCount}
+			</if>
+			<if test="cm.tradeCount != null and cm.tradeCount != ''">
+					and trade_count=#{cm.tradeCount}
+			</if>
+			<if test="cm.favoritesCount != null and cm.favoritesCount != ''">
+					and favorites_count=#{cm.favoritesCount}
+			</if>
+			<if test="cm.buyerNo != null and cm.buyerNo != ''">
+					and buyer_no=#{cm.buyerNo}
+			</if>
+			<if test="cm.isVirtual != null and cm.isVirtual != ''">
+					and is_virtual=#{cm.isVirtual}
+			</if>
+			<if test="cm.idCardNumber != null and cm.idCardNumber != ''">
+					and id_card_number=#{cm.idCardNumber}
+			</if>
+			<if test="cm.loginSource != null and cm.loginSource != ''">
+					and login_source=#{cm.loginSource}
+			</if>
+			<if test="cm.tourTime != null and cm.tourTime != ''">
+					and tour_time=#{cm.tourTime}
+			</if>
+			<if test="cm.isTop != null and cm.isTop != ''">
+					and is_top=#{cm.isTop}
+			</if>
+			<if test="cm.topTime != null and cm.topTime != ''">
+					and top_time=#{cm.topTime}
+			</if>
+			<if test="cm.topEndTime != null and cm.topEndTime != ''">
+					and top_end_time=#{cm.topEndTime}
+			</if>
+			<if test="cm.topOpId != null and cm.topOpId != ''">
+					and top_op_id=#{cm.topOpId}
+			</if>
+			<if test="cm.birthday != null and cm.birthday != ''">
+					and birthday=#{cm.birthday}
+			</if>
+			<if test="cm.liveCountryShortCode != null and cm.liveCountryShortCode != ''">
+					and live_country_short_code=#{cm.liveCountryShortCode}
+			</if>
+			<if test="cm.bindPhone != null and cm.bindPhone != ''">
+					and bind_phone=#{cm.bindPhone}
+			</if>
+			<if test="cm.payPasswordId != null and cm.payPasswordId != ''">
+					and pay_password_id=#{cm.payPasswordId}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or password_id_ like CONCAT('%',#{cm.keyword},'%')
+					or uuid like CONCAT('%',#{cm.keyword},'%')
+					or state like CONCAT('%',#{cm.keyword},'%')
+					or mobile like CONCAT('%',#{cm.keyword},'%')
+					or personalized_signature like CONCAT('%',#{cm.keyword},'%')
+					or weixin_openid like CONCAT('%',#{cm.keyword},'%')
+					or often_place like CONCAT('%',#{cm.keyword},'%')
+					or real_name like CONCAT('%',#{cm.keyword},'%')
+					or nick_name like CONCAT('%',#{cm.keyword},'%')
+					or avatar_rsurl like CONCAT('%',#{cm.keyword},'%')
+					or trust_value like CONCAT('%',#{cm.keyword},'%')
+					or is_pass_identity like CONCAT('%',#{cm.keyword},'%')
+					or is_pass_passport like CONCAT('%',#{cm.keyword},'%')
+					or is_pass_zhima like CONCAT('%',#{cm.keyword},'%')
+					or real_state like CONCAT('%',#{cm.keyword},'%')
+					or classify_tags like CONCAT('%',#{cm.keyword},'%')
+					or gender like CONCAT('%',#{cm.keyword},'%')
+					or live_country like CONCAT('%',#{cm.keyword},'%')
+					or is_pack like CONCAT('%',#{cm.keyword},'%')
+					or source like CONCAT('%',#{cm.keyword},'%')
+					or tour_count like CONCAT('%',#{cm.keyword},'%')
+					or trade_count like CONCAT('%',#{cm.keyword},'%')
+					or favorites_count like CONCAT('%',#{cm.keyword},'%')
+					or buyer_no like CONCAT('%',#{cm.keyword},'%')
+					or is_virtual like CONCAT('%',#{cm.keyword},'%')
+					or id_card_number like CONCAT('%',#{cm.keyword},'%')
+					or login_source like CONCAT('%',#{cm.keyword},'%')
+					or tour_time like CONCAT('%',#{cm.keyword},'%')
+					or is_top like CONCAT('%',#{cm.keyword},'%')
+					or top_time like CONCAT('%',#{cm.keyword},'%')
+					or top_end_time like CONCAT('%',#{cm.keyword},'%')
+					or top_op_id like CONCAT('%',#{cm.keyword},'%')
+					or birthday like CONCAT('%',#{cm.keyword},'%')
+					or live_country_short_code like CONCAT('%',#{cm.keyword},'%')
+					or bind_phone like CONCAT('%',#{cm.keyword},'%')
+					or pay_password_id like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

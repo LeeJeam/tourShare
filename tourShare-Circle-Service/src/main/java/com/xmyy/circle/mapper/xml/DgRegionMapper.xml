@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.DgRegionMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_region
+		<where>
+			<if test="cm.ccode != null and cm.ccode != ''">
+					and ccode=#{cm.ccode}
+			</if>
+			<if test="cm.cname != null and cm.cname != ''">
+					and cname=#{cm.cname}
+			</if>
+			<if test="cm.language != null and cm.language != ''">
+					and language=#{cm.language}
+			</if>
+			<if test="cm.parentcode != null and cm.parentcode != ''">
+					and parentcode=#{cm.parentcode}
+			</if>
+			<if test="cm.latitude != null and cm.latitude != ''">
+					and latitude=#{cm.latitude}
+			</if>
+			<if test="cm.longitude != null and cm.longitude != ''">
+					and longitude=#{cm.longitude}
+			</if>
+			<if test="cm.timezone != null and cm.timezone != ''">
+					and timezone=#{cm.timezone}
+			</if>
+			<if test="cm.idxcode != null and cm.idxcode != ''">
+					and idxcode=#{cm.idxcode}
+			</if>
+			<if test="cm.shortcode != null and cm.shortcode != ''">
+					and shortcode=#{cm.shortcode}
+			</if>
+			<if test="cm.childrencount != null and cm.childrencount != ''">
+					and childrencount=#{cm.childrencount}
+			</if>
+			<if test="cm.fullname != null and cm.fullname != ''">
+					and fullname=#{cm.fullname}
+			</if>
+			<if test="cm.postcode != null and cm.postcode != ''">
+					and postcode=#{cm.postcode}
+			</if>
+			<if test="cm.areacode != null and cm.areacode != ''">
+					and areacode=#{cm.areacode}
+			</if>
+			<if test="cm.secidxcode != null and cm.secidxcode != ''">
+					and secidxcode=#{cm.secidxcode}
+			</if>
+			<if test="cm.grade != null and cm.grade != ''">
+					and grade=#{cm.grade}
+			</if>
+			<if test="cm.isHot != null and cm.isHot != ''">
+					and is_hot=#{cm.isHot}
+			</if>
+			<if test="cm.prefixPhone != null and cm.prefixPhone != ''">
+					and prefix_phone=#{cm.prefixPhone}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or ccode like CONCAT('%',#{cm.keyword},'%')
+					or cname like CONCAT('%',#{cm.keyword},'%')
+					or language like CONCAT('%',#{cm.keyword},'%')
+					or parentcode like CONCAT('%',#{cm.keyword},'%')
+					or latitude like CONCAT('%',#{cm.keyword},'%')
+					or longitude like CONCAT('%',#{cm.keyword},'%')
+					or timezone like CONCAT('%',#{cm.keyword},'%')
+					or idxcode like CONCAT('%',#{cm.keyword},'%')
+					or shortcode like CONCAT('%',#{cm.keyword},'%')
+					or childrencount like CONCAT('%',#{cm.keyword},'%')
+					or fullname like CONCAT('%',#{cm.keyword},'%')
+					or postcode like CONCAT('%',#{cm.keyword},'%')
+					or areacode like CONCAT('%',#{cm.keyword},'%')
+					or secidxcode like CONCAT('%',#{cm.keyword},'%')
+					or grade like CONCAT('%',#{cm.keyword},'%')
+					or is_hot like CONCAT('%',#{cm.keyword},'%')
+					or prefix_phone like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

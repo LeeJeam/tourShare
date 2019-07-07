@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.dao.DgAreaDao">
+	<resultMap id="areaMap" type="com.xmyy.circle.dto.AreaDto">
+		<result property="areaCode" column="area_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="areaName" column="area_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="parentCode" column="parent_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	</resultMap>
+	<select id="queryArea" resultMap="areaMap">
+		select area_code,parent_code,area_name from dg_area
+		<where>
+			<if test="parentCode!=null and parentCode!=''">
+				and parent_code=#{parentCode}
+			</if>
+			<if test="level!=null">
+				and level=#{level}
+			</if>
+		</where>
+		order by parent_code asc
+	</select>
+</mapper>

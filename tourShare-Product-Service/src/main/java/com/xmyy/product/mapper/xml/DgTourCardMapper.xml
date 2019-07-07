@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.mapper.DgTourCardMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_tour_card
+		<where>
+			<if test="cm.cardName != null and cm.cardName != ''">
+					and card_name=#{cm.cardName}
+			</if>
+			<if test="cm.cardEngName != null and cm.cardEngName != ''">
+					and card_eng_name=#{cm.cardEngName}
+			</if>
+			<if test="cm.cardCode != null and cm.cardCode != ''">
+					and card_code=#{cm.cardCode}
+			</if>
+			<if test="cm.skinType != null and cm.skinType != ''">
+					and skin_type=#{cm.skinType}
+			</if>
+			<if test="cm.cardSize != null and cm.cardSize != ''">
+					and card_size=#{cm.cardSize}
+			</if>
+			<if test="cm.cardType != null and cm.cardType != ''">
+					and card_type=#{cm.cardType}
+			</if>
+			<if test="cm.imgUrl != null and cm.imgUrl != ''">
+					and img_url=#{cm.imgUrl}
+			</if>
+			<if test="cm.deviceType != null and cm.deviceType != ''">
+					and device_type=#{cm.deviceType}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or card_name like CONCAT('%',#{cm.keyword},'%')
+					or card_eng_name like CONCAT('%',#{cm.keyword},'%')
+					or card_code like CONCAT('%',#{cm.keyword},'%')
+					or skin_type like CONCAT('%',#{cm.keyword},'%')
+					or card_size like CONCAT('%',#{cm.keyword},'%')
+					or card_type like CONCAT('%',#{cm.keyword},'%')
+					or img_url like CONCAT('%',#{cm.keyword},'%')
+					or device_type like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

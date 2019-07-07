@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- Circle -->
+    <dubbo:reference id="ucDynamicCircleService" interface="com.xmyy.circle.service.UcDynamicCircleService" check="false"/>
+
+    <!-- Demande -->
+    <dubbo:reference id="dgDemandOrderService" interface="com.xmyy.demand.service.DgDemandOrderService" check="false"/>
+
+    <!-- Manage -->
+    <dubbo:reference id="adminSessionService" interface="com.xmyy.manage.service.AdminSessionService" check="false"/>
+
+    <!-- Member -->
+    <dubbo:reference id="ucSellerManageService" interface="com.xmyy.member.service.UcSellerManageService" check="false"/>
+    <dubbo:reference id="ucInviteCodeService" interface="com.xmyy.member.service.UcInviteCodeService" check="false"/>
+
+    <!-- Order -->
+    <dubbo:reference id="dgOrderService" interface="com.xmyy.order.service.DgOrderService" check="false"/>
+
+    <!-- Pay -->
+    <dubbo:reference id="dgPayLogService" interface="com.xmyy.pay.service.DgPayLogService" check="false"/>
+    <dubbo:reference id="manageCheckAccountService" interface="com.xmyy.pay.service.ManageCheckAccountService" check="false"/>
+
+    <!-- Product -->
+    <dubbo:reference id="tourService" interface="com.xmyy.product.service.TourService" check="false"/>
+    <dubbo:reference id="ptProductService" interface="com.xmyy.product.service.PtProductService" check="false"/>
+    <dubbo:reference id="dgCurrencyExchangeService" interface="com.xmyy.product.service.DgCurrencyExchangeService" check="false"/>
+    <dubbo:reference id="manageTourService" interface="com.xmyy.product.service.ManageTourService" check="false"/>
+
+    <!-- Search -->
+    <dubbo:reference id="packerImportService" interface="com.xmyy.search.service.PackerImportService" check="false"/>
+    <dubbo:reference id="sellerImportService" interface="com.xmyy.search.service.SellerImportService" check="false"/>
+
+</beans>

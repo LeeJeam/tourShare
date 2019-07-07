@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- Product -->
+	<dubbo:reference id="dgCurrencyExchangeService" interface="com.xmyy.product.service.DgCurrencyExchangeService" check="false" />
+	<dubbo:reference id="ptAttrService" interface="com.xmyy.product.service.PtAttrService" check="false" />
+	<dubbo:reference id="ptAttrTypeService" interface="com.xmyy.product.service.PtAttrTypeService" check="false" />
+	<dubbo:reference id="ptAttrValueService" interface="com.xmyy.product.service.PtAttrValueService" check="false" />
+	<dubbo:reference id="ptBrandService" interface="com.xmyy.product.service.PtBrandService" check="false" />
+	<dubbo:reference id="ptCategoryBrandService" interface="com.xmyy.product.service.PtCategoryBrandService" check="false" />
+	<dubbo:reference id="ptCategoryService" interface="com.xmyy.product.service.PtCategoryService" check="false" />
+	<dubbo:reference id="ptProductService" interface="com.xmyy.product.service.PtProductService" check="false" />
+	<dubbo:reference id="ptSeriesPriceService" interface="com.xmyy.product.service.PtSeriesPriceService" check="false" />
+	<dubbo:reference id="ptSeriesService" interface="com.xmyy.product.service.PtSeriesService" check="false" />
+	<dubbo:reference id="tourService" interface="com.xmyy.product.service.TourService" check="false"/>
+	<dubbo:reference id="tourSiteService" interface="com.xmyy.product.service.TourSiteService" check="false"/>
+
+	<!-- Manage -->
+	<dubbo:reference id="sysEventService" interface="com.xmyy.manage.service.SysEventService" check="false" />
+
+	<!-- Search -->
+	<dubbo:reference id="productImportService" interface="com.xmyy.search.service.ProductImportService" check="false" />
+	<dubbo:reference id="productSearchService" interface="com.xmyy.search.service.ProductSearchService" check="false" />
+
+</beans>

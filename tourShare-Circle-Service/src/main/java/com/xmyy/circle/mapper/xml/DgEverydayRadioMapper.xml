@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.DgEverydayRadioMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_everyday_radio
+		<where>
+			<if test="cm.type != null and cm.type != ''">
+					and type=#{cm.type}
+			</if>
+			<if test="cm.content != null and cm.content != ''">
+					and content=#{cm.content}
+			</if>
+			<if test="cm.toMemberId != null and cm.toMemberId != ''">
+					and to_member_id=#{cm.toMemberId}
+			</if>
+			<if test="cm.roMemberType != null and cm.roMemberType != ''">
+					and ro_member_type=#{cm.roMemberType}
+			</if>
+			<if test="cm.status != null and cm.status != ''">
+					and status=#{cm.status}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or type like CONCAT('%',#{cm.keyword},'%')
+					or content like CONCAT('%',#{cm.keyword},'%')
+					or to_member_id like CONCAT('%',#{cm.keyword},'%')
+					or ro_member_type like CONCAT('%',#{cm.keyword},'%')
+					or status like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

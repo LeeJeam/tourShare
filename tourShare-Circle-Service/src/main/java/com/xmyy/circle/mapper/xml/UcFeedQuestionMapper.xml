@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.UcFeedQuestionMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from uc_feed_question
+		<where>
+			<if test="cm.question != null and cm.question != ''">
+					and question=#{cm.question}
+			</if>
+			<if test="cm.answer != null and cm.answer != ''">
+					and answer=#{cm.answer}
+			</if>
+			<if test="cm.sort != null and cm.sort != ''">
+					and sort=#{cm.sort}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or question like CONCAT('%',#{cm.keyword},'%')
+					or answer like CONCAT('%',#{cm.keyword},'%')
+					or sort like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

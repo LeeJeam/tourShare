@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- Circle -->
+	<dubbo:reference id="dgEverydayRadioService" interface="com.xmyy.circle.service.DgEverydayRadioService" check="false" />
+	<dubbo:reference id="dgOrderEvaluateService" interface="com.xmyy.circle.service.DgOrderEvaluateService" check="false" />
+	<dubbo:reference id="dgProductEvaluateService" interface="com.xmyy.circle.service.DgProductEvaluateService" check="false" />
+
+	<!-- Demand -->
+	<dubbo:reference id="dgDemandAcceptService" interface="com.xmyy.demand.service.DgDemandAcceptService" check="false" />
+	<dubbo:reference id="dgDemandOrderService" interface="com.xmyy.demand.service.DgDemandOrderService" check="false" />
+
+	<!-- Member -->
+	<dubbo:reference id="ucBuyerService" interface="com.xmyy.member.service.UcBuyerService" check="false" />
+	<dubbo:reference id="ucMemberAddressService" interface="com.xmyy.member.service.UcMemberAddressService" check="false" />
+	<dubbo:reference id="ucPayPasswordService" interface="com.xmyy.member.service.UcPayPasswordService" check="false" />
+	<dubbo:reference id="ucSellerService" interface="com.xmyy.member.service.UcSellerService" check="false" />
+
+	<!-- Pay -->
+	<dubbo:reference id="allinPayOrderService" interface="com.xmyy.pay.service.AllinPayOrderService" check="false" />
+	<dubbo:reference id="dgPayLogService" interface="com.xmyy.pay.service.DgPayLogService" check="false" />
+
+	<!-- Product -->
+	<dubbo:reference id="ptCategoryService" interface="com.xmyy.product.service.PtCategoryService" check="false" />
+	<dubbo:reference id="ptProductService" interface="com.xmyy.product.service.PtProductService" check="false" />
+	<dubbo:reference id="ptSkuService" interface="com.xmyy.product.service.PtSkuService" check="false" />
+	<dubbo:reference id="tourService" interface="com.xmyy.product.service.TourService" check="false" />
+
+</beans>

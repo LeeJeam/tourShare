@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.dao.DgTourSiteDao">
+    <resultMap id="tourSiteMap" type="com.xmyy.product.dto.ApiTourSiteDto">
+        <result property="id" column="id_" javaType="Long" jdbcType="BIGINT"/>
+        <result property="tourId" column="tour_id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="regionCode" column="region_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="regionName" column="region_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="regionImgUrl" column="region_img_url" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="regionLogo" column="region_logo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="isSignIn" column="is_sign_in" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="planBeginTime" column="plan_begin_time" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="siteType" column="site_type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="queryTourSitesByTourId" parameterType="long" resultMap="tourSiteMap">
+        select id_, tour_id, region_code, region_name, region_logo, region_img_url, is_sign_in, plan_begin_time, site_type
+        from dg_tour_site
+        <where>
+            <if test="tourId!=null">
+                and tour_id=#{tourId}
+            </if>
+            and (site_type =1 or site_type=2)
+            and enable_=1
+        </where>
+        order by plan_begin_time asc
+    </select>
+
+    <select id="queryTodayTourSiteInfosByTourId" parameterType="long" resultMap="tourSiteMap">
+        select id_, tour_id, region_name, is_sign_in, plan_begin_time
+        from dg_tour_site
+        <where>
+            and tour_id=#{id}
+            and (site_type =1 or site_type=2)
+            and is_sign_in=0
+            and date(plan_begin_time)=date(now())
+            and enable_=1
+        </where>
+    </select>
+
+    <select id="queryTourSiteInfosByTourId" parameterType="long" resultType="com.xmyy.product.vo.ApiTourSiteInfoResult">
+		select
+            region_name as regionName,
+            is_sign_in as isSignIn,
+            plan_begin_time as planBeginTime,
+            region_logo as regionLogo
+		from dg_tour_site
+		<where>
+            and tour_id=#{id_}
+		    and site_type =1
+            and enable_=1
+        </where>
+		order by plan_begin_time asc
+	</select>
+
+    <select id="queryTourSiteBySortAndTourId" resultMap="tourSiteMap">
+        select id_, tour_id, region_code, region_name, region_logo, region_img_url, is_sign_in, plan_begin_time, site_type
+        from dg_tour_site
+        <where>
+            <if test="sort!=null">
+                and sort=#{sort}
+            </if>
+            <if test="tourId!=null">
+                and tour_id=#{tourId}
+            </if>
+            and enable_=1
+        </where>
+        order by plan_begin_time asc
+    </select>
+
+</mapper>

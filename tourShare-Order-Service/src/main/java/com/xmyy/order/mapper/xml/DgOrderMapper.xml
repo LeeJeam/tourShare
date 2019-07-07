@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.order.mapper.DgOrderMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_order
+		<where>
+			<if test="cm.applyPaylogId != null and cm.applyPaylogId != ''">
+					and apply_paylog_id=#{cm.applyPaylogId}
+			</if>
+			<if test="cm.payPaylogId != null and cm.payPaylogId != ''">
+					and pay_paylog_id=#{cm.payPaylogId}
+			</if>
+			<if test="cm.refundPaylogId != null and cm.refundPaylogId != ''">
+					and refund_paylog_id=#{cm.refundPaylogId}
+			</if>
+			<if test="cm.orderNo != null and cm.orderNo != ''">
+					and order_no=#{cm.orderNo}
+			</if>
+			<if test="cm.orderType != null and cm.orderType != ''">
+					and order_type=#{cm.orderType}
+			</if>
+			<if test="cm.demandId != null and cm.demandId != ''">
+					and demand_id=#{cm.demandId}
+			</if>
+			<if test="cm.productNameStr != null and cm.productNameStr != ''">
+					and product_name_str=#{cm.productNameStr}
+			</if>
+			<if test="cm.orderStatus != null and cm.orderStatus != ''">
+					and order_status=#{cm.orderStatus}
+			</if>
+			<if test="cm.tourId != null and cm.tourId != ''">
+					and tour_id=#{cm.tourId}
+			</if>
+			<if test="cm.tourNo != null and cm.tourNo != ''">
+					and tour_no=#{cm.tourNo}
+			</if>
+			<if test="cm.isAppraisal != null and cm.isAppraisal != ''">
+					and is_appraisal=#{cm.isAppraisal}
+			</if>
+			<if test="cm.sendStatus != null and cm.sendStatus != ''">
+					and send_status=#{cm.sendStatus}
+			</if>
+			<if test="cm.appraisalPrice != null and cm.appraisalPrice != ''">
+					and appraisal_price=#{cm.appraisalPrice}
+			</if>
+			<if test="cm.appraisalUrl != null and cm.appraisalUrl != ''">
+					and appraisal_url=#{cm.appraisalUrl}
+			</if>
+			<if test="cm.buyerId != null and cm.buyerId != ''">
+					and buyer_id=#{cm.buyerId}
+			</if>
+			<if test="cm.isPacker != null and cm.isPacker != ''">
+					and is_packer=#{cm.isPacker}
+			</if>
+			<if test="cm.sellerId != null and cm.sellerId != ''">
+					and seller_id=#{cm.sellerId}
+			</if>
+			<if test="cm.totalNum != null and cm.totalNum != ''">
+					and total_num=#{cm.totalNum}
+			</if>
+			<if test="cm.payMoney != null and cm.payMoney != ''">
+					and pay_money=#{cm.payMoney}
+			</if>
+			<if test="cm.waybillNo != null and cm.waybillNo != ''">
+					and waybill_no=#{cm.waybillNo}
+			</if>
+			<if test="cm.logisticsNo != null and cm.logisticsNo != ''">
+					and logistics_no=#{cm.logisticsNo}
+			</if>
+			<if test="cm.logisticsCompany != null and cm.logisticsCompany != ''">
+					and logistics_company=#{cm.logisticsCompany}
+			</if>
+			<if test="cm.consigneeAddress != null and cm.consigneeAddress != ''">
+					and consignee_address=#{cm.consigneeAddress}
+			</if>
+			<if test="cm.consigneeName != null and cm.consigneeName != ''">
+					and consignee_name=#{cm.consigneeName}
+			</if>
+			<if test="cm.consigneePhone != null and cm.consigneePhone != ''">
+					and consignee_phone=#{cm.consigneePhone}
+			</if>
+			<if test="cm.buyerMessage != null and cm.buyerMessage != ''">
+					and buyer_message=#{cm.buyerMessage}
+			</if>
+			<if test="cm.cancelText != null and cm.cancelText != ''">
+					and cancel_text=#{cm.cancelText}
+			</if>
+			<if test="cm.cancelReason != null and cm.cancelReason != ''">
+					and cancel_reason=#{cm.cancelReason}
+			</if>
+			<if test="cm.orderTime != null and cm.orderTime != ''">
+					and order_time=#{cm.orderTime}
+			</if>
+			<if test="cm.deliveryTime != null and cm.deliveryTime != ''">
+					and delivery_time=#{cm.deliveryTime}
+			</if>
+			<if test="cm.evaluateStatus != null and cm.evaluateStatus != ''">
+					and evaluate_status=#{cm.evaluateStatus}
+			</if>
+			<if test="cm.buyerDel != null and cm.buyerDel != ''">
+					and buyer_del=#{cm.buyerDel}
+			</if>
+			<if test="cm.sellerDel != null and cm.sellerDel != ''">
+					and seller_del=#{cm.sellerDel}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or apply_paylog_id like CONCAT('%',#{cm.keyword},'%')
+					or pay_paylog_id like CONCAT('%',#{cm.keyword},'%')
+					or refund_paylog_id like CONCAT('%',#{cm.keyword},'%')
+					or order_no like CONCAT('%',#{cm.keyword},'%')
+					or order_type like CONCAT('%',#{cm.keyword},'%')
+					or demand_id like CONCAT('%',#{cm.keyword},'%')
+					or product_name_str like CONCAT('%',#{cm.keyword},'%')
+					or order_status like CONCAT('%',#{cm.keyword},'%')
+					or tour_id like CONCAT('%',#{cm.keyword},'%')
+					or tour_no like CONCAT('%',#{cm.keyword},'%')
+					or is_appraisal like CONCAT('%',#{cm.keyword},'%')
+					or send_status like CONCAT('%',#{cm.keyword},'%')
+					or appraisal_price like CONCAT('%',#{cm.keyword},'%')
+					or appraisal_url like CONCAT('%',#{cm.keyword},'%')
+					or buyer_id like CONCAT('%',#{cm.keyword},'%')
+					or is_packer like CONCAT('%',#{cm.keyword},'%')
+					or seller_id like CONCAT('%',#{cm.keyword},'%')
+					or total_num like CONCAT('%',#{cm.keyword},'%')
+					or pay_money like CONCAT('%',#{cm.keyword},'%')
+					or waybill_no like CONCAT('%',#{cm.keyword},'%')
+					or logistics_no like CONCAT('%',#{cm.keyword},'%')
+					or logistics_company like CONCAT('%',#{cm.keyword},'%')
+					or consignee_address like CONCAT('%',#{cm.keyword},'%')
+					or consignee_name like CONCAT('%',#{cm.keyword},'%')
+					or consignee_phone like CONCAT('%',#{cm.keyword},'%')
+					or buyer_message like CONCAT('%',#{cm.keyword},'%')
+					or cancel_text like CONCAT('%',#{cm.keyword},'%')
+					or cancel_reason like CONCAT('%',#{cm.keyword},'%')
+					or order_time like CONCAT('%',#{cm.keyword},'%')
+					or delivery_time like CONCAT('%',#{cm.keyword},'%')
+					or evaluate_status like CONCAT('%',#{cm.keyword},'%')
+					or buyer_del like CONCAT('%',#{cm.keyword},'%')
+					or seller_del like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

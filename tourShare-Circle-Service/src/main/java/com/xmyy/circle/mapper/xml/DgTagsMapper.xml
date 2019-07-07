@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.DgTagsMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_tags
+		<where>
+			<if test="cm.tagName != null and cm.tagName != ''">
+					and tag_name=#{cm.tagName}
+			</if>
+			<if test="cm.isRecommend != null and cm.isRecommend != ''">
+					and is_recommend=#{cm.isRecommend}
+			</if>
+			<if test="cm.tagType != null and cm.tagType != ''">
+					and tag_type=#{cm.tagType}
+			</if>
+			<if test="cm.sort != null and cm.sort != ''">
+					and sort=#{cm.sort}
+			</if>
+			<if test="cm.state != null and cm.state != ''">
+					and state=#{cm.state}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or tag_name like CONCAT('%',#{cm.keyword},'%')
+					or is_recommend like CONCAT('%',#{cm.keyword},'%')
+					or tag_type like CONCAT('%',#{cm.keyword},'%')
+					or sort like CONCAT('%',#{cm.keyword},'%')
+					or state like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

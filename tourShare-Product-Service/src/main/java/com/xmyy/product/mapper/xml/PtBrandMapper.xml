@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.mapper.PtBrandMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from pt_brand
+		<where>
+			<if test="cm.name != null and cm.name != ''">
+					and name=#{cm.name}
+			</if>
+			<if test="cm.initial != null and cm.initial != ''">
+					and initial=#{cm.initial}
+			</if>
+			<if test="cm.ico != null and cm.ico != ''">
+					and ico=#{cm.ico}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or name like CONCAT('%',#{cm.keyword},'%')
+					or initial like CONCAT('%',#{cm.keyword},'%')
+					or ico like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+
+</mapper>

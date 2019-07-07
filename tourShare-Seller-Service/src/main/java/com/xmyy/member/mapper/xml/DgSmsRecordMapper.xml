@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.member.mapper.DgSmsRecordMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_sms_record
+		<where>
+			<if test="cm.bizId != null and cm.bizId != ''">
+					and biz_id=#{cm.bizId}
+			</if>
+			<if test="cm.type != null and cm.type != ''">
+					and type=#{cm.type}
+			</if>
+			<if test="cm.mobile != null and cm.mobile != ''">
+					and mobile=#{cm.mobile}
+			</if>
+			<if test="cm.state != null and cm.state != ''">
+					and state=#{cm.state}
+			</if>
+			<if test="cm.content != null and cm.content != ''">
+					and content=#{cm.content}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or biz_id like CONCAT('%',#{cm.keyword},'%')
+					or type like CONCAT('%',#{cm.keyword},'%')
+					or mobile like CONCAT('%',#{cm.keyword},'%')
+					or state like CONCAT('%',#{cm.keyword},'%')
+					or content like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

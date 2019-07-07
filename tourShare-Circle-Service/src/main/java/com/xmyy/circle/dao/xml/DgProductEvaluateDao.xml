@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.dao.DgProductEvaluateDao">
+
+    <select id="queryProductEvaluate" resultType="com.xmyy.circle.vo.ProductEvaluateResult" parameterType="com.xmyy.circle.vo.ProductEvaluateParam">
+        select  ord.order_time orderTime,po.product_name productName,po.product_cover productCover,
+        po.product_num productNum,po.product_price productPrice,oe.seller_id_ sellerId,oe.buy_service buyService,oe.product_level productLevel,
+        ord.waybill_no waybillNo,ord.order_no orderNo,(case when ord.evaluate_status =0 then "false" else "true" end) isComment, ord.id_ orderId,po.id_ productOrderId,
+        oe.id_ OrderEvluateId,us.nick_name nickName,us.real_name realName,po.product_id productId
+        from dg_product_order po
+        LEFT JOIN dg_order ord on ord.id_=po.order_id_
+        LEFT JOIN uc_seller  us on us.id_=ord.seller_id
+        LEFT JOIN dg_order_evaluate oe  on po.order_id_=oe.order_id_  and oe.order_id_=ord.id_
+        LEFT JOIN dg_product_evaluate pev on pev.order_id=ord.id_ and pev.product_order_id=po.id_ and pev.product_id_=po.product_id and pev.enable_=1
+        where po.enable_=1  and  us.enable_=1 and oe.enable_=1 and ord.enable_=1
+        <choose>
+            <when test="userType!=null and userType!='' and userType==2 ">
+                and ord.buyer_id=#{userId}
+            </when>
+            <when test="userType!=null and userType!='' and userType==3">
+                and ord.is_packer=1 and ord.seller_id=#{userId}
+            </when>
+            <otherwise>
+                and ord.is_packer=0 and ord.seller_id=#{userId}
+            </otherwise>
+        </choose>
+        <if test="productName!=null and productName!=''">
+            and po.product_name like CONCAT('%',#{productName},'%')
+        </if>
+        <if test="waybillNo!=null and waybillNo!=''">
+            and ord.waybill_no=#{waybillNo}
+        </if>
+        <if test="productLevel!=0">
+            and oe.product_level=#{productLevel}
+        </if>
+        <if test="commentStatus!=null and commentStatus!='' and commentStatus>-1">
+            and ord.evaluate_status=#{commentStatus}
+        </if>
+        <if test="isPicture==1">
+            and pev.pic_rsurl is not null and pev.pic_rsurl!=''
+        </if>
+
+        limit #{current},#{size}
+    </select>
+
+    <select id="countProductEvaluate" resultType="Integer" parameterType="com.xmyy.circle.vo.ProductEvaluateParam">
+        select count(1)
+        from dg_product_order po
+        LEFT JOIN dg_order ord on ord.id_=po.order_id_
+        LEFT JOIN uc_seller  us on us.id_=ord.seller_id
+        LEFT JOIN dg_order_evaluate oe  on po.order_id_=oe.order_id_  and oe.order_id_=ord.id_
+        LEFT JOIN dg_product_evaluate pev on pev.order_id=ord.id_ and pev.product_order_id=po.id_ and pev.product_id_=po.product_id and pev.enable_=1
+        where po.enable_=1  and  us.enable_=1 and oe.enable_=1 and ord.enable_=1
+        <choose>
+            <when test="userType!=null and userType!='' and userType==2 ">
+                and ord.buyer_id=#{userId}
+            </when>
+            <when test="userType!=null and userType!='' and userType==3">
+                and ord.is_packer=1 and ord.seller_id=#{userId}
+            </when>
+            <otherwise>
+                and ord.is_packer=0 and ord.seller_id=#{userId}
+            </otherwise>
+        </choose>
+        <if test="productName!=null and productName!=''">
+            and po.product_name like CONCAT('%',#{productName},'%')
+        </if>
+        <if test="waybillNo!=null and waybillNo!=''">
+            and ord.waybill_no=#{waybillNo}
+        </if>
+        <if test="productLevel!=0">
+            and oe.product_level=#{productLevel}
+        </if>
+        <if test="commentStatus!=null and commentStatus!='' and commentStatus>-1">
+            and ord.evaluate_status=#{commentStatus}
+        </if>
+        <if test="isPicture==1">
+            and pev.pic_rsurl is not null and pev.pic_rsurl!=''
+        </if>
+    </select>
+    <select id="getFavorable" resultType="java.lang.Float">
+        SELECT
+            ROUND(a.cnt / b.cnt * 100, 2)
+        FROM
+            (
+                SELECT
+                    count(1) AS cnt
+                FROM
+                    dg_product_evaluate pe left join dg_order_evaluate oe
+                      on pe.order_id = oe.order_id_
+                WHERE
+                    pe.product_id_ = #{productId}
+                                and oe.product_level >= 3
+            ) AS a,
+            (
+                SELECT
+                    count(1) AS cnt
+                FROM
+                    dg_product_evaluate
+                WHERE
+                    product_id_ = #{productId}
+            ) AS b
+    </select>
+
+</mapper>

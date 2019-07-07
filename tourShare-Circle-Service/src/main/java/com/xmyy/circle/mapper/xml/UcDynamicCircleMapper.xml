@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.UcDynamicCircleMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from uc_dynamic_circle
+		<where>
+			<if test="cm.sellerId != null and cm.sellerId != ''">
+					and seller_id_=#{cm.sellerId}
+			</if>
+			<if test="cm.typeId != null and cm.typeId != ''">
+					and type_id=#{cm.typeId}
+			</if>
+			<if test="cm.content != null and cm.content != ''">
+					and content=#{cm.content}
+			</if>
+			<if test="cm.praiseCount != null and cm.praiseCount != ''">
+					and praise_count=#{cm.praiseCount}
+			</if>
+			<if test="cm.commentCount != null and cm.commentCount != ''">
+					and comment_count=#{cm.commentCount}
+			</if>
+			<if test="cm.videoRsurl != null and cm.videoRsurl != ''">
+					and video_rsurl=#{cm.videoRsurl}
+			</if>
+			<if test="cm.readCount != null and cm.readCount != ''">
+					and read_count=#{cm.readCount}
+			</if>
+			<if test="cm.playCount != null and cm.playCount != ''">
+					and play_count=#{cm.playCount}
+			</if>
+			<if test="cm.coverRsurl != null and cm.coverRsurl != ''">
+					and cover_rsurl=#{cm.coverRsurl}
+			</if>
+			<if test="cm.classifyTags != null and cm.classifyTags != ''">
+					and classify_tags=#{cm.classifyTags}
+			</if>
+			<if test="cm.state != null and cm.state != ''">
+					and state=#{cm.state}
+			</if>
+			<if test="cm.isTop != null and cm.isTop != ''">
+					and is_top=#{cm.isTop}
+			</if>
+			<if test="cm.topTime != null and cm.topTime != ''">
+					and top_time=#{cm.topTime}
+			</if>
+			<if test="cm.topEndTime != null and cm.topEndTime != ''">
+					and top_end_time=#{cm.topEndTime}
+			</if>
+			<if test="cm.title != null and cm.title != ''">
+					and title=#{cm.title}
+			</if>
+			<if test="cm.videoTimes != null and cm.videoTimes != ''">
+					and video_times=#{cm.videoTimes}
+			</if>
+			<if test="cm.favoritesCount != null and cm.favoritesCount != ''">
+					and favorites_count=#{cm.favoritesCount}
+			</if>
+			<if test="cm.topOpId != null and cm.topOpId != ''">
+					and top_op_id=#{cm.topOpId}
+			</if>
+			<if test="cm.jsonContent != null and cm.jsonContent != ''">
+					and json_content=#{cm.jsonContent}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or seller_id_ like CONCAT('%',#{cm.keyword},'%')
+					or type_id like CONCAT('%',#{cm.keyword},'%')
+					or content like CONCAT('%',#{cm.keyword},'%')
+					or praise_count like CONCAT('%',#{cm.keyword},'%')
+					or comment_count like CONCAT('%',#{cm.keyword},'%')
+					or video_rsurl like CONCAT('%',#{cm.keyword},'%')
+					or read_count like CONCAT('%',#{cm.keyword},'%')
+					or play_count like CONCAT('%',#{cm.keyword},'%')
+					or cover_rsurl like CONCAT('%',#{cm.keyword},'%')
+					or classify_tags like CONCAT('%',#{cm.keyword},'%')
+					or state like CONCAT('%',#{cm.keyword},'%')
+					or is_top like CONCAT('%',#{cm.keyword},'%')
+					or top_time like CONCAT('%',#{cm.keyword},'%')
+					or top_end_time like CONCAT('%',#{cm.keyword},'%')
+					or title like CONCAT('%',#{cm.keyword},'%')
+					or video_times like CONCAT('%',#{cm.keyword},'%')
+					or favorites_count like CONCAT('%',#{cm.keyword},'%')
+					or top_op_id like CONCAT('%',#{cm.keyword},'%')
+					or json_content like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

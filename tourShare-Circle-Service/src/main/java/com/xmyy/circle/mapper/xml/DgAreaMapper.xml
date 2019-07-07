@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.DgAreaMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_area
+		<where>
+			<if test="cm.areaName != null and cm.areaName != ''">
+					and area_name=#{cm.areaName}
+			</if>
+			<if test="cm.areaCode != null and cm.areaCode != ''">
+					and area_code=#{cm.areaCode}
+			</if>
+			<if test="cm.parentCode != null and cm.parentCode != ''">
+					and parent_code=#{cm.parentCode}
+			</if>
+			<if test="cm.shortname != null and cm.shortname != ''">
+					and shortname=#{cm.shortname}
+			</if>
+			<if test="cm.longitude != null and cm.longitude != ''">
+					and longitude=#{cm.longitude}
+			</if>
+			<if test="cm.latitude != null and cm.latitude != ''">
+					and latitude=#{cm.latitude}
+			</if>
+			<if test="cm.level != null and cm.level != ''">
+					and level=#{cm.level}
+			</if>
+			<if test="cm.position != null and cm.position != ''">
+					and position=#{cm.position}
+			</if>
+			<if test="cm.sort != null and cm.sort != ''">
+					and sort=#{cm.sort}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or area_name like CONCAT('%',#{cm.keyword},'%')
+					or area_code like CONCAT('%',#{cm.keyword},'%')
+					or parent_code like CONCAT('%',#{cm.keyword},'%')
+					or shortname like CONCAT('%',#{cm.keyword},'%')
+					or longitude like CONCAT('%',#{cm.keyword},'%')
+					or latitude like CONCAT('%',#{cm.keyword},'%')
+					or level like CONCAT('%',#{cm.keyword},'%')
+					or position like CONCAT('%',#{cm.keyword},'%')
+					or sort like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

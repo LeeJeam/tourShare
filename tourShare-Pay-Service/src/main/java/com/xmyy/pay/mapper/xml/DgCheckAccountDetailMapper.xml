@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.pay.mapper.DgCheckAccountDetailMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_check_account_detail
+		<where>
+			<if test="cm.orderNo != null and cm.orderNo != ''">
+					and order_no=#{cm.orderNo}
+			</if>
+			<if test="cm.orderType != null and cm.orderType != ''">
+					and order_type=#{cm.orderType}
+			</if>
+			<if test="cm.amount != null and cm.amount != ''">
+					and amount=#{cm.amount}
+			</if>
+			<if test="cm.fee != null and cm.fee != ''">
+					and fee=#{cm.fee}
+			</if>
+			<if test="cm.time != null and cm.time != ''">
+					and time=#{cm.time}
+			</if>
+			<if test="cm.bizOrderNo != null and cm.bizOrderNo != ''">
+					and biz_order_no=#{cm.bizOrderNo}
+			</if>
+			<if test="cm.channelAmount != null and cm.channelAmount != ''">
+					and channel_amount=#{cm.channelAmount}
+			</if>
+			<if test="cm.channelNo != null and cm.channelNo != ''">
+					and channel_no=#{cm.channelNo}
+			</if>
+			<if test="cm.channelFee != null and cm.channelFee != ''">
+					and channel_fee=#{cm.channelFee}
+			</if>
+			<if test="cm.cloudAccountFee != null and cm.cloudAccountFee != ''">
+					and cloud_account_fee=#{cm.cloudAccountFee}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or order_no like CONCAT('%',#{cm.keyword},'%')
+					or order_type like CONCAT('%',#{cm.keyword},'%')
+					or amount like CONCAT('%',#{cm.keyword},'%')
+					or fee like CONCAT('%',#{cm.keyword},'%')
+					or time like CONCAT('%',#{cm.keyword},'%')
+					or biz_order_no like CONCAT('%',#{cm.keyword},'%')
+					or channel_amount like CONCAT('%',#{cm.keyword},'%')
+					or channel_no like CONCAT('%',#{cm.keyword},'%')
+					or channel_fee like CONCAT('%',#{cm.keyword},'%')
+					or cloud_account_fee like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			pay by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

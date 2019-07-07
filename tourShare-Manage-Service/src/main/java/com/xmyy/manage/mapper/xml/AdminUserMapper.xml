@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.manage.mapper.AdminUserMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from admin_user
+		<where>
+			<if test="cm.account != null and cm.account != ''">
+					and account=#{cm.account}
+			</if>
+			<if test="cm.password != null and cm.password != ''">
+					and password=#{cm.password}
+			</if>
+			<if test="cm.userName != null and cm.userName != ''">
+					and user_name=#{cm.userName}
+			</if>
+			<if test="cm.gender != null and cm.gender != ''">
+					and gender=#{cm.gender}
+			</if>
+			<if test="cm.staffNo != null and cm.staffNo != ''">
+					and staff_no=#{cm.staffNo}
+			</if>
+			<if test="cm.mobile != null and cm.mobile != ''">
+					and mobile=#{cm.mobile}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or account like CONCAT('%',#{cm.keyword},'%')
+					or password like CONCAT('%',#{cm.keyword},'%')
+					or user_name like CONCAT('%',#{cm.keyword},'%')
+					or gender like CONCAT('%',#{cm.keyword},'%')
+					or staff_no like CONCAT('%',#{cm.keyword},'%')
+					or mobile like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

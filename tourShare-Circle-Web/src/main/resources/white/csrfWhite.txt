@@ -1,0 +1,12 @@
+/swagger-ui.html
+/webjars/
+/v2/
+/swagger-resources
+
+192.168.6.166
+192.168.6.51
+192.168.6.236
+192.168.6.238
+192.168.6.239
+demo.gzxmyy.com
+test.gzxmyy.com

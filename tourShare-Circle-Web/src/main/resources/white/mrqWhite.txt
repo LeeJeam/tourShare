@@ -1,0 +1,3 @@
+/api/circle/dynamic/list
+/api/circle/base
+/api

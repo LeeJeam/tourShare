@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.DgSysMessageMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_sys_message
+		<where>
+			<if test="cm.messageType != null and cm.messageType != ''">
+					and message_type=#{cm.messageType}
+			</if>
+			<if test="cm.title != null and cm.title != ''">
+					and title=#{cm.title}
+			</if>
+			<if test="cm.content != null and cm.content != ''">
+					and content=#{cm.content}
+			</if>
+			<if test="cm.cover != null and cm.cover != ''">
+					and cover=#{cm.cover}
+			</if>
+			<if test="cm.images != null and cm.images != ''">
+					and images=#{cm.images}
+			</if>
+			<if test="cm.memberType != null and cm.memberType != ''">
+					and member_type=#{cm.memberType}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or message_type like CONCAT('%',#{cm.keyword},'%')
+					or title like CONCAT('%',#{cm.keyword},'%')
+					or content like CONCAT('%',#{cm.keyword},'%')
+					or cover like CONCAT('%',#{cm.keyword},'%')
+					or images like CONCAT('%',#{cm.keyword},'%')
+					or member_type like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

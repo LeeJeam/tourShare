@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.DgSysMessageReadMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_sys_message_read
+		<where>
+			<if test="cm.messageId != null and cm.messageId != ''">
+					and message_id_=#{cm.messageId}
+			</if>
+			<if test="cm.memberId != null and cm.memberId != ''">
+					and member_id=#{cm.memberId}
+			</if>
+			<if test="cm.memberType != null and cm.memberType != ''">
+					and member_type=#{cm.memberType}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or message_id_ like CONCAT('%',#{cm.keyword},'%')
+					or member_id like CONCAT('%',#{cm.keyword},'%')
+					or member_type like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

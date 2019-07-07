@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.manage.mapper.AdminMenuMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from admin_menu
+		<where>
+			<if test="cm.menuName != null and cm.menuName != ''">
+					and menu_name=#{cm.menuName}
+			</if>
+			<if test="cm.operation != null and cm.operation != ''">
+					and operation=#{cm.operation}
+			</if>
+			<if test="cm.pId != null and cm.pId != ''">
+					and p_id=#{cm.pId}
+			</if>
+			<if test="cm.icon != null and cm.icon != ''">
+					and icon=#{cm.icon}
+			</if>
+			<if test="cm.htmlUrl != null and cm.htmlUrl != ''">
+					and html_url=#{cm.htmlUrl}
+			</if>
+			<if test="cm.componentCode != null and cm.componentCode != ''">
+					and component_code=#{cm.componentCode}
+			</if>
+			<if test="cm.sortNo != null and cm.sortNo != ''">
+					and sort_no=#{cm.sortNo}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or menu_name like CONCAT('%',#{cm.keyword},'%')
+					or operation like CONCAT('%',#{cm.keyword},'%')
+					or p_id like CONCAT('%',#{cm.keyword},'%')
+					or icon like CONCAT('%',#{cm.keyword},'%')
+					or html_url like CONCAT('%',#{cm.keyword},'%')
+					or sort_no like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

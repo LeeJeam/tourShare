@@ -1,0 +1,9 @@
+/swagger-ui.html
+/webjars/
+/v2/
+/swagger-resources
+
+/app/login
+/api/demand/queryListNoLogin
+/api/demand/detailNoLogin
+/manage/demand/

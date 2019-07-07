@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.manage.dao.AdminInterfaceDao">
+
+    <select id="queryForPermissionByUser" resultType="com.xmyy.manage.model.AdminInterface">
+        SELECT
+            DISTINCT i.id_ as id, i.url, i.method, i.`describe`, i.create_by as createBy, i.create_time as createTime,
+            i.update_by as updateBy, i.update_time as updateTime, i.enable_ as `enable`
+        FROM admin_interface i
+        JOIN admin_menu_interface mi on i.id_ = mi.interface_id_
+        JOIN admin_role_menu rm on rm.menu_id_ = mi.menu_id_
+        JOIN admin_user_role ur on ur.role_id_ = rm.role_id_
+        WHERE ur.user_id_ = #{userId}
+    </select>
+</mapper>

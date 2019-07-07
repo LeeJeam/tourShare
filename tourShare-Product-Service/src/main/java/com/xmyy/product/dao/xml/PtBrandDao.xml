@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.dao.PtBrandDao">
+
+    <select id="selectIdByKeyword" resultType="java.lang.Long">
+		select id_ from pt_brand
+		<if test="keyword != null and keyword !=''">
+			where name like CONCAT('%',#{keyword},'%')
+		</if>
+	</select>
+
+    <select id="getBrandIdPageCount" resultType="java.lang.Integer">
+		SELECT COUNT(DISTINCT b.id_) AS id
+		FROM pt_brand b
+		LEFT JOIN pt_category_brand cb
+		ON b.id_ = cb.pt_brand_id
+		<include refid="getBrandIdPage_condition"/>
+	</select>
+
+	<select id="getBrandIdPageList" parameterType="com.xmyy.product.vo.BrandListParam" resultType="com.xmyy.product.vo.BrandListResult">
+		SELECT DISTINCT b.id_ AS id
+		FROM pt_brand b
+		LEFT JOIN pt_category_brand cb
+		ON b.id_ = cb.pt_brand_id
+		<include refid="getBrandIdPage_condition"/>
+		ORDER BY b.id_
+	</select>
+
+	<sql id="getBrandIdPage_condition">
+		<where>
+			and b.enable_ = 1
+			<if test="params.name != null and params.name !=''">
+				and b.name like CONCAT('%',#{params.name},'%')
+			</if>
+			<if test="params.initial != null and params.initial !=''">
+				and b.initial like CONCAT('%',#{params.initial},'%')
+			</if>
+			<if test="params.categoryId2 != null">
+				and cb.pt_category_id2 = #{params.categoryId2}
+			</if>
+		</where>
+	</sql>
+
+	<select id="getSimpleBrandList" resultType="com.xmyy.product.vo.ApiBrandListResult">
+		SELECT
+			pb.id_ AS id,
+			pb.name AS name,
+			pb.initial AS initial
+		FROM pt_category_brand pcb
+		LEFT JOIN pt_brand pb
+		ON pcb.pt_brand_id = pb.id_
+		<where>
+			<if test="categoryId != null">
+				and pcb.pt_category_id = #{categoryId}
+			</if>
+			<if test="categoryId2 != null">
+				and pcb.pt_category_id2 = #{categoryId2}
+			</if>
+			<if test="initial != null and initial !=''">
+				and pb.initial = #{initial}
+			</if>
+		</where>
+		ORDER BY pb.initial
+	</select>
+
+	<select id="getSimpleBrandAllList" resultType="com.xmyy.product.vo.ApiBrandListResult">
+		SELECT
+			pb.id_ AS id,
+			pb.name AS name,
+			pb.initial AS initial
+		FROM pt_brand pb
+		<where>
+			<if test="initial != null and initial !=''">
+				and pb.initial = #{initial}
+			</if>
+		</where>
+		ORDER BY pb.initial
+	</select>
+</mapper>

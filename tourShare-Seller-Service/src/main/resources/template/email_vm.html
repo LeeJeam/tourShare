@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href=/logo.ico type=image/x-icon>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>邮件通知</title>
+    <style>
+        .email_box{
+            width: 600px;
+            height: auto;
+            margin: 50px auto 0;
+        }
+        .email_header{
+            height: 55px;
+            line-height: 55px;
+            margin-bottom: 50px;
+        }
+        .email_header img{
+            float: left;
+        }
+        .email_header span{
+            margin-left: 10px;
+            color: #333333;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .email_content{
+            border-bottom: 1px solid #EEEEEE;
+            padding-bottom: 10px;
+        }
+        .email_content .buyer{
+            font-size: 16px;
+            color: #333333;
+            font-weight: 600;
+        }
+        .email_content .text{
+            font-size:16px;
+            color:rgba(102,102,102,1);
+            line-height:30px;
+            margin: 20px 0;
+        }
+        .email_content .code{
+            font-size: 30px;
+            color: #333333;
+            font-weight: 600;
+        }
+        .email_content .proteam{
+			margin-top: 90px;
+            font-weight: 300;
+            color: #666666;
+            font-size: 14px;
+        }
+        .email_content .proteam span{
+            font-size: 12px;
+            color: #c7c7c7;
+        }
+        .email_footer{
+            font-size:12px;
+            color:rgba(153,153,153,1);
+            line-height:20px;
+            margin-top: 20px;
+        }
+        .email_footer p{
+           margin: 0;
+           line-height: 1.5;
+           font-weight: 300;
+        }
+        .email_footer p span{
+            color: #999999;
+            font-size: 14px;
+            margin: 0 5px;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div class="email_box" style" width: 600px;">
+        <div class="email_header">
+            <img src="http://xiabeibao-2017.oss-cn-shenzhen.aliyuncs.com/images/avatar_default_60x60.png" width="55" height="55">
+            <span>小背包</span>
+        </div>
+        <div class="email_content">
+            <p class="buyer">敬爱的先生/女士：</p>
+            <p class="text">您好！恭喜您成为小背包专业的买手，小背包致力于全球好货打造。以下是您的小背包买手激活码，请您妥善保管，及时激活：</p>
+            <p class="code">${inviteNo}</p>
+			<p class="text">此激活码为一次性激活码，有限期在${endDate}日之前下载小背包买手APP，开始您的全球之旅吧。</p>
+            <P class="proteam">欢迎来到小背包的世界<br /><span>小背包买手运营团队</span></P>
+        </div>
+        <div class="email_footer">
+            <p>由<span>广州夏木悠悠智联有限公司</span>发送</p>
+            <p>广州市天河区华夏路8号合景国际金融广场</p>
+        </div>
+    </div>
+</body>
+</html>

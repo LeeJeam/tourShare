@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.dao.ProductManagerDao">
+
+    <select id="queryProductManageList" resultType="com.xmyy.product.vo.ProductManagerResult" parameterType="com.xmyy.product.vo.ManageProductParams">
+		select  p.id_ productId,p.name productName,p.product_no productNo,cg1.name cateName,cg2.name cateName2,p.buy_region  buyRegion from pt_product p
+        LEFT JOIN pt_category cg1  on p.pt_category_id=cg1.id_
+        LEFT JOIN pt_category cg2  on p.pt_category_id2=cg2.id_
+       where p.enable_=1  and cg1.enable_=1  and cg2.enable_=1
+            <if test="categoryId!=null and categoryId!=''">
+				and p.pt_category_id=#{categoryId}
+			</if>
+			<if test="categoryId2!=null and categoryId2!=''">
+				and p.pt_category_id2=#{categoryId2}
+			</if>
+			<if test="brandId!=null and brandId!=''">
+				and p.pt_brand_id=#{brandId}
+			</if>
+
+		<if test="ptAttrParams!=null and ptAttrParams.size>0">
+			and EXISTS (select 1 from pt_attr pa
+			where pa.enable_=1 and pa.pt_product_id=p.id_
+			and pa.pt_attr_type_id in
+			<foreach collection="ptAttrParams" item="item" open="(" close=")" separator=",">
+				#{item.ptAttrTypeId}
+			</foreach>
+		    and pa.pt_attr_value_id in
+		   <foreach collection="ptAttrParams" item="item" open="(" close=")" separator=",">
+		  #{item.ptAttrValueId}
+		   </foreach>
+			)
+		</if>
+
+        limit #{current},#{size}
+	</select>
+
+
+
+	<select id="countProductManage" resultType="java.lang.Integer" parameterType="com.xmyy.product.vo.ManageProductParams">
+		select  count(1) from pt_product p
+		LEFT JOIN pt_category cg1  on p.pt_category_id=cg1.id_
+		LEFT JOIN pt_category cg2  on p.pt_category_id2=cg2.id_
+		where p.enable_=1  and cg1.enable_=1  and cg2.enable_=1
+		<if test="categoryId!=null and categoryId!=''">
+			and p.pt_category_id=#{categoryId}
+		</if>
+		<if test="categoryId2!=null and categoryId2!=''">
+			and p.pt_category_id2=#{categoryId2}
+		</if>
+		<if test="brandId!=null and brandId!=''">
+			and p.pt_brand_id=#{brandId}
+		</if>
+
+		<if test="ptAttrParams!=null and ptAttrParams.size>0">
+			and EXISTS (select 1 from pt_attr pa
+			where pa.enable_=1 and pa.pt_product_id=p.id_
+			and pa.pt_attr_type_id in
+			<foreach collection="ptAttrParams" item="item" open="(" close=")" separator=",">
+				#{item.ptAttrTypeId}
+			</foreach>
+			and pa.pt_attr_value_id in
+			<foreach collection="ptAttrParams" item="item" open="(" close=")" separator=",">
+				#{item.ptAttrValueId}
+			</foreach>
+			)
+		</if>
+	</select>
+
+	<select id="queryPtAttrList" resultType="com.xmyy.product.model.PtAttr" parameterType="Map">
+     select * from pt_attr
+		where 1=1
+			<!-- <if test="seriesAttrTypeIds!=null and seriesAttrTypeIds!=''">
+				 and pt_series_attr_type_id in (#{seriesAttrTypeIds})
+			 </if>
+			<if test="seriesAttrValueIds!=null and seriesAttrValueIds!=''">
+				  and pt_series_attr_value_id in (#{seriesAttrValueIds})
+			</if>
+			<if test="seriesAttrTypeIds==null or seriesAttrTypeIds=='' or seriesAttrValueIds==null or seriesAttrValueIds == null">
+				  and 1!=1
+			</if>-->
+
+	</select>
+
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.demand.mapper.DgDemandOrderMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_demand_order
+		<where>
+			<if test="cm.orderId != null and cm.orderId != ''">
+					and order_id_=#{cm.orderId}
+			</if>
+			<if test="cm.demandNo != null and cm.demandNo != ''">
+					and demand_no=#{cm.demandNo}
+			</if>
+			<if test="cm.buyerId != null and cm.buyerId != ''">
+					and buyer_id=#{cm.buyerId}
+			</if>
+			<if test="cm.demandTime != null and cm.demandTime != ''">
+					and demand_time=#{cm.demandTime}
+			</if>
+			<if test="cm.demandPosition != null and cm.demandPosition != ''">
+					and demand_position=#{cm.demandPosition}
+			</if>
+			<if test="cm.countryId != null and cm.countryId != ''">
+					and country_id=#{cm.countryId}
+			</if>
+			<if test="cm.buyCountry != null and cm.buyCountry != ''">
+					and buy_country=#{cm.buyCountry}
+			</if>
+			<if test="cm.sellerId != null and cm.sellerId != ''">
+					and seller_id=#{cm.sellerId}
+			</if>
+			<if test="cm.isPacker != null and cm.isPacker != ''">
+					and is_packer=#{cm.isPacker}
+			</if>
+			<if test="cm.demandImages != null and cm.demandImages != ''">
+					and demand_images=#{cm.demandImages}
+			</if>
+			<if test="cm.demandCover != null and cm.demandCover != ''">
+					and demand_cover=#{cm.demandCover}
+			</if>
+			<if test="cm.demandDesc != null and cm.demandDesc != ''">
+					and demand_desc=#{cm.demandDesc}
+			</if>
+			<if test="cm.deliveryTime != null and cm.deliveryTime != ''">
+					and delivery_time=#{cm.deliveryTime}
+			</if>
+			<if test="cm.budgetPrice != null and cm.budgetPrice != ''">
+					and budget_price=#{cm.budgetPrice}
+			</if>
+			<if test="cm.appraisalPrice != null and cm.appraisalPrice != ''">
+					and appraisal_price=#{cm.appraisalPrice}
+			</if>
+			<if test="cm.isToilsome != null and cm.isToilsome != ''">
+					and is_toilsome=#{cm.isToilsome}
+			</if>
+			<if test="cm.toilsomePrice != null and cm.toilsomePrice != ''">
+					and toilsome_price=#{cm.toilsomePrice}
+			</if>
+			<if test="cm.budgetStatus != null and cm.budgetStatus != ''">
+					and budget_status=#{cm.budgetStatus}
+			</if>
+			<if test="cm.productType != null and cm.productType != ''">
+					and product_type=#{cm.productType}
+			</if>
+			<if test="cm.tour != null and cm.tour != ''">
+					and tour=#{cm.tour}
+			</if>
+			<if test="cm.tourNo != null and cm.tourNo != ''">
+					and tour_no=#{cm.tourNo}
+			</if>
+			<if test="cm.consigneeName != null and cm.consigneeName != ''">
+					and consignee_name=#{cm.consigneeName}
+			</if>
+			<if test="cm.buyerPhone != null and cm.buyerPhone != ''">
+					and buyer_phone=#{cm.buyerPhone}
+			</if>
+			<if test="cm.consigneeAddress != null and cm.consigneeAddress != ''">
+					and consignee_address=#{cm.consigneeAddress}
+			</if>
+			<if test="cm.isAppraisal != null and cm.isAppraisal != ''">
+					and is_appraisal=#{cm.isAppraisal}
+			</if>
+			<if test="cm.acceptedNumber != null and cm.acceptedNumber != ''">
+					and accepted_number=#{cm.acceptedNumber}
+			</if>
+			<if test="cm.cancelReason != null and cm.cancelReason != ''">
+					and cancel_reason=#{cm.cancelReason}
+			</if>
+			<if test="cm.sellerDel != null and cm.sellerDel != ''">
+					and seller_del=#{cm.sellerDel}
+			</if>
+			<if test="cm.buyerDel != null and cm.buyerDel != ''">
+					and buyer_del=#{cm.buyerDel}
+			</if>
+			<if test="cm.cancelText != null and cm.cancelText != ''">
+					and cancel_text=#{cm.cancelText}
+			</if>
+			<if test="cm.releaseSellerIds != null and cm.releaseSellerIds != ''">
+					and release_seller_ids=#{cm.releaseSellerIds}
+			</if>
+			<if test="cm.shortCode != null and cm.shortCode != ''">
+					and short_code=#{cm.shortCode}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or order_id_ like CONCAT('%',#{cm.keyword},'%')
+					or demand_no like CONCAT('%',#{cm.keyword},'%')
+					or buyer_id like CONCAT('%',#{cm.keyword},'%')
+					or demand_time like CONCAT('%',#{cm.keyword},'%')
+					or demand_position like CONCAT('%',#{cm.keyword},'%')
+					or country_id like CONCAT('%',#{cm.keyword},'%')
+					or buy_country like CONCAT('%',#{cm.keyword},'%')
+					or seller_id like CONCAT('%',#{cm.keyword},'%')
+					or is_packer like CONCAT('%',#{cm.keyword},'%')
+					or demand_images like CONCAT('%',#{cm.keyword},'%')
+					or demand_cover like CONCAT('%',#{cm.keyword},'%')
+					or demand_desc like CONCAT('%',#{cm.keyword},'%')
+					or delivery_time like CONCAT('%',#{cm.keyword},'%')
+					or budget_price like CONCAT('%',#{cm.keyword},'%')
+					or appraisal_price like CONCAT('%',#{cm.keyword},'%')
+					or is_toilsome like CONCAT('%',#{cm.keyword},'%')
+					or toilsome_price like CONCAT('%',#{cm.keyword},'%')
+					or budget_status like CONCAT('%',#{cm.keyword},'%')
+					or product_type like CONCAT('%',#{cm.keyword},'%')
+					or tour like CONCAT('%',#{cm.keyword},'%')
+					or tour_no like CONCAT('%',#{cm.keyword},'%')
+					or consignee_name like CONCAT('%',#{cm.keyword},'%')
+					or buyer_phone like CONCAT('%',#{cm.keyword},'%')
+					or consignee_address like CONCAT('%',#{cm.keyword},'%')
+					or is_appraisal like CONCAT('%',#{cm.keyword},'%')
+					or accepted_number like CONCAT('%',#{cm.keyword},'%')
+					or cancel_reason like CONCAT('%',#{cm.keyword},'%')
+					or seller_del like CONCAT('%',#{cm.keyword},'%')
+					or buyer_del like CONCAT('%',#{cm.keyword},'%')
+					or cancel_text like CONCAT('%',#{cm.keyword},'%')
+					or release_seller_ids like CONCAT('%',#{cm.keyword},'%')
+					or short_code like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

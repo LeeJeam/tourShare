@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.mapper.DgTourMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_tour
+		<where>
+			<if test="cm.tourNo != null and cm.tourNo != ''">
+					and tour_no=#{cm.tourNo}
+			</if>
+			<if test="cm.tags != null and cm.tags != ''">
+					and tags=#{cm.tags}
+			</if>
+			<if test="cm.checkPic != null and cm.checkPic != ''">
+					and check_pic=#{cm.checkPic}
+			</if>
+			<if test="cm.checkType != null and cm.checkType != ''">
+					and check_type=#{cm.checkType}
+			</if>
+			<if test="cm.uploadTime != null and cm.uploadTime != ''">
+					and upload_time=#{cm.uploadTime}
+			</if>
+			<if test="cm.auditStatus != null and cm.auditStatus != ''">
+					and audit_status=#{cm.auditStatus}
+			</if>
+			<if test="cm.auditTime != null and cm.auditTime != ''">
+					and audit_time=#{cm.auditTime}
+			</if>
+			<if test="cm.auditUserId != null and cm.auditUserId != ''">
+					and audit_user_id=#{cm.auditUserId}
+			</if>
+			<if test="cm.auditUserName != null and cm.auditUserName != ''">
+					and audit_user_name=#{cm.auditUserName}
+			</if>
+			<if test="cm.status != null and cm.status != ''">
+					and status=#{cm.status}
+			</if>
+			<if test="cm.siteCount != null and cm.siteCount != ''">
+					and site_count=#{cm.siteCount}
+			</if>
+			<if test="cm.firstRegionCode != null and cm.firstRegionCode != ''">
+					and first_region_code=#{cm.firstRegionCode}
+			</if>
+			<if test="cm.firstRegionName != null and cm.firstRegionName != ''">
+					and first_region_name=#{cm.firstRegionName}
+			</if>
+			<if test="cm.firstTime != null and cm.firstTime != ''">
+					and first_time=#{cm.firstTime}
+			</if>
+			<if test="cm.destRegionCode != null and cm.destRegionCode != ''">
+					and dest_region_code=#{cm.destRegionCode}
+			</if>
+			<if test="cm.destRegionName != null and cm.destRegionName != ''">
+					and dest_region_name=#{cm.destRegionName}
+			</if>
+			<if test="cm.returnTime != null and cm.returnTime != ''">
+					and return_time=#{cm.returnTime}
+			</if>
+			<if test="cm.curRegionCode != null and cm.curRegionCode != ''">
+					and cur_region_code=#{cm.curRegionCode}
+			</if>
+			<if test="cm.curRegionName != null and cm.curRegionName != ''">
+					and cur_region_name=#{cm.curRegionName}
+			</if>
+			<if test="cm.isLive != null and cm.isLive != ''">
+					and is_live=#{cm.isLive}
+			</if>
+			<if test="cm.cancelWay != null and cm.cancelWay != ''">
+					and cancel_way=#{cm.cancelWay}
+			</if>
+			<if test="cm.cancelTime != null and cm.cancelTime != ''">
+					and cancel_time=#{cm.cancelTime}
+			</if>
+			<if test="cm.trustValue != null and cm.trustValue != ''">
+					and trust_value=#{cm.trustValue}
+			</if>
+			<if test="cm.tradeCount != null and cm.tradeCount != ''">
+					and trade_count=#{cm.tradeCount}
+			</if>
+			<if test="cm.realName != null and cm.realName != ''">
+					and real_name=#{cm.realName}
+			</if>
+			<if test="cm.mobile != null and cm.mobile != ''">
+					and mobile=#{cm.mobile}
+			</if>
+			<if test="cm.isPacker != null and cm.isPacker != ''">
+					and is_packer=#{cm.isPacker}
+			</if>
+			<if test="cm.isSelf != null and cm.isSelf != ''">
+				and is_self=#{cm.isSelf}
+			</if>
+			<if test="cm.isTop != null and cm.isTop != ''">
+					and is_top=#{cm.isTop}
+			</if>
+			<if test="cm.topBeginTime != null and cm.topBeginTime != ''">
+					and top_begin_time=#{cm.topBeginTime}
+			</if>
+			<if test="cm.topEndTime != null and cm.topEndTime != ''">
+					and top_end_time=#{cm.topEndTime}
+			</if>
+			<if test="cm.toperId != null and cm.toperId != ''">
+					and toper_id=#{cm.toperId}
+			</if>
+			<if test="cm.toperName != null and cm.toperName != ''">
+					and toper_name=#{cm.toperName}
+			</if>
+			<if test="cm.demandCount != null and cm.demandCount != ''">
+					and demand_count=#{cm.demandCount}
+			</if>
+			<if test="cm.orderCount != null and cm.orderCount != ''">
+					and order_count=#{cm.orderCount}
+			</if>
+			<if test="cm.amount != null and cm.amount != ''">
+					and amount=#{cm.amount}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or tour_no like CONCAT('%',#{cm.keyword},'%')
+					or tags like CONCAT('%',#{cm.keyword},'%')
+					or check_pic like CONCAT('%',#{cm.keyword},'%')
+					or check_type like CONCAT('%',#{cm.keyword},'%')
+					or upload_time like CONCAT('%',#{cm.keyword},'%')
+					or audit_status like CONCAT('%',#{cm.keyword},'%')
+					or audit_time like CONCAT('%',#{cm.keyword},'%')
+					or audit_user_id like CONCAT('%',#{cm.keyword},'%')
+					or audit_user_name like CONCAT('%',#{cm.keyword},'%')
+					or status like CONCAT('%',#{cm.keyword},'%')
+					or site_count like CONCAT('%',#{cm.keyword},'%')
+					or first_region_code like CONCAT('%',#{cm.keyword},'%')
+					or first_region_name like CONCAT('%',#{cm.keyword},'%')
+					or first_time like CONCAT('%',#{cm.keyword},'%')
+					or dest_region_code like CONCAT('%',#{cm.keyword},'%')
+					or dest_region_name like CONCAT('%',#{cm.keyword},'%')
+					or return_time like CONCAT('%',#{cm.keyword},'%')
+					or cur_region_code like CONCAT('%',#{cm.keyword},'%')
+					or cur_region_name like CONCAT('%',#{cm.keyword},'%')
+					or is_live like CONCAT('%',#{cm.keyword},'%')
+					or cancel_way like CONCAT('%',#{cm.keyword},'%')
+					or cancel_time like CONCAT('%',#{cm.keyword},'%')
+					or trust_value like CONCAT('%',#{cm.keyword},'%')
+					or trade_count like CONCAT('%',#{cm.keyword},'%')
+					or real_name like CONCAT('%',#{cm.keyword},'%')
+					or mobile like CONCAT('%',#{cm.keyword},'%')
+					or is_packer like CONCAT('%',#{cm.keyword},'%')
+					or is_self like CONCAT('%',#{cm.keyword},'%')
+					or is_top like CONCAT('%',#{cm.keyword},'%')
+					or top_begin_time like CONCAT('%',#{cm.keyword},'%')
+					or top_end_time like CONCAT('%',#{cm.keyword},'%')
+					or toper_id like CONCAT('%',#{cm.keyword},'%')
+					or toper_name like CONCAT('%',#{cm.keyword},'%')
+					or demand_count like CONCAT('%',#{cm.keyword},'%')
+					or order_count like CONCAT('%',#{cm.keyword},'%')
+					or amount like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.livevideo.mapper.VdLiveVideoMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from vd_live_video
+		<where>
+			<if test="cm.memberId != null and cm.memberId != ''">
+					and member_id=#{cm.memberId}
+			</if>
+			<if test="cm.chartRoomId != null and cm.chartRoomId != ''">
+					and chart_room_id=#{cm.chartRoomId}
+			</if>
+			<if test="cm.strokeId != null and cm.strokeId != ''">
+					and stroke_id=#{cm.strokeId}
+			</if>
+			<if test="cm.pageUrl != null and cm.pageUrl != ''">
+					and page_url=#{cm.pageUrl}
+			</if>
+			<if test="cm.roomTitle != null and cm.roomTitle != ''">
+					and room_title=#{cm.roomTitle}
+			</if>
+			<if test="cm.roomDesc != null and cm.roomDesc != ''">
+					and room_desc=#{cm.roomDesc}
+			</if>
+			<if test="cm.cityAddr != null and cm.cityAddr != ''">
+					and city_addr=#{cm.cityAddr}
+			</if>
+			<if test="cm.pointNumber != null and cm.pointNumber != ''">
+					and point_number=#{cm.pointNumber}
+			</if>
+			<if test="cm.lookNumber != null and cm.lookNumber != ''">
+					and look_number=#{cm.lookNumber}
+			</if>
+			<if test="cm.sysLookNumber != null and cm.sysLookNumber != ''">
+					and sys_look_number=#{cm.sysLookNumber}
+			</if>
+			<if test="cm.pushUrl != null and cm.pushUrl != ''">
+					and push_url=#{cm.pushUrl}
+			</if>
+			<if test="cm.pullUrl != null and cm.pullUrl != ''">
+					and pull_url=#{cm.pullUrl}
+			</if>
+			<if test="cm.pullRtmpUrl != null and cm.pullRtmpUrl != ''">
+					and pull_rtmp_url=#{cm.pullRtmpUrl}
+			</if>
+			<if test="cm.videoUrl != null and cm.videoUrl != ''">
+					and video_url=#{cm.videoUrl}
+			</if>
+			<if test="cm.status != null and cm.status != ''">
+					and status=#{cm.status}
+			</if>
+			<if test="cm.memberType != null and cm.memberType != ''">
+					and member_type=#{cm.memberType}
+			</if>
+
+			<if test="cm.beginTime != null and cm.beginTime != ''">
+				and begin_time=#{cm.beginTime}
+			</if>
+			<if test="cm.endTime != null and cm.endTime != ''">
+				and end_time=#{cm.endTime}
+			</if>
+			<if test="cm.effectTime != null and cm.effectTime != ''">
+				and effect_time=#{cm.effectTime}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or member_id like CONCAT('%',#{cm.keyword},'%')
+					or chart_room_id like CONCAT('%',#{cm.keyword},'%')
+					or stroke_id like CONCAT('%',#{cm.keyword},'%')
+					or page_url like CONCAT('%',#{cm.keyword},'%')
+					or room_title like CONCAT('%',#{cm.keyword},'%')
+					or room_desc like CONCAT('%',#{cm.keyword},'%')
+					or city_addr like CONCAT('%',#{cm.keyword},'%')
+					or point_number like CONCAT('%',#{cm.keyword},'%')
+					or look_number like CONCAT('%',#{cm.keyword},'%')
+					or sys_look_number like CONCAT('%',#{cm.keyword},'%')
+					or push_url like CONCAT('%',#{cm.keyword},'%')
+					or pull_url like CONCAT('%',#{cm.keyword},'%')
+					or pull_rtmp_url like CONCAT('%',#{cm.keyword},'%')
+					or video_url like CONCAT('%',#{cm.keyword},'%')
+					or status like CONCAT('%',#{cm.keyword},'%')
+					or member_type like CONCAT('%',#{cm.keyword},'%')
+					or begin_time like CONCAT('%',#{cm.keyword},'%')
+					or end_time like CONCAT('%',#{cm.keyword},'%')
+					or effect_time like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

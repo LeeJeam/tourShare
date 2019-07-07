@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.manage.dao.AdminRoleDao">
+
+    <select id="queryByUserId" parameterType="java.lang.Long" resultType="com.xmyy.manage.model.AdminRole">
+        SELECT
+        r.id_ as id, r.remark_ as remark, r.enable_ as enable, r.create_by as createBy, r.create_time as createTime,
+        r.update_by as updateBy, r.update_time as updateTime, r.role_name as roleName, r.role_code as roleCode
+        FROM admin_role r
+        JOIN admin_user_role ur ON r.id_ = ur.role_id_
+        WHERE r.role_status = 1
+        AND ur.user_id_ = #{userId}
+    </select>
+
+    <select id="countByUser" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM admin_role r
+        JOIN admin_user_role ur ON r.id_ = ur.role_id_
+        WHERE r.id_ = #{roleId}
+    </select>
+
+    <select id="queryPermissionRoles" parameterType="java.lang.Long" resultType="com.xmyy.manage.vo.ManagePermissionRole">
+        SELECT r.role_name as roleName, r.id_ as roleId, CASE WHEN ur.id_ is null THEN 'false' ELSE 'true' END as isPermission
+        FROM admin_role r
+        LEFT JOIN admin_user_role ur ON r.id_ = ur.role_id_
+        <if test="userId != null">
+            AND ur.user_id_ = #{userId}
+        </if>
+    </select>
+
+    <select id="queryForList" parameterType="com.xmyy.manage.vo.ManageAdminRoleQueryParam" resultType="com.xmyy.manage.vo.ManageAdminRoleQueryResult">
+        SELECT
+        r.id_ as id, r.role_code as roleCode, r.role_name as roleName, r.role_status as roleStatus,
+        count(ur.user_id_) as countUser
+        FROM admin_role  r
+        LEFT JOIN admin_user_role ur ON r.id_ = ur.role_id_
+        <where>
+            <if test="id != null">
+                r.id_ = #{id}
+            </if>
+            <if test="roleName != null">
+                r.role_name = #{roleName}
+            </if>
+            <if test="roleCode != null">
+                r.role_code = #{roleCode}
+            </if>
+            <if test="roleStatus != null">
+                r.role_status = #{roleStatus}
+            </if>
+        </where>
+        GROUP BY r.id_, r.role_code, r.role_name, r.role_status
+    </select>
+</mapper>

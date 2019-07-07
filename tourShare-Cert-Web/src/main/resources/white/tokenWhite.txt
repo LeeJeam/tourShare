@@ -1,0 +1,12 @@
+/swagger-ui.html
+/webjars/
+/v2/
+/swagger-resources
+
+/api/cert/saveIdentityInfo
+/api/cert/uploadImage
+/api/thirdParty/zhiMaCredit/aliPayCreditScore
+/manage/cert/uploadImage
+/manage/
+/unauthorized
+/forbidden

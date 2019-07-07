@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.mapper.DgCurrencyExchangeMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_currency_exchange
+		<where>
+			<if test="cm.foreignCurrencyCode != null and cm.foreignCurrencyCode != ''">
+					and foreign_currency_code=#{cm.foreignCurrencyCode}
+			</if>
+			<if test="cm.rate != null and cm.rate != ''">
+					and rate=#{cm.rate}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or foreign_currency_code like CONCAT('%',#{cm.keyword},'%')
+					or rate like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

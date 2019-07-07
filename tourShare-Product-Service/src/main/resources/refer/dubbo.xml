@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- Circle -->
+	<dubbo:reference id="dgCountryService" interface="com.xmyy.circle.service.DgCountryService" check="false" />
+	<dubbo:reference id="dgFavoritesService" interface="com.xmyy.circle.service.DgFavoritesService" check="false" />
+
+	<!-- Demand -->
+	<dubbo:reference id="dgDemandOrderService" interface="com.xmyy.demand.service.DgDemandOrderService" check="false"/>
+
+	<!-- Member -->
+	<dubbo:reference id="ucSellerService" interface="com.xmyy.member.service.UcSellerService" check="false" />
+	<dubbo:reference id="ucBuyerService" interface="com.xmyy.member.service.UcBuyerService" check="false" />
+
+	<!-- Manage -->
+	<dubbo:reference id="adminUserService" interface="com.xmyy.manage.service.AdminUserService" check="false" />
+	<dubbo:reference id="sysEventService" interface="com.xmyy.manage.service.SysEventService" check="false" />
+
+</beans>

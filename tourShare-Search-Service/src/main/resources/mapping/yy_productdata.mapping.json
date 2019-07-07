@@ -1,0 +1,246 @@
+{
+	"settings": {
+        "analysis": {
+            "analyzer": {
+                "fulltextAnalyzer": {
+                    "type": "custom",
+                    "char_filter": ["html_strip"],
+                    "tokenizer": "ik_smart",
+                    "filter": ["trim", "lowercase"]
+                },
+                "fulltextAnalyzerMax": {
+                    "type": "custom",
+                    "char_filter": ["html_strip"],
+                    "tokenizer": "ik_max_word",
+                    "filter": ["trim", "lowercase"]
+                },
+                "limit2FulltextAnalyzer": {
+                    "type": "custom",
+                    "char_filter": ["html_strip"],
+                    "tokenizer": "ik_smart",
+                    "filter": ["trim", "lowercase", "limit2Filter"]
+                }
+            },
+            "filter": {
+            	"limit2Filter": {
+                    "type": "length",
+                    "min": 2
+                }
+            }
+        }
+    },
+	"mappings": {
+		"product": {
+			"_all": {
+				"enabled": "false"
+			},
+			"properties": {
+				"id": {
+					"type": "long",
+					"index": "analyzed"
+				},
+				"dgTourId": {
+					"type": "long",
+					"index": "not_analyzed"
+				},
+				"ptBrandId": {
+					"type": "long",
+					"index": "not_analyzed"
+				},
+				"ptSeriesId": {
+					"type": "long",
+					"index": "not_analyzed"
+				},
+				"ptCategoryId": {
+					"type": "long",
+					"index": "not_analyzed"
+				},
+				"ptCategoryId2": {
+					"type": "long",
+					"index": "not_analyzed"
+				},
+				"remark": {
+					"type": "string",
+					"index": "analyzed"
+				},
+				"enable": {
+					"type": "integer",
+					"index": "analyzed"
+				},
+				"createBy": {
+					"type": "long",
+					"index": "analyzed"
+				},
+				"createTime": {
+					"type": "date",
+					"index": "analyzed"
+				},
+				"updateBy": {
+					"type": "long",
+					"index": "analyzed"
+				},
+				"updateTime": {
+					"type": "date",
+					"index": "analyzed"
+				},
+				"name ": {
+					"type": "string ",
+					"index": "analyzed"
+				},
+				"productNo": {
+					"type": "string",
+					"index": "analyzed"
+				},
+				"marketPrice": {
+					"type": "double",
+					"index": "analyzed"
+				},
+				"maxPrice": {
+					"type": "double",
+					"index": "analyzed"
+				},
+				"minPrice": {
+					"type": "double",
+					"index": "analyzed"
+				},
+				"isSale": {
+					"type": "integer",
+					"index": "analyzed"
+				},
+				"isHot": {
+					"type": "integer",
+					"index": "analyzed"
+				},
+				"isRecommend": {
+					"type": "integer",
+					"index": "analyzed"
+				},
+				"productDesc": {
+					"type": "null",
+					"index": "analyzed"
+				},
+				"cover ": {
+					"type": "string ",
+					"index": "analyzed"
+				},
+				"images ": {
+					"type": "string ",
+					"index": "analyzed"
+				},
+				"expressType": {
+					"type": "integer",
+					"index": "analyzed"
+				},
+				"expiresTime": {
+					"type": "date",
+					"index": "analyzed"
+				},
+				"shopName": {
+					"type": "string",
+					"index": "analyzed"
+				},
+				"title ": {
+					"type": "string ",
+					"index": "analyzed"
+				},
+				"tags ": {
+					"type": "string ",
+					"index": "analyzed"
+				},
+				"serviceDesc": {
+					"type": "null",
+					"index": "analyzed"
+				},
+				"productType": {
+					"type": "integer",
+					"index": "analyzed"
+				},
+				"orderCount": {
+					"type": "integer",
+					"index": "analyzed"
+				},
+				"collectCount": {
+					"type": "integer",
+					"index": "analyzed"
+				},
+				"refundCount": {
+					"type": "integer",
+					"index": "analyzed"
+				},
+				"isTop": {
+					"type": "integer",
+					"index": "analyzed"
+				},
+				"topBeginTime": {
+					"type": "date",
+					"index": "analyzed"
+				},
+				"topEndTime": {
+					"type": "date",
+					"index": "analyzed"
+				},
+				"topOpId": {
+					"type": "long",
+					"index": "analyzed"
+				},
+				"topOpTime": {
+					"type": "date",
+					"index": "analyzed"
+				},
+				"clickCount": {
+					"type": "integer",
+					"index": "analyzed"
+				},
+				"videoClickCount": {
+					"type": "integer",
+					"index": "analyzed"
+				},
+				"favorable ": {
+					"type": "float ",
+					"index": "analyzed"
+				},
+				"buyRegion": {
+					"type": "string",
+					"index": "analyzed"
+				},
+				"buyRegionLogo": {
+					"type": "string",
+					"index": "analyzed"
+				},
+				"buyRegionCurrency": {
+					"type": "string",
+					"index": "analyzed"
+				},
+				"buyRegionCurrencyCode": {
+					"type": "string",
+					"index": "analyzed"
+				},
+				"currency ": {
+					"type": "string ",
+					"index": "analyzed"
+				},
+				"currencyCode": {
+					"type": "string",
+					"index": "analyzed"
+				},
+				"categoryName": {
+					"type": "string",
+					"index": "analyzed"
+				},
+				"categoryName2": {
+					"type": "string ",
+					"index": "analyzed"
+				},
+				"brandName": {
+					"type": "string",
+					"index": "analyzed"
+				},
+				"attrValues": {
+					"type": "array",
+					"index": "analyzed"
+				}
+			}
+		}
+	}
+
+}

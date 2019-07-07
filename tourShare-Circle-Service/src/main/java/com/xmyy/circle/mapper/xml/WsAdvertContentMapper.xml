@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.WsAdvertContentMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from ws_advert_content
+		<where>
+			<if test="cm.positionId != null and cm.positionId != ''">
+					and position_id_=#{cm.positionId}
+			</if>
+			<if test="cm.fileRsurl != null and cm.fileRsurl != ''">
+					and file_rsurl=#{cm.fileRsurl}
+			</if>
+			<if test="cm.state != null and cm.state != ''">
+					and state=#{cm.state}
+			</if>
+			<if test="cm.startTime != null and cm.startTime != ''">
+					and start_time=#{cm.startTime}
+			</if>
+			<if test="cm.endTime != null and cm.endTime != ''">
+					and end_time=#{cm.endTime}
+			</if>
+			<if test="cm.content != null and cm.content != ''">
+					and content=#{cm.content}
+			</if>
+			<if test="cm.describe != null and cm.describe != ''">
+					and describe_=#{cm.describe}
+			</if>
+			<if test="cm.sort != null and cm.sort != ''">
+					and sort=#{cm.sort}
+			</if>
+			<if test="cm.clickUrl != null and cm.clickUrl != ''">
+					and click_url=#{cm.clickUrl}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or position_id_ like CONCAT('%',#{cm.keyword},'%')
+					or file_rsurl like CONCAT('%',#{cm.keyword},'%')
+					or state like CONCAT('%',#{cm.keyword},'%')
+					or start_time like CONCAT('%',#{cm.keyword},'%')
+					or end_time like CONCAT('%',#{cm.keyword},'%')
+					or content like CONCAT('%',#{cm.keyword},'%')
+					or describe_ like CONCAT('%',#{cm.keyword},'%')
+					or sort like CONCAT('%',#{cm.keyword},'%')
+					or click_url like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

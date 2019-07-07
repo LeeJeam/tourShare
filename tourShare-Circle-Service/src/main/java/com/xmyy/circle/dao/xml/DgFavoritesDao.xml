@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.dao.DgFavoritesDao">
+
+	<select id="findProductFavorites"  resultType="com.xmyy.circle.vo.MyFavoritesResult">
+		SELECT f.id_ id,
+		f.entity_type_id entityTypeId,
+		f.entity_id entityId,
+		p.cover coverRsurl,
+		p.title title,
+		f.create_time createTime,
+		c.name category,
+		p.min_price minPrice,
+		s.nick_name createName,
+		case p.is_sale
+		when 1 then '上架'
+		else '下架'
+		end as stateStr
+		from dg_favorites f
+		LEFT JOIN pt_product p ON p.id_ = f.entity_id
+		LEFT JOIN pt_category c on c.id_ = p.pt_category_id
+		LEFT JOIN uc_seller s on s.id_ = f.member_id
+		where f.enable_ = 1
+		<if test="m.member_id!=null">
+			and f.member_id = #{m.member_id,jdbcType=DECIMAL}
+		</if>
+		<if test="m.entity_type_id!=null">
+			and f.entity_type_id=#{m.entity_type_id,jdbcType=DECIMAL}
+		</if>
+		<if test="m.member_type!=null">
+			and f.member_type= #{m.member_type,jdbcType=DECIMAL}
+		</if>
+		order by f.create_time desc
+
+	</select>
+</mapper>

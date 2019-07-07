@@ -1,0 +1,49 @@
+{
+	"settings": {
+        "analysis": {
+            "analyzer": {
+                "limit2FulltextAnalyzer": {
+                    "type": "custom",
+                    "char_filter": ["html_strip"],
+                    "tokenizer": "ik_smart",
+                    "filter": ["trim", "lowercase", "limit2Filter"]
+                }
+            },
+            "filter": {
+            	"limit2Filter": {
+                    "type": "length",
+                    "min": 2
+                }
+            }
+        }
+    },
+	"mappings": {
+		"searchLog": {
+			"_all": {
+				"enabled": "false"
+			},
+			"properties": {
+				"keyword": {
+					"type": "string",
+					"index": "analyzed",
+					"analyzer": "limit2FulltextAnalyzer",
+					"search_analyzer": "limit2FulltextAnalyzer",
+					"fields": {
+				        "raw": { 
+				            "type":  "string",
+				            "index": "not_analyzed"
+				        }
+				    }
+				},
+				"city": {
+					"type": "string",
+					"index": "not_analyzed"
+				},
+				"createAt": {
+					"type": "date"
+				}
+			}
+		}
+	}
+	
+}

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.manage.dao.AdminMenuDao">
+
+    <select id="queryForPermissionList" resultType="com.xmyy.manage.vo.ManageMenuNodeResult">
+        SELECT DISTINCT
+            m.id_ as id, m.remark_ as remark, m.enable_ as enable, m.create_by as createBy, m.create_time as createTime,
+            m.update_by as updateBy, m.update_time as updateTime, m.menu_name as menuName, m.operation as operation,
+            m.p_id as pId, m.icon as icon, m.html_url as htmlUrl, m.component_code as componentCode, m.sort_no as sortNo
+        FROM admin_menu m
+        JOIN admin_role_menu rm ON rm.menu_id_ = m.id_
+        JOIN admin_user_role ur ON ur.role_id_ = rm.role_id_
+        JOIN admin_role r ON r.id_ = ur.role_id_
+        <where>
+                r.role_status = 1
+            <if test="userId != null">
+                AND ur.user_id_ = #{userId}
+            </if>
+            <if test="params != null and params.id != null">
+                AND m.id_ = #{params.id}
+            </if>
+            <if test="params != null and params.enable != null">
+                AND m.enable_ = #{params.enable}
+            </if>
+            <if test="params != null and params.pId != null">
+                AND m.p_id = #{params.pId}
+            </if>
+            <if test="params != null and params.menuName != null">
+                AND m.menu_name LIKE CONCAT('%', #{params.menuName}, '%')
+            </if>
+        </where>
+        ORDER BY m.sort_no
+    </select>
+
+    <select id="queryForList" resultType="com.xmyy.manage.vo.ManageMenuNodeResult">
+        SELECT DISTINCT
+            m.id_ as id, m.remark_ as remark, m.enable_ as enable, m.create_by as createBy, m.create_time as createTime,
+            m.update_by as updateBy, m.update_time as updateTime, m.menu_name as menuName, m.operation as operation,
+            m.p_id as pId, m.icon as icon, m.html_url as htmlUrl, m.component_code as componentCode, m.sort_no as sortNo
+        FROM admin_menu m
+        <where>
+            <if test="params != null and params.id != null">
+                m.id_ = #{params.id}
+            </if>
+            <if test="params != null and params.enable != null">
+                AND m.enable_ = #{params.enable}
+            </if>
+            <if test="params != null and params.pId != null">
+                AND m.p_id = #{params.pId}
+            </if>
+            <if test="params != null and params.menuName != null">
+                AND m.menu_name LIKE CONCAT('%', #{params.menuName}, '%')
+            </if>
+        </where>
+        ORDER BY m.sort_no
+    </select>
+
+    <select id="countForRole" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM admin_role_menu rm
+        JOIN admin_menu m ON m.id_ = rm.menu_id_
+        WHERE m.id_ = #{menuId}
+    </select>
+
+    <select id="queryGroupByRole" parameterType="java.lang.Long" resultType="com.xmyy.manage.vo.ManageRoleMenusMap">
+        SELECT ur.role_id_ as roleId, group_concat(distinct rm.menu_id_) as menuIds
+        FROM admin_user u
+        JOIN admin_user_role ur on ur.user_id_ = u.id_
+        JOIN admin_role_menu rm on ur.role_id_ = rm.role_id_
+        <if test="userId != null">
+            WHERE u.id_ = #{userId}
+        </if>
+        GROUP BY ur.role_id_
+    </select>
+
+    <select id="queryForCheckList" resultType="com.xmyy.manage.vo.ManageMenuNodeCheckResult">
+        SELECT
+            DISTINCT m.id_ as id, m.remark_ as remark, m.enable_ as enable, m.create_by as createBy, m.create_time as createTime,
+            m.update_by as updateBy, m.update_time as updateTime, m.menu_name as menuName, m.operation as operation,
+            m.p_id as pId, m.icon as icon, m.html_url as htmlUrl, m.component_code as componentCode, m.sort_no as sortNo,
+            CASE WHEN a.menu_id_ IS NULL THEN 'false' ELSE 'true' END AS permission
+        FROM admin_menu m
+        LEFT JOIN admin_role_menu rm ON rm.menu_id_ = m.id_
+        LEFT JOIN
+            (SELECT rm.menu_id_
+            FROM admin_role_menu rm
+            JOIN admin_role r ON rm.role_id_ = r.id_ AND r.id_ = #{roleId} ) a ON a.menu_id_ = m.id_
+        ORDER BY m.id_, m.sort_no
+    </select>
+</mapper>

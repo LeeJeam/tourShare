@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- Cert -->
+    <dubbo:reference id="ucMemberCertService" interface="com.xmyy.cert.service.UcMemberCertService" check="false"/>
+
+    <!-- Circle-->
+    <dubbo:reference id="dgCommentService" interface="com.xmyy.circle.service.DgCommentService" check="false"/>
+    <dubbo:reference id="dgFavoritesService" interface="com.xmyy.circle.service.DgFavoritesService" check="false"/>
+    <dubbo:reference id="dgOrderEvaluateService" interface="com.xmyy.circle.service.DgOrderEvaluateService" check="false"/>
+    <dubbo:reference id="dgPraiseRecordService" interface="com.xmyy.circle.service.DgPraiseRecordService" check="false"/>
+    <dubbo:reference id="dgProductEvaluateService" interface="com.xmyy.circle.service.DgProductEvaluateService" check="false"/>
+    <dubbo:reference id="dgTagsService" interface="com.xmyy.circle.service.DgTagsService" check="false"/>
+    <dubbo:reference id="dgSysMessageService" interface="com.xmyy.circle.service.DgSysMessageService" check="false"/>
+    <dubbo:reference id="ucDynamicCircleService" interface="com.xmyy.circle.service.UcDynamicCircleService" check="false"/>
+    <dubbo:reference id="ucMemberRelationService" interface="com.xmyy.circle.service.UcMemberRelationService" check="false"/>
+    <dubbo:reference id="ucFeedbackService" interface="com.xmyy.circle.service.UcFeedbackService" check="false"/>
+    <dubbo:reference id="ucFeedQuestionService" interface="com.xmyy.circle.service.UcFeedQuestionService" check="false"/>
+    <dubbo:reference id="manageCircleService" interface="com.xmyy.circle.service.ManageCircleService" check="false"/>
+    <dubbo:reference id="regionService" interface="com.xmyy.circle.service.RegionService" timeout="20000" check="false"/>
+    <dubbo:reference id="wsAdvertContentService" interface="com.xmyy.circle.service.WsAdvertContentService" check="false"/>
+
+    <!-- Demand-->
+    <dubbo:reference id="dgDemandAcceptService" interface="com.xmyy.demand.service.DgDemandAcceptService" check="false"/>
+    <dubbo:reference id="dgDemandOrderService" interface="com.xmyy.demand.service.DgDemandOrderService" check="false"/>
+    <dubbo:reference id="dgDemandOrderManageService" interface="com.xmyy.demand.service.DgDemandOrderManageService" check="false"/>
+
+    <!-- LiveVideo-->
+    <dubbo:reference id="liveVideoService" interface="com.xmyy.livevideo.serivce.LiveVideoService" check="false"/>
+
+    <!-- Manage -->
+    <dubbo:reference id="adminDicService" interface="com.xmyy.manage.service.AdminDicService" check="false"/>
+    <dubbo:reference id="adminInterfaceService" interface="com.xmyy.manage.service.AdminInterfaceService" check="false"/>
+    <dubbo:reference id="adminMenuService" interface="com.xmyy.manage.service.AdminMenuService" check="false"/>
+    <dubbo:reference id="adminRoleService" interface="com.xmyy.manage.service.AdminRoleService" check="false"/>
+    <dubbo:reference id="adminRoleMenuService" interface="com.xmyy.manage.service.AdminRoleMenuService" check="false"/>
+    <dubbo:reference id="adminUserRoleService" interface="com.xmyy.manage.service.AdminUserRoleService" check="false"/>
+    <dubbo:reference id="adminUserService" interface="com.xmyy.manage.service.AdminUserService" check="false"/>
+    <dubbo:reference id="adminSessionService" interface="com.xmyy.manage.service.AdminSessionService" check="false"/>
+    <dubbo:reference id="schedulerService" interface="com.xmyy.manage.service.SchedulerService" check="false"/>
+    <dubbo:reference id="sysEventService" interface="com.xmyy.manage.service.SysEventService" check="false"/>
+    <dubbo:reference id="wSensitiveService" interface="com.xmyy.manage.service.WsSensitiveService" check="false"/>
+
+    <!-- Member -->
+    <dubbo:reference id="ucBuyerManageService" interface="com.xmyy.member.service.UcBuyerManageService" check="false"/>
+    <dubbo:reference id="ucInviteCodeService" interface="com.xmyy.member.service.UcInviteCodeService" check="false"/>
+    <dubbo:reference id="ucSellerService" interface="com.xmyy.member.service.UcSellerService" check="false"/>
+    <dubbo:reference id="ucSellerManageService" interface="com.xmyy.member.service.UcSellerManageService" check="false"/>
+
+    <!-- Order -->
+    <dubbo:reference id="dgOrderService" interface="com.xmyy.order.service.DgOrderService" check="false"/>
+    <dubbo:reference id="dgOrderManageService" interface="com.xmyy.order.service.DgOrderManageService" check="false"/>
+
+    <!-- Product -->
+    <dubbo:reference id="ptSeriesService" interface="com.xmyy.product.service.PtSeriesService" check="false"/>
+    <dubbo:reference id="tourService" interface="com.xmyy.product.service.TourService" check="false"/>
+    <dubbo:reference id="tourSiteService" interface="com.xmyy.product.service.TourSiteService" check="false"/>
+    <dubbo:reference id="managePtAttrService" interface="com.xmyy.product.service.ManagePtAttrService" check="false"/>
+    <dubbo:reference id="managePtBrandService" interface="com.xmyy.product.service.ManagePtBrandService" check="false"/>
+    <dubbo:reference id="managePtCategoryService" interface="com.xmyy.product.service.ManagePtCategoryService" check="false"/>
+    <dubbo:reference id="managePtProductService" interface="com.xmyy.product.service.ManagePtProductService" check="false"/>
+    <dubbo:reference id="manageTourService" interface="com.xmyy.product.service.ManageTourService" check="false"/>
+
+    <!-- Search -->
+    <dubbo:reference id="circleImportService" interface="com.xmyy.search.service.CircleImportService" check="false"/>
+    <dubbo:reference id="packerImportService" interface="com.xmyy.search.service.PackerImportService" check="false"/>
+    <dubbo:reference id="sellerImportService" interface="com.xmyy.search.service.SellerImportService" check="false"/>
+
+</beans>

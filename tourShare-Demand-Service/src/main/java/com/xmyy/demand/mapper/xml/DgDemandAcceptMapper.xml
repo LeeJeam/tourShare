@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.demand.mapper.DgDemandAcceptMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_demand_accept
+		<where>
+			<if test="cm.benefitsLogId != null and cm.benefitsLogId != ''">
+					and benefits_log_id_=#{cm.benefitsLogId}
+			</if>
+			<if test="cm.demandOrderId != null and cm.demandOrderId != ''">
+					and demand_order_id_=#{cm.demandOrderId}
+			</if>
+			<if test="cm.sellerId != null and cm.sellerId != ''">
+					and seller_id=#{cm.sellerId}
+			</if>
+			<if test="cm.isPacker != null and cm.isPacker != ''">
+					and is_packer=#{cm.isPacker}
+			</if>
+			<if test="cm.trustDgree != null and cm.trustDgree != ''">
+					and trust_dgree=#{cm.trustDgree}
+			</if>
+			<if test="cm.oftenTour != null and cm.oftenTour != ''">
+					and often_tour=#{cm.oftenTour}
+			</if>
+			<if test="cm.tourId != null and cm.tourId != ''">
+					and tour_id=#{cm.tourId}
+			</if>
+			<if test="cm.tourList != null and cm.tourList != ''">
+					and tour_list=#{cm.tourList}
+			</if>
+			<if test="cm.benefitStatus != null and cm.benefitStatus != ''">
+					and benefit_status=#{cm.benefitStatus}
+			</if>
+			<if test="cm.benefits != null and cm.benefits != ''">
+					and benefits=#{cm.benefits}
+			</if>
+			<if test="cm.benefitsName != null and cm.benefitsName != ''">
+					and benefits_name=#{cm.benefitsName}
+			</if>
+			<if test="cm.budgetStatus != null and cm.budgetStatus != ''">
+					and budget_status=#{cm.budgetStatus}
+			</if>
+			<if test="cm.cancelReason != null and cm.cancelReason != ''">
+					and cancel_reason=#{cm.cancelReason}
+			</if>
+			<if test="cm.cancelText != null and cm.cancelText != ''">
+					and cancel_text=#{cm.cancelText}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or benefits_log_id_ like CONCAT('%',#{cm.keyword},'%')
+					or demand_order_id_ like CONCAT('%',#{cm.keyword},'%')
+					or seller_id like CONCAT('%',#{cm.keyword},'%')
+					or is_packer like CONCAT('%',#{cm.keyword},'%')
+					or trust_dgree like CONCAT('%',#{cm.keyword},'%')
+					or often_tour like CONCAT('%',#{cm.keyword},'%')
+					or tour_id like CONCAT('%',#{cm.keyword},'%')
+					or tour_list like CONCAT('%',#{cm.keyword},'%')
+					or benefit_status like CONCAT('%',#{cm.keyword},'%')
+					or benefits like CONCAT('%',#{cm.keyword},'%')
+					or benefits_name like CONCAT('%',#{cm.keyword},'%')
+					or budget_status like CONCAT('%',#{cm.keyword},'%')
+					or cancel_reason like CONCAT('%',#{cm.keyword},'%')
+					or cancel_text like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

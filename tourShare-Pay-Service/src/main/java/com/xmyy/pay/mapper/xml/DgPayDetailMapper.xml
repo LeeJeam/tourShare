@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.pay.mapper.DgPayDetailMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_pay_detail
+		<where>
+			<if test="cm.payLogId != null and cm.payLogId != ''">
+					and pay_log_id_=#{cm.payLogId}
+			</if>
+			<if test="cm.bizOrderNo != null and cm.bizOrderNo != ''">
+					and biz_order_no=#{cm.bizOrderNo}
+			</if>
+			<if test="cm.type != null and cm.type != ''">
+					and type=#{cm.type}
+			</if>
+			<if test="cm.bizUserId != null and cm.bizUserId != ''">
+					and biz_user_id=#{cm.bizUserId}
+			</if>
+			<if test="cm.accountSetNo != null and cm.accountSetNo != ''">
+					and account_set_no=#{cm.accountSetNo}
+			</if>
+			<if test="cm.amount != null and cm.amount != ''">
+					and amount=#{cm.amount}
+			</if>
+			<if test="cm.fee != null and cm.fee != ''">
+					and fee=#{cm.fee}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or pay_log_id_ like CONCAT('%',#{cm.keyword},'%')
+					or biz_order_no like CONCAT('%',#{cm.keyword},'%')
+					or type like CONCAT('%',#{cm.keyword},'%')
+					or biz_user_id like CONCAT('%',#{cm.keyword},'%')
+					or account_set_no like CONCAT('%',#{cm.keyword},'%')
+					or amount like CONCAT('%',#{cm.keyword},'%')
+					or fee like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

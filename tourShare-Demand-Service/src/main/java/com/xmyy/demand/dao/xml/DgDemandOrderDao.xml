@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.demand.dao.DgDemandOrderDao">
+	<select id="getStatisticByTag" resultType="com.xmyy.demand.vo.StatisticResult">
+		SELECT
+			product_type AS productType,
+			count(1) AS totalCount
+		FROM
+			`dg_demand_order`
+		WHERE
+			enable_ = 1
+		GROUP BY
+			product_type;
+	</select>
+</mapper>

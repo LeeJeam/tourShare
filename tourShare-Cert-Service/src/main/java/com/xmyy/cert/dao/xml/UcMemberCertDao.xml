@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.cert.dao.UcMemberCertDao">
+	<select id="getResultCount" resultType="java.util.Map" parameterType="com.xmyy.cert.vo.MemberCertCountParam">
+		select
+		count(*) as 'auditTotal',
+		COALESCE(sum(case when state=0 then 1 else 0 end),0)  as 'unAuditTotal',
+		COALESCE(sum(case when state=-50 then 1 else 0 end),0) as 'notPassTotal',
+		COALESCE(sum(case when state=50 then 1 else 0 end),0) as 'passTotal'
+		from uc_member_cert m
+		where enable_ = 1
+		<if test="memberName != null and memberName != ''">
+			and m.member_name like CONCAT('%',#{memberName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="mobile != null and mobile != ''">
+			and m.mobile like CONCAT('%', #{mobile,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="realReviewUserName != null and realReviewUserName != ''">
+			and m.real_review_user_name like CONCAT('%',#{realReviewUserName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="state != null">
+			and m.state=#{state}
+		</if>
+		<if test="realReviewTime != null">
+			and m.real_review_time = str_to_date(concat(date_format(#{realReviewTime,jdbcType=TIMESTAMP}, '%Y-%m-%d'), ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+		</if>
+	</select>
+</mapper>

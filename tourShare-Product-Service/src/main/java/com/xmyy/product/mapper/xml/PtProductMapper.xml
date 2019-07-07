@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.mapper.PtProductMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from pt_product
+		<where>
+			<if test="cm.dgTourId != null and cm.dgTourId != ''">
+				and dg_tour_id=#{cm.dgTourId}
+			</if>
+			<if test="cm.ptBrandId != null and cm.ptBrandId != ''">
+				and pt_brand_id=#{cm.ptBrandId}
+			</if>
+			<if test="cm.ptSeriesId != null and cm.ptSeriesId != ''">
+				and pt_series_id=#{cm.ptSeriesId}
+			</if>
+			<if test="cm.ptCategoryId != null and cm.ptCategoryId != ''">
+				and pt_category_id=#{cm.ptCategoryId}
+			</if>
+			<if test="cm.ptCategoryId2 != null and cm.ptCategoryId2 != ''">
+				and pt_category_id2=#{cm.ptCategoryId2}
+			</if>
+			<if test="cm.name != null and cm.name != ''">
+				and name=#{cm.name}
+			</if>
+			<if test="cm.productNo != null and cm.productNo != ''">
+				and product_no=#{cm.productNo}
+			</if>
+			<if test="cm.marketPrice != null and cm.marketPrice != ''">
+				and market_price=#{cm.marketPrice}
+			</if>
+			<if test="cm.minPrice != null and cm.minPrice != ''">
+				and min_price=#{cm.minPrice}
+			</if>
+			<if test="cm.isSale != null and cm.isSale != ''">
+				and is_sale=#{cm.isSale}
+			</if>
+			<if test="cm.isHot != null and cm.isHot != ''">
+				and is_hot=#{cm.isHot}
+			</if>
+			<if test="cm.isRecommend != null and cm.isRecommend != ''">
+				and is_recommend=#{cm.isRecommend}
+			</if>
+			<if test="cm.productDesc != null and cm.productDesc != ''">
+				and product_desc=#{cm.productDesc}
+			</if>
+			<if test="cm.cover != null and cm.cover != ''">
+				and cover=#{cm.cover}
+			</if>
+			<if test="cm.images != null and cm.images != ''">
+				and images=#{cm.images}
+			</if>
+			<if test="cm.expressType != null and cm.expressType != ''">
+				and express_type=#{cm.expressType}
+			</if>
+			<if test="cm.expiresTime != null and cm.expiresTime != ''">
+				and expires_time=#{cm.expiresTime}
+			</if>
+			<if test="cm.buyRegion != null and cm.buyRegion != ''">
+				and buy_region=#{cm.buyRegion}
+			</if>
+			<if test="cm.shopName != null and cm.shopName != ''">
+				and shop_name=#{cm.shopName}
+			</if>
+			<if test="cm.title != null and cm.title != ''">
+				and title=#{cm.title}
+			</if>
+			<if test="cm.tags != null and cm.tags != ''">
+				and tags=#{cm.tags}
+			</if>
+			<if test="cm.serviceDesc != null and cm.serviceDesc != ''">
+				and service_desc=#{cm.serviceDesc}
+			</if>
+			<if test="cm.productType != null and cm.productType != ''">
+				and product_type=#{cm.productType}
+			</if>
+			<if test="cm.orderCount != null and cm.orderCount != ''">
+				and order_count=#{cm.orderCount}
+			</if>
+			<if test="cm.collectCount != null and cm.collectCount != ''">
+				and collect_count=#{cm.collectCount}
+			</if>
+			<if test="cm.refundCount != null and cm.refundCount != ''">
+				and refund_count=#{cm.refundCount}
+			</if>
+			<if test="cm.isTop != null and cm.isTop != ''">
+				and is_top=#{cm.isTop}
+			</if>
+			<if test="cm.topBeginTime != null and cm.topBeginTime != ''">
+				and top_begin_time=#{cm.topBeginTime}
+			</if>
+			<if test="cm.maxPrice != null and cm.maxPrice != ''">
+				and max_price=#{cm.maxPrice}
+			</if>
+			<if test="cm.topEndTime != null and cm.topEndTime != ''">
+				and top_end_time=#{cm.topEndTime}
+			</if>
+			<if test="cm.clickCount != null and cm.clickCount != ''">
+				and click_count=#{cm.clickCount}
+			</if>
+			<if test="cm.videoClickCount != null and cm.videoClickCount != ''">
+				and video_click_count=#{cm.videoClickCount}
+			</if>
+			<if test="cm.favorable != null and cm.favorable != ''">
+				and favorable=#{cm.favorable}
+			</if>
+			<if test="cm.buyRegionLogo != null and cm.buyRegionLogo != ''">
+				and buy_region_logo=#{cm.buyRegionLogo}
+			</if>
+			<if test="cm.buyRegionCurrency != null and cm.buyRegionCurrency != ''">
+				and buy_region_currency=#{cm.buyRegionCurrency}
+			</if>
+			<if test="cm.buyRegionCurrencyLogo != null and cm.buyRegionCurrencyLogo != ''">
+				and buy_region_currency_logo=#{cm.buyRegionCurrencyLogo}
+			</if>
+			<if test="cm.priceCurrency != null and cm.priceCurrency != ''">
+				and price_currency=#{cm.priceCurrency}
+			</if>
+			<if test="cm.priceCurrencyLogo != null and cm.priceCurrencyLogo != ''">
+				and price_currency_logo=#{cm.priceCurrencyLogo}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+				or dg_tour_id like CONCAT('%',#{cm.keyword},'%')
+				or pt_brand_id like CONCAT('%',#{cm.keyword},'%')
+				or pt_series_id like CONCAT('%',#{cm.keyword},'%')
+				or pt_category_id like CONCAT('%',#{cm.keyword},'%')
+				or pt_category_id2 like CONCAT('%',#{cm.keyword},'%')
+				or name like CONCAT('%',#{cm.keyword},'%')
+				or product_no like CONCAT('%',#{cm.keyword},'%')
+				or market_price like CONCAT('%',#{cm.keyword},'%')
+				or min_price like CONCAT('%',#{cm.keyword},'%')
+				or is_sale like CONCAT('%',#{cm.keyword},'%')
+				or is_hot like CONCAT('%',#{cm.keyword},'%')
+				or is_recommend like CONCAT('%',#{cm.keyword},'%')
+				or product_desc like CONCAT('%',#{cm.keyword},'%')
+				or cover like CONCAT('%',#{cm.keyword},'%')
+				or images like CONCAT('%',#{cm.keyword},'%')
+				or express_type like CONCAT('%',#{cm.keyword},'%')
+				or expires_time like CONCAT('%',#{cm.keyword},'%')
+				or buy_region like CONCAT('%',#{cm.keyword},'%')
+				or shop_name like CONCAT('%',#{cm.keyword},'%')
+				or title like CONCAT('%',#{cm.keyword},'%')
+				or tags like CONCAT('%',#{cm.keyword},'%')
+				or service_desc like CONCAT('%',#{cm.keyword},'%')
+				or product_type like CONCAT('%',#{cm.keyword},'%')
+				or order_count like CONCAT('%',#{cm.keyword},'%')
+				or collect_count like CONCAT('%',#{cm.keyword},'%')
+				or refund_count like CONCAT('%',#{cm.keyword},'%')
+				or is_top like CONCAT('%',#{cm.keyword},'%')
+				or top_begin_time like CONCAT('%',#{cm.keyword},'%')
+				or max_price like CONCAT('%',#{cm.keyword},'%')
+				or top_end_time like CONCAT('%',#{cm.keyword},'%')
+				or click_count like CONCAT('%',#{cm.keyword},'%')
+				or video_click_count like CONCAT('%',#{cm.keyword},'%')
+				or favorable like CONCAT('%',#{cm.keyword},'%')
+				or buy_region_logo like CONCAT('%',#{cm.keyword},'%')
+				or buy_region_currency like CONCAT('%',#{cm.keyword},'%')
+				or buy_region_currency_logo like CONCAT('%',#{cm.keyword},'%')
+				or price_currency like CONCAT('%',#{cm.keyword},'%')
+				or price_currency_logo like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

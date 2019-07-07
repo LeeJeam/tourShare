@@ -1,0 +1,4 @@
+/swagger-ui.html
+/webjars/
+/v2/
+/swagger-resources

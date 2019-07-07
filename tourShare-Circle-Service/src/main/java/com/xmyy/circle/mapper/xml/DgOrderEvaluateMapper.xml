@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.DgOrderEvaluateMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_order_evaluate
+		<where>
+			<if test="cm.orderId != null and cm.orderId != ''">
+					and order_id_=#{cm.orderId}
+			</if>
+			<if test="cm.buyerId != null and cm.buyerId != ''">
+					and buyer_id_=#{cm.buyerId}
+			</if>
+			<if test="cm.content != null and cm.content != ''">
+					and content=#{cm.content}
+			</if>
+			<if test="cm.buyService != null and cm.buyService != ''">
+					and buy_service=#{cm.buyService}
+			</if>
+			<if test="cm.productLevel != null and cm.productLevel != ''">
+					and product_level=#{cm.productLevel}
+			</if>
+			<if test="cm.praiseCount != null and cm.praiseCount != ''">
+					and praise_count=#{cm.praiseCount}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or order_id_ like CONCAT('%',#{cm.keyword},'%')
+					or buyer_id_ like CONCAT('%',#{cm.keyword},'%')
+					or content like CONCAT('%',#{cm.keyword},'%')
+					or buy_service like CONCAT('%',#{cm.keyword},'%')
+					or product_level like CONCAT('%',#{cm.keyword},'%')
+					or praise_count like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

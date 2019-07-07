@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.mapper.DgTourSiteMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_tour_site
+		<where>
+			<if test="cm.tourId != null and cm.tourId != ''">
+					and tour_id=#{cm.tourId}
+			</if>
+			<if test="cm.regionCode != null and cm.regionCode != ''">
+					and region_code=#{cm.regionCode}
+			</if>
+			<if test="cm.regionName != null and cm.regionName != ''">
+					and region_name=#{cm.regionName}
+			</if>
+			<if test="cm.siteType != null and cm.siteType != ''">
+					and site_type=#{cm.siteType}
+			</if>
+			<if test="cm.regionLogo != null and cm.regionLogo != ''">
+					and region_logo=#{cm.regionLogo}
+			</if>
+			<if test="cm.regionImgUrl != null and cm.regionImgUrl != ''">
+					and region_img_url=#{cm.regionImgUrl}
+			</if>
+			<if test="cm.planBeginTime != null and cm.planBeginTime != ''">
+					and plan_begin_time=#{cm.planBeginTime}
+			</if>
+			<if test="cm.isSignIn != null and cm.isSignIn != ''">
+					and is_sign_in=#{cm.isSignIn}
+			</if>
+			<if test="cm.isPacker != null and cm.isPacker != ''">
+					and is_packer=#{cm.isPacker}
+			</if>
+			<if test="cm.sort != null and cm.sort != ''">
+					and sort=#{cm.sort}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or tour_id like CONCAT('%',#{cm.keyword},'%')
+					or region_code like CONCAT('%',#{cm.keyword},'%')
+					or region_name like CONCAT('%',#{cm.keyword},'%')
+					or site_type like CONCAT('%',#{cm.keyword},'%')
+					or region_logo like CONCAT('%',#{cm.keyword},'%')
+					or region_img_url like CONCAT('%',#{cm.keyword},'%')
+					or plan_begin_time like CONCAT('%',#{cm.keyword},'%')
+					or is_sign_in like CONCAT('%',#{cm.keyword},'%')
+					or is_packer like CONCAT('%',#{cm.keyword},'%')
+					or sort like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.manage.mapper.AdminRoleMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from admin_role
+		<where>
+			<if test="cm.roleName != null and cm.roleName != ''">
+					and role_name=#{cm.roleName}
+			</if>
+			<if test="cm.roleCode != null and cm.roleCode != ''">
+					and role_code=#{cm.roleCode}
+			</if>
+			<if test="cm.roleStatus != null and cm.roleStatus != ''">
+					and role_status=#{cm.roleStatus}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or role_name like CONCAT('%',#{cm.keyword},'%')
+					or role_code like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

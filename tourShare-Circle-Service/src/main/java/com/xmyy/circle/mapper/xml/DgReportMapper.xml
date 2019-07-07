@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.DgReportMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_report
+		<where>
+			<if test="cm.reportType != null and cm.reportType != ''">
+					and report_type=#{cm.reportType}
+			</if>
+			<if test="cm.content != null and cm.content != ''">
+					and content=#{cm.content}
+			</if>
+			<if test="cm.targetId != null and cm.targetId != ''">
+					and target_id=#{cm.targetId}
+			</if>
+			<if test="cm.targetType != null and cm.targetType != ''">
+					and target_type=#{cm.targetType}
+			</if>
+			<if test="cm.reporterId != null and cm.reporterId != ''">
+					and reporter_id=#{cm.reporterId}
+			</if>
+			<if test="cm.reporterType != null and cm.reporterType != ''">
+					and reporter_type=#{cm.reporterType}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or report_type like CONCAT('%',#{cm.keyword},'%')
+					or content like CONCAT('%',#{cm.keyword},'%')
+					or target_id like CONCAT('%',#{cm.keyword},'%')
+					or target_type like CONCAT('%',#{cm.keyword},'%')
+					or reporter_id like CONCAT('%',#{cm.keyword},'%')
+					or reporter_type like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

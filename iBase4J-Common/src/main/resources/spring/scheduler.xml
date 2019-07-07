@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="schedulerConfig" class="top.ibase4j.core.config.SchedulerConfig"/>
+
+    <bean id="schedulerManager" factory-bean="schedulerConfig"
+          factory-method="scheduler">
+        <description>监控类型</description>
+        <constructor-arg name="scheduler">
+            <bean id="schedulerFactory" factory-bean="schedulerConfig"
+                  factory-method="schedulerFactory" c:data-source-ref="dataSource">
+                <description>定时任务调度器工厂</description>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="jobListener">
+            <bean class="top.ibase4j.core.support.scheduler.JobListener" autowire="byName"/>
+        </constructor-arg>
+    </bean>
+</beans>

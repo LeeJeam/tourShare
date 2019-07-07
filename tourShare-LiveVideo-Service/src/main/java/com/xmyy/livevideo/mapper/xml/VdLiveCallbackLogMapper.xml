@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.livevideo.mapper.VdLiveCallbackLogMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from vd_live_callback_log
+		<where>
+			<if test="cm.eventType != null and cm.eventType != ''">
+					and event_type=#{cm.eventType}
+			</if>
+			<if test="cm.streamId != null and cm.streamId != ''">
+					and stream_id=#{cm.streamId}
+			</if>
+			<if test="cm.videoId != null and cm.videoId != ''">
+					and video_id=#{cm.videoId}
+			</if>
+			<if test="cm.videoUrl != null and cm.videoUrl != ''">
+					and video_url=#{cm.videoUrl}
+			</if>
+			<if test="cm.picFullUrl != null and cm.picFullUrl != ''">
+					and pic_full_url=#{cm.picFullUrl}
+			</if>
+			<if test="cm.jsonBody != null and cm.jsonBody != ''">
+					and json_body=#{cm.jsonBody}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or event_type like CONCAT('%',#{cm.keyword},'%')
+					or stream_id like CONCAT('%',#{cm.keyword},'%')
+					or video_id like CONCAT('%',#{cm.keyword},'%')
+					or video_url like CONCAT('%',#{cm.keyword},'%')
+					or pic_full_url like CONCAT('%',#{cm.keyword},'%')
+					or json_body like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

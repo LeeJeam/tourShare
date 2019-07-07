@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.order.mapper.DgProductOrderMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_product_order
+		<where>
+			<if test="cm.orderId != null and cm.orderId != ''">
+					and order_id_=#{cm.orderId}
+			</if>
+			<if test="cm.productId != null and cm.productId != ''">
+					and product_id=#{cm.productId}
+			</if>
+			<if test="cm.tourId != null and cm.tourId != ''">
+					and tour_id=#{cm.tourId}
+			</if>
+			<if test="cm.skuId != null and cm.skuId != ''">
+					and sku_id=#{cm.skuId}
+			</if>
+			<if test="cm.productName != null and cm.productName != ''">
+					and product_name=#{cm.productName}
+			</if>
+			<if test="cm.productType != null and cm.productType != ''">
+					and product_type=#{cm.productType}
+			</if>
+			<if test="cm.productPrice != null and cm.productPrice != ''">
+					and product_price=#{cm.productPrice}
+			</if>
+			<if test="cm.productCover != null and cm.productCover != ''">
+					and product_cover=#{cm.productCover}
+			</if>
+			<if test="cm.productImages != null and cm.productImages != ''">
+					and product_images=#{cm.productImages}
+			</if>
+			<if test="cm.productSpec != null and cm.productSpec != ''">
+					and product_spec=#{cm.productSpec}
+			</if>
+			<if test="cm.specParams != null and cm.specParams != ''">
+					and spec_params=#{cm.specParams}
+			</if>
+			<if test="cm.productNum != null and cm.productNum != ''">
+					and product_num=#{cm.productNum}
+			</if>
+			<if test="cm.subtotal != null and cm.subtotal != ''">
+					and subtotal=#{cm.subtotal}
+			</if>
+			<if test="cm.isRefund != null and cm.isRefund != ''">
+					and is_refund=#{cm.isRefund}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or order_id_ like CONCAT('%',#{cm.keyword},'%')
+					or product_id like CONCAT('%',#{cm.keyword},'%')
+					or tour_id like CONCAT('%',#{cm.keyword},'%')
+					or sku_id like CONCAT('%',#{cm.keyword},'%')
+					or product_name like CONCAT('%',#{cm.keyword},'%')
+					or product_type like CONCAT('%',#{cm.keyword},'%')
+					or product_price like CONCAT('%',#{cm.keyword},'%')
+					or product_cover like CONCAT('%',#{cm.keyword},'%')
+					or product_images like CONCAT('%',#{cm.keyword},'%')
+					or product_spec like CONCAT('%',#{cm.keyword},'%')
+					or spec_params like CONCAT('%',#{cm.keyword},'%')
+					or product_num like CONCAT('%',#{cm.keyword},'%')
+					or subtotal like CONCAT('%',#{cm.keyword},'%')
+					or is_refund like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

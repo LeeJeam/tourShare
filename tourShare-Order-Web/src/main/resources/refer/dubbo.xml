@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- Manage -->
+    <dubbo:reference id="sysEventService" interface="com.xmyy.manage.service.SysEventService" check="false"/>
+
+    <!-- Order -->
+    <dubbo:reference id="dgOrderService" interface="com.xmyy.order.service.DgOrderService" check="false"/>
+    <dubbo:reference id="dgOrderManageService" interface="com.xmyy.order.service.DgOrderManageService" check="false"/>
+
+</beans>

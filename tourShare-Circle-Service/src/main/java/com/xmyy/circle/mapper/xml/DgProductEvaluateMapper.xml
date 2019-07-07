@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.DgProductEvaluateMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_product_evaluate
+		<where>
+			<if test="cm.productId != null and cm.productId != ''">
+					and product_id_=#{cm.productId}
+			</if>
+			<if test="cm.buyerId != null and cm.buyerId != ''">
+					and buyer_id_=#{cm.buyerId}
+			</if>
+			<if test="cm.content != null and cm.content != ''">
+					and content=#{cm.content}
+			</if>
+			<if test="cm.orderId != null and cm.orderId != ''">
+					and order_id=#{cm.orderId}
+			</if>
+			<if test="cm.praiseCount != null and cm.praiseCount != ''">
+					and praise_count=#{cm.praiseCount}
+			</if>
+			<if test="cm.picRsurl != null and cm.picRsurl != ''">
+					and pic_rsurl=#{cm.picRsurl}
+			</if>
+			<if test="cm.reviewContent != null and cm.reviewContent != ''">
+					and review_content=#{cm.reviewContent}
+			</if>
+			<if test="cm.replyContent != null and cm.replyContent != ''">
+					and reply_content=#{cm.replyContent}
+			</if>
+			<if test="cm.reviewTime != null and cm.reviewTime != ''">
+					and review_time=#{cm.reviewTime}
+			</if>
+			<if test="cm.replyTime != null and cm.replyTime != ''">
+					and reply_time=#{cm.replyTime}
+			</if>
+			<if test="cm.reviewPicRsurl != null and cm.reviewPicRsurl != ''">
+					and review_pic_rsurl=#{cm.reviewPicRsurl}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or product_id_ like CONCAT('%',#{cm.keyword},'%')
+					or buyer_id_ like CONCAT('%',#{cm.keyword},'%')
+					or content like CONCAT('%',#{cm.keyword},'%')
+					or order_id like CONCAT('%',#{cm.keyword},'%')
+					or praise_count like CONCAT('%',#{cm.keyword},'%')
+					or pic_rsurl like CONCAT('%',#{cm.keyword},'%')
+					or review_content like CONCAT('%',#{cm.keyword},'%')
+					or reply_content like CONCAT('%',#{cm.keyword},'%')
+					or review_time like CONCAT('%',#{cm.keyword},'%')
+					or reply_time like CONCAT('%',#{cm.keyword},'%')
+					or review_pic_rsurl like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+
+	<!--我的评价 begin-->
+    <select id="getProductEvaluatePageCount" resultType="java.lang.Integer">
+		select count(*) from dg_product_evaluate pe
+		left join uc_buyer u on pe.buyer_id_ = u.id_
+		<include refid="getProductEvaluatePage_condition" />
+	</select>
+
+	<select id="getProductEvaluatePageList"
+			resultType="com.xmyy.circle.vo.ProductEvaluateListResult">
+		select pe.id_ as id,pe.order_id as orderId,pe.product_id_ as productId,pe.product_order_id as productOrderId,pe.content,pe.pic_rsurl as picRsurl,
+			   pe.create_time as createTime,pe.review_content as reviewContent,pe.review_time as reviewTime,DATEDIFF(pe.review_time,pe.create_time) AS dayDiff,
+			   pe.seller_id_ as sellerId,pe.buyer_id_ as buyerId,
+			   u.nick_name as nickName,u.avatar_rsurl as avatarRsurl
+		from dg_product_evaluate pe
+		left join uc_buyer u on pe.buyer_id_ = u.id_
+		<include refid="getProductEvaluatePage_condition" />
+		order by pe.create_time desc
+	</select>
+
+	<sql id="getProductEvaluatePage_condition">
+		where pe.enable_ = 1
+		<if test="params.memberType == 2">
+			and pe.buyer_id_ = #{userId}
+		</if>
+		<if test="params.memberType == 1 or params.memberType == 3 ">
+			and pe.seller_id_ = #{userId}
+		</if>
+		<if test="params.memberType == 3">
+			and pe.is_packer = 1
+		</if>
+		<if test="params.evaluateType == 1">
+			and order_type in (1,2)
+		</if>
+		<if test="params.evaluateType == 2">
+			and order_type = 3
+		</if>
+	</sql>
+	<!--我的评价 end-->
+
+	<!--商品详情里的评价 begin-->
+	<select id="getEvaluateByProductIdPageCount" resultType="java.lang.Integer">
+		select count(*) from dg_product_evaluate pe left join uc_buyer u
+		on pe.buyer_id_ = u.id_
+		<include refid="getEvaluateByProductIdPage_condition" />
+	</select>
+
+	<select id="getEvaluateByProductIdPageList" resultType="com.xmyy.circle.vo.EvaluateByProductIdResult">
+		select pe.id_ as id,pe.content,
+			   pe.create_time as createTime,pe.review_content as reviewContent,pe.review_time as reviewTime,DATEDIFF(pe.review_time,pe.create_time) AS dayDiff,
+			   pe.buyer_id_ as buyerId,pe.praise_count as praiseCount,pe.pic_rsurl as picRsurl,
+			   u.nick_name as nickName,u.avatar_rsurl as avatarRsurl
+		from dg_product_evaluate pe left join uc_buyer u
+		on pe.buyer_id_ = u.id_
+		<include refid="getEvaluateByProductIdPage_condition" />
+	</select>
+
+	<sql id="getEvaluateByProductIdPage_condition">
+		where pe.enable_ = 1
+		and pe.product_id_ = #{productId}
+		order by pe.praise_count desc,pe.create_time desc
+	</sql>
+	<!--商品详情里的评价 end-->
+</mapper>

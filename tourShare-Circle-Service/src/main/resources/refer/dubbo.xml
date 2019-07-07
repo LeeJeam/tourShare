@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- Demand -->
+	<dubbo:reference id="dgDemandOrderService" interface="com.xmyy.demand.service.DgDemandOrderService" check="false"/>
+
+	<!-- Manage -->
+	<dubbo:reference id="wsSensitiveService" interface="com.xmyy.manage.service.WsSensitiveService" check="false"/>
+
+	<!-- Member -->
+	<dubbo:reference id="ucBuyerService" interface="com.xmyy.member.service.UcBuyerService" check="false" />
+	<dubbo:reference id="ucSellerService" interface="com.xmyy.member.service.UcSellerService" check="false" />
+
+	<!-- Order -->
+	<dubbo:reference id="dgOrderService" interface="com.xmyy.order.service.DgOrderService" check="false" />
+	<dubbo:reference id="dgProductOrderService" interface="com.xmyy.order.service.DgProductOrderService" check="false" />
+
+	<!-- Product -->
+	<dubbo:reference id="ptProductService" interface="com.xmyy.product.service.PtProductService" check="false" />
+	<dubbo:reference id="tourService" interface="com.xmyy.product.service.TourService" check="false"/>
+
+</beans>

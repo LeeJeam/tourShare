@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.cert.mapper.UcMemberCertMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from uc_member_cert
+		<where>
+			<if test="cm.isPassIdentity != null and cm.isPassIdentity != ''">
+					and is_pass_identity=#{cm.isPassIdentity}
+			</if>
+			<if test="cm.identityRsurl != null and cm.identityRsurl != ''">
+					and identity_rsurl=#{cm.identityRsurl}
+			</if>
+			<if test="cm.isPassPassport != null and cm.isPassPassport != ''">
+					and is_pass_passport=#{cm.isPassPassport}
+			</if>
+			<if test="cm.passRsurl != null and cm.passRsurl != ''">
+					and pass_rsurl=#{cm.passRsurl}
+			</if>
+			<if test="cm.isPassZhima != null and cm.isPassZhima != ''">
+					and is_pass_zhima=#{cm.isPassZhima}
+			</if>
+			<if test="cm.idCardNumber != null and cm.idCardNumber != ''">
+					and id_card_number=#{cm.idCardNumber}
+			</if>
+			<if test="cm.zhimaOpenid != null and cm.zhimaOpenid != ''">
+					and zhima_openid=#{cm.zhimaOpenid}
+			</if>
+			<if test="cm.zhimaScore != null and cm.zhimaScore != ''">
+					and zhima_score=#{cm.zhimaScore}
+			</if>
+			<if test="cm.state != null and cm.state != ''">
+					and state=#{cm.state}
+			</if>
+			<if test="cm.realCreateTime != null and cm.realCreateTime != ''">
+					and real_create_time=#{cm.realCreateTime}
+			</if>
+			<if test="cm.realReviewUserId != null and cm.realReviewUserId != ''">
+					and real_review_user_id=#{cm.realReviewUserId}
+			</if>
+			<if test="cm.realReviewUserName != null and cm.realReviewUserName != ''">
+					and real_review_user_name=#{cm.realReviewUserName}
+			</if>
+			<if test="cm.realReviewTime != null and cm.realReviewTime != ''">
+					and real_review_time=#{cm.realReviewTime}
+			</if>
+			<if test="cm.realRemark != null and cm.realRemark != ''">
+					and real_remark=#{cm.realRemark}
+			</if>
+			<if test="cm.isOverseas != null and cm.isOverseas != ''">
+					and is_overseas=#{cm.isOverseas}
+			</if>
+			<if test="cm.passportNumber != null and cm.passportNumber != ''">
+					and passport_number=#{cm.passportNumber}
+			</if>
+			<if test="cm.memberId != null and cm.memberId != ''">
+					and member_id=#{cm.memberId}
+			</if>
+			<if test="cm.memberType != null and cm.memberType != ''">
+					and member_type=#{cm.memberType}
+			</if>
+            <if test="cm.memberName != null and cm.memberName != ''">
+                and member_name=#{cm.memberName}
+            </if>
+            <if test="cm.mobile != null and cm.mobile != ''">
+                and mobile=#{cm.mobile}
+            </if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or is_pass_identity like CONCAT('%',#{cm.keyword},'%')
+					or identity_rsurl like CONCAT('%',#{cm.keyword},'%')
+					or is_pass_passport like CONCAT('%',#{cm.keyword},'%')
+					or pass_rsurl like CONCAT('%',#{cm.keyword},'%')
+					or is_pass_zhima like CONCAT('%',#{cm.keyword},'%')
+					or id_card_number like CONCAT('%',#{cm.keyword},'%')
+					or zhima_openid like CONCAT('%',#{cm.keyword},'%')
+					or zhima_score like CONCAT('%',#{cm.keyword},'%')
+					or state like CONCAT('%',#{cm.keyword},'%')
+					or real_create_time like CONCAT('%',#{cm.keyword},'%')
+					or real_review_user_id like CONCAT('%',#{cm.keyword},'%')
+					or real_review_user_name like CONCAT('%',#{cm.keyword},'%')
+					or real_review_time like CONCAT('%',#{cm.keyword},'%')
+					or real_remark like CONCAT('%',#{cm.keyword},'%')
+					or is_overseas like CONCAT('%',#{cm.keyword},'%')
+					or passport_number like CONCAT('%',#{cm.keyword},'%')
+					or member_id like CONCAT('%',#{cm.keyword},'%')
+					or member_type like CONCAT('%',#{cm.keyword},'%')
+                    or member_name like CONCAT('%',#{cm.keyword},'%')
+                    or mobile like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

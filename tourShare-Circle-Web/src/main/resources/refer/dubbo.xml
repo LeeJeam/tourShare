@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- Circle -->
+	<dubbo:reference id="apiIndexService" interface="com.xmyy.circle.service.ApiIndexService" check="false" />
+	<dubbo:reference id="dgCommentService" interface="com.xmyy.circle.service.DgCommentService" check="false" />
+	<dubbo:reference id="dgOrderEvaluateService" interface="com.xmyy.circle.service.DgOrderEvaluateService" check="false" />
+	<dubbo:reference id="dgProductEvaluateService" interface="com.xmyy.circle.service.DgProductEvaluateService" check="false" />
+	<dubbo:reference id="dgPraiseRecordService" interface="com.xmyy.circle.service.DgPraiseRecordService" check="false" />
+	<dubbo:reference id="dgFavoritesService" interface="com.xmyy.circle.service.DgFavoritesService" check="false" />
+	<dubbo:reference id="dgReportService" interface="com.xmyy.circle.service.DgReportService" check="false" />
+	<dubbo:reference id="dgEverydayRadioService" interface="com.xmyy.circle.service.DgEverydayRadioService" check="false" />
+	<dubbo:reference id="dgTagsService" interface="com.xmyy.circle.service.DgTagsService" check="false" />
+	<dubbo:reference id="dgSysMessageService" interface="com.xmyy.circle.service.DgSysMessageService" check="false"/>
+	<dubbo:reference id="dgCountryService" interface="com.xmyy.circle.service.DgCountryService" check="false" />
+	<dubbo:reference id="dgAreaService" interface="com.xmyy.circle.service.DgAreaService" check="false"/>
+	<dubbo:reference id="manageCircleService" interface="com.xmyy.circle.service.ManageCircleService" check="false" />
+	<dubbo:reference id="ucMemberRelationService" interface="com.xmyy.circle.service.UcMemberRelationService" check="false" />
+	<dubbo:reference id="ucDynamicCircleService" interface="com.xmyy.circle.service.UcDynamicCircleService" check="false" />
+	<dubbo:reference id="ucFeedbackService" interface="com.xmyy.circle.service.UcFeedbackService" check="false" />
+	<dubbo:reference id="ucFeedQuestionService" interface="com.xmyy.circle.service.UcFeedQuestionService" check="false" />
+	<dubbo:reference id="regionService" interface="com.xmyy.circle.service.RegionService" timeout="20000" check="false"/>
+	<dubbo:reference id="wsAdvertContentService" interface="com.xmyy.circle.service.WsAdvertContentService" check="false" />
+
+	<!-- Manage -->
+	<dubbo:reference id="sysEventService" interface="com.xmyy.manage.service.SysEventService" check="false" />
+
+	<!-- Search -->
+	<dubbo:reference id="circleSearchService" interface="com.xmyy.search.service.CircleSearchService" check="false" />
+
+</beans>

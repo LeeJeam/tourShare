@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.member.mapper.UcMemberLoginMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from uc_member_login
+		<where>
+			<if test="cm.token != null and cm.token != ''">
+					and token=#{cm.token}
+			</if>
+			<if test="cm.loginCode != null and cm.loginCode != ''">
+					and login_code=#{cm.loginCode}
+			</if>
+			<if test="cm.mobile != null and cm.mobile != ''">
+					and mobile=#{cm.mobile}
+			</if>
+			<if test="cm.loginTime != null and cm.loginTime != ''">
+					and login_time=#{cm.loginTime}
+			</if>
+			<if test="cm.isLogout != null and cm.isLogout != ''">
+					and is_logout=#{cm.isLogout}
+			</if>
+			<if test="cm.logoutTime != null and cm.logoutTime != ''">
+					and logout_time=#{cm.logoutTime}
+			</if>
+			<if test="cm.lastActiveTime != null and cm.lastActiveTime != ''">
+					and last_active_time=#{cm.lastActiveTime}
+			</if>
+			<if test="cm.state != null and cm.state != ''">
+					and state=#{cm.state}
+			</if>
+			<if test="cm.loginCountry != null and cm.loginCountry != ''">
+					and login_country=#{cm.loginCountry}
+			</if>
+			<if test="cm.loginType != null and cm.loginType != ''">
+					and login_type=#{cm.loginType}
+			</if>
+			<if test="cm.loginSource != null and cm.loginSource != ''">
+					and login_source=#{cm.loginSource}
+			</if>
+			<if test="cm.ip != null and cm.ip != ''">
+					and ip=#{cm.ip}
+			</if>
+			<if test="cm.memberId != null and cm.memberId != ''">
+					and member_id=#{cm.memberId}
+			</if>
+			<if test="cm.memberType != null and cm.memberType != ''">
+					and member_type=#{cm.memberType}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or token like CONCAT('%',#{cm.keyword},'%')
+					or login_code like CONCAT('%',#{cm.keyword},'%')
+					or mobile like CONCAT('%',#{cm.keyword},'%')
+					or login_time like CONCAT('%',#{cm.keyword},'%')
+					or is_logout like CONCAT('%',#{cm.keyword},'%')
+					or logout_time like CONCAT('%',#{cm.keyword},'%')
+					or last_active_time like CONCAT('%',#{cm.keyword},'%')
+					or state like CONCAT('%',#{cm.keyword},'%')
+					or login_country like CONCAT('%',#{cm.keyword},'%')
+					or login_type like CONCAT('%',#{cm.keyword},'%')
+					or login_source like CONCAT('%',#{cm.keyword},'%')
+					or ip like CONCAT('%',#{cm.keyword},'%')
+					or member_id like CONCAT('%',#{cm.keyword},'%')
+					or member_type like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

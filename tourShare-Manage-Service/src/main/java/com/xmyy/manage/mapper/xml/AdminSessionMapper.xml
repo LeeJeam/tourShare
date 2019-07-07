@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.manage.mapper.AdminSessionMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from admin_session
+		<where>
+			<if test="cm.userId != null and cm.userId != ''">
+					and user_id_=#{cm.userId}
+			</if>
+			<if test="cm.sessionId != null and cm.sessionId != ''">
+					and session_id=#{cm.sessionId}
+			</if>
+			<if test="cm.account != null and cm.account != ''">
+					and account=#{cm.account}
+			</if>
+			<if test="cm.ip != null and cm.ip != ''">
+					and ip=#{cm.ip}
+			</if>
+			<if test="cm.startTime != null and cm.startTime != ''">
+					and start_time=#{cm.startTime}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or user_id_ like CONCAT('%',#{cm.keyword},'%')
+					or session_id like CONCAT('%',#{cm.keyword},'%')
+					or account like CONCAT('%',#{cm.keyword},'%')
+					or ip like CONCAT('%',#{cm.keyword},'%')
+					or start_time like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

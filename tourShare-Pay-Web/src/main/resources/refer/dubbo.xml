@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- Manage -->
+	<dubbo:reference id="sysEventService" interface="com.xmyy.manage.service.SysEventService" check="false" />
+
+	<!-- Order -->
+	<dubbo:reference id="dgOrderService" interface="com.xmyy.order.service.DgOrderService" check="false" />
+
+	<!-- Pay -->
+	<dubbo:reference id="allinPayMemberService" interface="com.xmyy.pay.service.AllinPayMemberService" check="false" />
+	<dubbo:reference id="allinPayOrderService" interface="com.xmyy.pay.service.AllinPayOrderService" check="false" />
+	<dubbo:reference id="callBackService" interface="com.xmyy.pay.service.CallBackService" check="false" />
+	<dubbo:reference id="dgCheckAccountDetailService" interface="com.xmyy.pay.service.DgCheckAccountDetailService" check="false" />
+	<dubbo:reference id="dgCheckAccountSummaryService" interface="com.xmyy.pay.service.DgCheckAccountSummaryService" check="false" />
+	<dubbo:reference id="dgCheckAccountTempService" interface="com.xmyy.pay.service.DgCheckAccountTempService" check="false" />
+	<dubbo:reference id="dgPayDetailService" interface="com.xmyy.pay.service.DgPayDetailService" check="false" />
+	<dubbo:reference id="dgPayLogService" interface="com.xmyy.pay.service.DgPayLogService" check="false" />
+	<dubbo:reference id="manageCheckAccountService" interface="com.xmyy.pay.service.ManageCheckAccountService" check="false" />
+
+</beans>

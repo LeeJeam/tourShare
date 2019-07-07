@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.order.mapper.DgOrderHistoryMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_order_history
+		<where>
+			<if test="cm.orderId != null and cm.orderId != ''">
+					and order_id_=#{cm.orderId}
+			</if>
+			<if test="cm.optContext != null and cm.optContext != ''">
+					and opt_context=#{cm.optContext}
+			</if>
+			<if test="cm.optDesc != null and cm.optDesc != ''">
+					and opt_desc=#{cm.optDesc}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or order_id_ like CONCAT('%',#{cm.keyword},'%')
+					or opt_context like CONCAT('%',#{cm.keyword},'%')
+					or opt_desc like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

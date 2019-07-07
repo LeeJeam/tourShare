@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.member.mapper.UcInviteCodeMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from uc_invite_code
+		<where>
+			<if test="cm.inviteNo != null and cm.inviteNo != ''">
+					and invite_no=#{cm.inviteNo}
+			</if>
+			<if test="cm.mobile != null and cm.mobile != ''">
+					and mobile=#{cm.mobile}
+			</if>
+			<if test="cm.email != null and cm.email != ''">
+					and email=#{cm.email}
+			</if>
+			<if test="cm.occupyMan != null and cm.occupyMan != ''">
+					and occupy_man=#{cm.occupyMan}
+			</if>
+			<if test="cm.explainInfo != null and cm.explainInfo != ''">
+					and explain_info=#{cm.explainInfo}
+			</if>
+			<if test="cm.channelType != null and cm.channelType != ''">
+					and channel_type=#{cm.channelType}
+			</if>
+			<if test="cm.days != null and cm.days != ''">
+					and days=#{cm.days}
+			</if>
+			<if test="cm.sendTime != null and cm.sendTime != ''">
+					and send_time=#{cm.sendTime}
+			</if>
+			<if test="cm.state != null and cm.state != ''">
+					and state=#{cm.state}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or invite_no like CONCAT('%',#{cm.keyword},'%')
+					or mobile like CONCAT('%',#{cm.keyword},'%')
+					or email like CONCAT('%',#{cm.keyword},'%')
+					or occupy_man like CONCAT('%',#{cm.keyword},'%')
+					or explain_info like CONCAT('%',#{cm.keyword},'%')
+					or channel_type like CONCAT('%',#{cm.keyword},'%')
+					or days like CONCAT('%',#{cm.keyword},'%')
+					or send_time like CONCAT('%',#{cm.keyword},'%')
+					or state like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

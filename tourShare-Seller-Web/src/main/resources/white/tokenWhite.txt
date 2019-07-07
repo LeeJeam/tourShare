@@ -1,0 +1,14 @@
+/swagger-ui.html
+/webjars/
+/v2/
+/swagger-resources
+
+/api/seller/add
+/api/seller/login
+/api/seller/resetpwd
+/api/seller/list
+/api/seller/topList
+/api/seller/getSellerInfo
+/api/seller/logout
+/api/seller/getSellerInfo
+/api/seller/search/

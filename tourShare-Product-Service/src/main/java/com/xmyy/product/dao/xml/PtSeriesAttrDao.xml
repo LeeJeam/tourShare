@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.dao.PtSeriesAttrDao">
+
+    <select id="getSeriesAttr" resultType="com.xmyy.product.dto.ApiAttrDto">
+		SELECT DISTINCT t.id_ as attrTypeId ,t.name as attrTypeName,
+		group_concat(v.id_) as attrValueIdStr,
+		group_concat(v.name) as attrValueNameStr
+		FROM pt_series_attr s
+		left join pt_attr_type t on s.pt_attr_type_id = t.id_
+		left join pt_attr_value v on s.pt_attr_value_id = v.id_
+		where s.pt_series_id = #{seriesId}
+		group by attrTypeId
+	</select>
+
+
+	<select id="getSeriesAttrList" resultType="com.xmyy.product.dto.PtSeriesAttrDto">
+		SELECT DISTINCT t.id_ as attrTypeId ,t.name as attrTypeName,s.pt_series_id ptSeriesId,
+		group_concat(v.id_ ORDER BY v.id_ asc separator '/') as attrValueIdStr,
+		group_concat(v.name ORDER BY v.name asc separator '/') as attrValueNameStr
+		FROM pt_series_attr s
+		left join pt_attr_type t on s.pt_attr_type_id = t.id_
+		left join pt_attr_value v on s.pt_attr_value_id = v.id_
+		where s.enable_=1 and t.enable_=1 and v.enable_=1
+		and s.pt_series_id in
+		<foreach collection="seriesIds" item="seriesId" separator="," open="(" close=")"  >
+			#{seriesId}
+		</foreach>
+		group by attrTypeId,ptSeriesId
+	</select>
+
+	<select id="queryManagerPtSeriesList" resultType="com.xmyy.product.vo.ManagerPtSeriesListResult" parameterType="com.xmyy.product.vo.ManageSeriesParam">
+		SELECT
+			ps.id_ AS seriesId,
+			ps.name AS seriesName,
+			ps.series_no AS seriesNo ,
+			pc1.name AS cateGory1,
+			pc2.name AS cateGory2,
+			ps.pt_brand_id AS ptBrandId
+		FROM pt_series ps
+  		LEFT JOIN pt_category pc1 ON ps.pt_category_id=pc1.id_
+		LEFT JOIN pt_category pc2 ON ps.pt_category_id2=pc2.id_
+		WHERE ps.enable_=1
+		AND pc1.enable_=1
+		AND pc2.enable_=1
+		<if test="categoryId!=null and categoryId!=''">
+			and ps.pt_category_id=#{categoryId}
+		</if>
+		<if test="categoryId2!=null and categoryId2!=''">
+			and ps.pt_category_id2=#{categoryId2}
+		</if>
+		<if test="brandId!=null and brandId!=''">
+			and ps.pt_brand_id=#{brandId}
+		</if>
+		<if test="seriesName!=null and seriesName!=''">
+			and ps.name like CONCAT('%',#{seriesName},'%')
+		</if>
+		<if test="ptAttrParams!=null and ptAttrParams.size>0">
+			AND EXISTS (
+				SELECT 1 FROM pt_series_attr pa
+				WHERE pa.enable_=1
+				AND pa.pt_series_id=ps.id_
+				AND pa.pt_attr_type_id IN
+				<foreach collection="ptAttrParams" item="item" open="(" close=")" separator=",">
+					#{item.ptAttrTypeId}
+				</foreach>
+				and pa.pt_attr_value_id IN
+				<foreach collection="ptAttrParams" item="item" open="(" close=")" separator=",">
+					#{item.ptAttrValueId}
+				</foreach>
+			)
+		</if>
+		LIMIT (#{current}-1)*#{size},#{size}
+	</select>
+
+	<select id="countManagerPtSeries" resultType="Integer" parameterType="com.xmyy.product.vo.ManageSeriesParam">
+		select count(1) from pt_series  ps
+		LEFT JOIN pt_category pc1 on ps.pt_category_id =pc1.id_
+		LEFT JOIN pt_category pc2 on ps.pt_category_id2=pc2.id_
+		where ps.enable_=1 and pc1.enable_=1 and pc2.enable_=1
+
+		<if test="categoryId!=null and categoryId!=''">
+			and ps.pt_category_id=#{categoryId}
+		</if>
+		<if test="categoryId2!=null and categoryId2!=''">
+			and ps.pt_category_id2=#{categoryId2}
+		</if>
+		<if test="brandId!=null and brandId!=''">
+			and ps.pt_brand_id=#{brandId}
+		</if>
+		<if test="seriesName!=null and seriesName!=''">
+			and ps.name like CONCAT('%',#{seriesName},'%')
+		</if>
+		<if test="ptAttrParams!=null and ptAttrParams.size>0">
+			and EXISTS (select 1 from pt_series_attr pa
+			where pa.enable_=1 and pa.pt_series_id=ps.id_
+			and pa.pt_attr_type_id in
+			<foreach collection="ptAttrParams" item="item" open="(" close=")" separator=",">
+				#{item.ptAttrTypeId}
+			</foreach>
+			and pa.pt_attr_value_id in
+			<foreach collection="ptAttrParams" item="item" open="(" close=")" separator=",">
+				#{item.ptAttrValueId}
+			</foreach>
+			)
+		</if>
+	</select>
+
+
+	<select id="countSeriesTotal" resultType="Integer">
+		select count(1) from pt_series  ps
+		LEFT JOIN pt_category pc1 on ps.pt_category_id =pc1.id_
+		LEFT JOIN pt_category pc2 on ps.pt_category_id2=pc2.id_
+		where ps.enable_=1 and pc1.enable_=1 and pc2.enable_=1
+	</select>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- Circle -->
+	<dubbo:reference id="dgTagsService" interface="com.xmyy.circle.service.DgTagsService" check="false" />
+	<dubbo:reference id="ucMemberRelationService" interface="com.xmyy.circle.service.UcMemberRelationService" check="false" />
+
+	<!-- Member -->
+	<dubbo:reference id="adminUserService" interface="com.xmyy.manage.service.AdminUserService" check="false" />
+	<dubbo:reference id="dgSmsRecordService" interface="com.xmyy.member.service.DgSmsRecordService" check="false" />
+	<dubbo:reference id="phoneBelongService" interface="com.xmyy.member.service.PhoneBelongService" check="false" />
+	<dubbo:reference id="ucMemberLoginService" interface="com.xmyy.member.service.UcMemberLoginService" check="false" />
+	<dubbo:reference id="ucBuyerService" interface="com.xmyy.member.service.UcBuyerService" check="false" />
+
+	<!-- Pay -->
+	<dubbo:reference id="allinPayMemberService" interface="com.xmyy.pay.service.AllinPayMemberService" check="false" />
+
+	<!-- Product -->
+	<dubbo:reference id="ptProductService" interface="com.xmyy.product.service.PtProductService" check="false" />
+	<dubbo:reference id="tourService" interface="com.xmyy.product.service.TourService" check="false" />
+
+</beans>

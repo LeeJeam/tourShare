@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.order.dao.DgOrderDao">
+
+	<select id="selectBuyerOrderInfo" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		SELECT COUNT(id_) FROM dg_order WHERE buyer_id = #{id} AND buyer_del = 0 AND order_status = 1
+		UNION ALL
+		SELECT COUNT(id_) FROM dg_order WHERE buyer_id = #{id} AND buyer_del = 0 AND order_status = 2
+		UNION ALL
+		SELECT COUNT(id_) FROM dg_order WHERE buyer_id = #{id} AND buyer_del = 0 AND order_status = 3
+		UNION ALL
+		SELECT COUNT(id_) FROM dg_order_return WHERE buyer_id = #{id} AND return_status = 0
+		UNION ALL
+		SELECT COUNT(id_) FROM dg_order WHERE buyer_id = #{id} AND buyer_del = 0 AND order_status = 4 AND evaluate_status = 0;
+	</select>
+
+</mapper>

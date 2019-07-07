@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.dao.DgTourDao">
+
+    <resultMap id="tourImgMap" type="com.xmyy.product.dto.ApiTourImgDto">
+        <result property="id" column="id_" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="firstRegionName" column="first_region_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="firstTime" column="first_time" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="destRegionName" column="dest_region_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="returnTime" column="return_time" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="status" column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="isLive" column="is_live" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="auditStatus" column="audit_status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="siteCount" column="site_count" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="tags" column="tags" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="isPacker" column="is_packer" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="curRegionName" column="cur_region_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="tourInfoMap" type="com.xmyy.product.vo.ApiTourInfoResult">
+        <id property="id" javaType="java.lang.Long" column="id_" jdbcType="BIGINT"/>
+        <result property="createTime" javaType="java.util.Date" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="status" javaType="java.lang.Integer" column="status" jdbcType="INTEGER"/>
+        <result property="tourNo" javaType="java.lang.String" column="tour_no" jdbcType="VARCHAR"/>
+        <result property="createBy" javaType="java.lang.Long" column="create_by" jdbcType="BIGINT"/>
+        <collection property="tourSites"
+                    ofType="com.xmyy.product.vo.ApiTourSiteInfoResult"
+                    column="id_"
+                    select="com.xmyy.product.dao.DgTourSiteDao.queryTourSiteInfosByTourId">
+        </collection>
+    </resultMap>
+
+    <resultMap id="todayTourMap" type="com.xmyy.product.vo.ApiTourTodayResult">
+        <result property="id" column="id_" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="firstRegionName" column="first_region_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="firstTime" column="first_time" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="destRegionName" column="dest_region_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="returnTime" column="return_time" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="isPacker" column="is_packer" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <collection property="tourSites"
+                    ofType="com.xmyy.product.vo.ApiTourSiteInfoResult"
+                    column="id_"
+                    select="com.xmyy.product.dao.DgTourSiteDao.queryTodayTourSiteInfosByTourId">
+        </collection>
+    </resultMap>
+
+    <select id="matchPageListByMacthCondtion" resultMap="tourInfoMap" parameterType="com.xmyy.product.vo.ApiTourMatchParam">
+        SELECT a.id_, a.tour_no, a.status, a.audit_status, a.create_time FROM dg_tour a
+        <where>
+            <if test="matchMinTime !=null">
+                and a.return_time&gt;=#{matchMinTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="matchMaxTime !=null">
+                and a.return_time&lt;#{matchMaxTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and a.create_by=#{createBy}
+            </if>
+            <if test="isPacker==0 or isPacker==1">
+                and a.is_packer=#{isPacker}
+            </if>
+            AND (a.status=1 OR a.status=2)
+            AND EXISTS (
+            SELECT 1 FROM dg_tour_site b WHERE
+            a.id_ = b.tour_id
+            <if test="matchRegionCode !=null and matchRegionCode!=''">
+                and ( b.region_code=#{matchRegionCode}
+                <if test="customRegionCode!=null and customRegionCode!=''">
+                    or b.region_code=#{customRegionCode}
+                </if>
+                )
+            </if>
+            )
+            order by a.create_time asc LIMIT ${(current-1)*size},${size}
+        </where>
+    </select>
+
+    <select id="countByMacthCondtion" resultType="java.lang.Long" parameterType="com.xmyy.product.vo.ApiTourMatchParam">
+        select count(1) from dg_tour a
+        <where>
+            <if test="matchMinTime !=null">
+                and a.return_time&gt;#{matchMinTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="matchMaxTime !=null">
+                and a.return_time&lt;#{matchMaxTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and a.create_by=#{createBy}
+            </if>
+            <if test="isPacker==0 or isPacker==1">
+                and a.is_packer=#{isPacker}
+            </if>
+            AND (a.status=1 OR a.status=2)
+            AND EXISTS (
+            SELECT 1 FROM dg_tour_site b WHERE
+            a.id_ = b.tour_id
+            <if test="matchRegionCode !=null and matchRegionCode!=''">
+                and ( b.region_code=#{matchRegionCode}
+                <if test="customRegionCode!=null and customRegionCode!=''">
+                    or b.region_code=#{customRegionCode}
+                </if>
+                )
+            </if>
+            )
+            order by a.create_time asc
+        </where>
+    </select>
+
+    <select id="listPageForBuyer1" resultMap="tourImgMap" parameterType="com.xmyy.product.vo.ApiTourListForBuyerParam">
+        select a.id_, a.first_region_name, a.first_time, a.dest_region_name, a.is_live, a.return_time,
+            a.audit_status, a.site_count, a.tags, a.is_packer, a.create_by, a.create_time, a.cur_region_name
+        from
+        dg_tour a
+        <where>
+            <choose>
+                <when test="destRegionCodes!=null and destRegionCodes.size>0">
+                    and a.dest_region_code in
+                    <foreach collection="destRegionCodes" index="index" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </when>
+                <when test="destRegionCode!=null and destRegionCode!=''">
+                    and a.dest_region_code=#{destRegionCode}
+                </when>
+            </choose>
+            <if test="destRegionCode!=null and destRegionCode!=''">
+                and a.dest_region_code = #{destRegionCode}
+            </if>
+
+            <if test="tagsGroup!=null and tagsGroup.size>0">
+                and
+                <foreach collection="tagsGroup" index="index" item="tag" open="(" separator=" or " close=")">
+                    a.tags like CONCAT('%',#{tag},'%')
+                </foreach>
+            </if>
+            AND (a.status=1 OR a.status=2)
+            and a.enable_=1
+            <if test="isSelf==0 or isSelf==1">
+                and a.is_self=#{isSelf}
+            </if>
+            <if test="isPacker==0 or isPacker==1">
+                and a.is_packer=#{isPacker}
+            </if>
+            <if test="sortType==null or sortType==0">
+                order by a.is_top desc,a.top_begin_time desc,a.create_time desc
+            </if>
+            <if test="sortType!=null and sortType==1">
+                order by a.first_time desc
+            </if>
+            LIMIT ${(current-1)*size},${size}
+        </where>
+    </select>
+
+    <select id="countTourForBuyer1" resultType="java.lang.Long" parameterType="com.xmyy.product.vo.ApiTourListForBuyerParam">
+        select count(1) from dg_tour a
+        <where>
+            <choose>
+                <when test="destRegionCodes!=null and destRegionCodes.size>0">
+                    and a.dest_region_code in
+                    <foreach collection="destRegionCodes" index="index" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </when>
+                <when test="destRegionCode!=null and destRegionCode!=''">
+                    and a.dest_region_code=#{destRegionCode}
+                </when>
+            </choose>
+            <if test="destRegionCode!=null and destRegionCode!=''">
+                and a.dest_region_code = #{destRegionCode}
+            </if>
+
+            <if test="tagsGroup!=null and tagsGroup.size>0">
+                and
+                <foreach collection="tagsGroup" index="index" item="tag" open="(" separator=" or " close=")">
+                    a.tags like CONCAT('%',#{tag},'%')
+                </foreach>
+            </if>
+            AND (a.status=1 OR a.status=2)
+            and a.enable_=1
+            <if test="isSelf==0 or isSelf==1">
+                and a.is_self=#{isSelf}
+            </if>
+            <if test="isPacker==0 or isPacker==1">
+                and a.is_packer=#{isPacker}
+            </if>
+        </where>
+    </select>
+
+    <select id="listPageForBuyer2" resultMap="tourImgMap" parameterType="com.xmyy.product.vo.ApiTourListForBuyerParam">
+        SELECT a.id_, a.first_region_name, a.first_time, a.dest_region_name, a.is_live, a.return_time,
+          a.audit_status, a.site_count, a.tags, a.is_packer, a.create_by, a.create_time, a.cur_region_name
+        FROM dg_tour a
+        LEFT JOIN uc_seller b
+        ON a.create_by=b.id_
+        <where>
+            <if test="isPacker==0 or isPacker==1">
+                and a.is_packer=#{isPacker}
+            </if>
+            <choose>
+                <when test="destRegionCodes!=null and destRegionCodes.size>0">
+                    and a.dest_region_code in
+                    <foreach collection="destRegionCodes" index="index" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </when>
+                <when test="destRegionCode!=null and destRegionCode!=''">
+                    and a.dest_region_code=#{destRegionCode}
+                </when>
+            </choose>
+            <if test="destRegionCode!=null and destRegionCode!=''">
+                and a.dest_region_code = #{destRegionCode}
+            </if>
+            <if test="tagsGroup!=null and tagsGroup.size>0">
+                and
+                <foreach collection="tagsGroup" index="index" item="tag" open="(" separator=" or " close=")">
+                    a.tags like CONCAT('%',#{tag},'%')
+                </foreach>
+            </if>
+            AND (a.status=1 OR a.status=2)
+            AND (a.enable_=1 and b.enable_=1)
+            <if test="isSelf==0 or isSelf==1">
+                and b.is_self=#{isSelf}
+            </if>
+            <if test="sortType!=null and sortType==1">
+                order by a.first_time desc
+            </if>
+            <if test="sortType!=null and sortType==2">
+                order by b.trust_value desc
+            </if>
+            <if test="sortType!=null and sortType==3">
+                order by b.trade_count desc
+            </if>
+            LIMIT ${(current-1)*size},${size}
+        </where>
+    </select>
+
+    <select id="countTourForBuyer2" resultType="java.lang.Long" parameterType="com.xmyy.product.vo.ApiTourListForBuyerParam">
+        select count(1) from dg_tour a
+        <where>
+            <if test="isPacker!=null and isPacker!=''">
+                and a.is_packer=#{isPacker}
+            </if>
+            <choose>
+                <when test="destRegionCodes!=null and destRegionCodes.size>0">
+                    and a.dest_region_code in
+                    <foreach collection="destRegionCodes" index="index" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </when>
+                <when test="destRegionCode!=null and destRegionCode!=''">
+                    and a.dest_region_code=#{destRegionCode}
+                </when>
+            </choose>
+            <if test="tagsGroup!=null and tagsGroup.size>0">
+                and
+                <foreach collection="tagsGroup" index="index" item="tag" open="(" separator=" or " close=")">
+                    a.tags like CONCAT('%',#{tag},'%')
+                </foreach>
+            </if>
+            AND (a.status=1 OR a.status=2)
+            AND EXISTS (
+            SELECT 1 FROM uc_seller b WHERE
+            a.create_by = b.id_
+            )
+        </where>
+    </select>
+
+    <select id="listIndexForBuyer" resultMap="tourImgMap" parameterType="com.xmyy.product.vo.ApiTourInBuyerIndexParam">
+        select a.id_,
+            a.first_region_name, a.first_region_code, a.first_time,
+            a.dest_region_name, a.dest_region_code, a.return_time,
+            a.cur_region_name, a.cur_region_code,
+            a.is_live, a.status, a.audit_status, a.site_count, a.tags, a.is_packer, a.create_by, a.create_time
+        from dg_tour a
+        <where>
+            <if test="isPacker!=null and isPacker!=''">
+                and a.is_packer=#{isPacker}
+            </if>
+            <if test="tagsGroup!=null and tagsGroup.size>0">
+                and
+                <foreach collection="tagsGroup" index="index" item="tag" open="(" separator=" or " close=")">
+                    a.tags like CONCAT('%',#{tag},'%')
+                </foreach>
+            </if>
+            AND (a.status=1 OR a.status=2)
+            AND EXISTS (
+            SELECT 1 FROM dg_tour_site b WHERE
+            a.id_ = b.tour_id
+            <if test="matchRegion !=null and matchRegion!=''">
+                and b.region_code=#{matchRegion}
+            </if>
+            )
+            order by a.is_top desc, a.top_begin_time desc, a.create_time desc
+            LIMIT ${(current-1)*size},${size}
+        </where>
+    </select>
+
+    <select id="countIndexForBuyer" resultType="java.lang.Long" parameterType="com.xmyy.product.vo.ApiTourInBuyerIndexParam">
+        select count(1) from dg_tour a
+        <where>
+            <if test="isPacker!=null and isPacker!=''">
+                and a.is_packer=#{isPacker}
+            </if>
+            <if test="tagsGroup!=null and tagsGroup.size>0">
+                and
+                <foreach collection="tagsGroup" index="index" item="tag" open="(" separator=" or " close=")">
+                    a.tags like CONCAT('%',#{tag},'%')
+                </foreach>
+            </if>
+            AND (a.status=1 OR a.status=2)
+            AND EXISTS (
+            SELECT 1 FROM dg_tour_site b WHERE
+            a.id_ = b.tour_id
+            <if test="matchRegion !=null and matchRegion!=''">
+                and b.region_code=#{matchRegion}
+            </if>
+            )
+        </where>
+    </select>
+
+    <select id="listRecentForSeller" resultMap="tourInfoMap">
+        select id_, tour_no, status, create_time, create_by from dg_tour
+        <where>
+            <if test="isPacker==0 or isPacker==1">
+                and is_packer=#{isPacker}
+            </if>
+            <if test="createBy!=null">
+                and create_by=#{createBy}
+            </if>
+            and enable_=1
+            AND (status=1 OR status=2)
+            order by create_time desc
+        </where>
+    </select>
+
+    <select id="listHistoryForSeller" resultMap="tourInfoMap">
+        select id_, status, create_time from dg_tour
+        <where>
+            <if test="isPacker==0 or isPacker==1">
+                and is_packer=#{isPacker}
+            </if>
+            <if test="createBy!=null">
+                and create_by=#{createBy}
+            </if>
+            and enable_=1
+            AND (status=0 OR status=4)
+            order by create_time desc
+        </where>
+    </select>
+
+    <select id="listRunningTour" resultMap="tourInfoMap">
+        select a.id_, a.tour_no, a.status, a.create_time from dg_tour a
+        <where>
+            <if test="createBy!=null">
+                and a.create_by=#{createBy}
+            </if>
+            AND a.status=2
+            AND a.is_packer=1
+        </where>
+        order by a.create_time asc
+        limit 0,1
+    </select>
+
+    <select id="queryNewTourByMemberIds" resultMap="tourInfoMap">
+        SELECT
+          b.id_ AS id_,
+          b.create_time AS create_time,
+          b.status AS status,
+          b.create_by
+        FROM dg_tour b
+        WHERE b.id_
+        IN (
+            SELECT MAX(id_) AS id FROM dg_tour a
+            <where>
+                <if test="memberIds!=null and memberIds.size>0">
+                    AND a.create_by IN
+                    <foreach collection="memberIds" index="index" item="createBy" open="(" separator="," close=")">
+                        #{createBy}
+                    </foreach>
+                </if>
+                AND a.is_packer=1
+                AND a.enable_=1
+                AND (a.status=1 OR a.status=2)
+            </where>
+            GROUP BY a.create_by
+        )
+        ORDER BY b.create_time DESC
+    </select>
+
+    <select id="queryAllTodayTours" resultMap="todayTourMap">
+        SELECT a.id_,
+            a.first_region_name, a.first_time,
+            a.dest_region_name,
+            a.return_time, a.is_packer, a.create_by
+        FROM dg_tour a
+        <where>
+            EXISTS(
+                SELECT 1
+                FROM dg_tour_site b
+                WHERE b.enable_=1
+                    AND DATE(b.plan_begin_time)=DATE(now())
+                    AND b.site_type = 1
+                    AND b.tour_id=a.id_
+            )
+            AND enable_ = 1
+            AND DATE(a.first_time) &lt;= DATE(now())
+            AND DATE(a.return_time) &gt;= DATE(now())
+        </where>
+    </select>
+
+    <update id="updateCurSiteByTourSite" parameterType="com.xmyy.product.model.DgTourSite">
+        UPDATE dg_tour
+        <set>
+            <if test="regionName!=null">
+                cur_region_name=#{regionName},
+            </if>
+            <if test="regionCode!=null">
+                cur_region_code=#{regionCode},
+            </if>
+        </set>
+        WHERE id_=#{tourId}
+    </update>
+
+
+    <!-- 行程管理列表查询开始 -->
+    <sql id="queryForBuyerFilter">
+        <where>
+            enable_=1
+            <if test="tourNo != null">
+                and tour_no = #{tourNo, jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                AND status = #{status, jdbcType=INTEGER}
+            </if>
+            <if test="timingStartTime != null">
+                AND first_time <![CDATA[ >= ]]> FROM_UNIXTIME(#{timingStartTime, jdbcType=DATE}/1000)
+            </if>
+            <if test="timingEndTime != null">
+                AND return_time <![CDATA[ <= ]]> FROM_UNIXTIME(#{timingEndTime, jdbcType=DATE}/1000)
+            </if>
+            <if test="minOrderCount != null">
+                AND order_count <![CDATA[ >= ]]> #{minOrderCount, jdbcType=BIGINT}
+            </if>
+            <if test="maxOrderCount != null">
+                AND order_count <![CDATA[ <= ]]> #{maxOrderCount, jdbcType=BIGINT}
+            </if>
+            <if test="isLive != null">
+                AND is_live = #{isLive, jdbcType=INTEGER}
+            </if>
+            <if test="destRegion != null">
+                AND dest_region_code = #{destRegion, jdbcType=VARCHAR}
+            </if>
+            <if test="userName != null">
+                AND real_name LIKE CONCAT('%', #{userName, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="mobile != null">
+                AND mobile LIKE CONCAT('%', #{mobile, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="tags != null">
+                AND FIND_IN_SET(#{tags, jdbcType=VARCHAR}, tags)
+            </if>
+            <if test="minDemandCount != null">
+                AND demand_count <![CDATA[ >= ]]> #{minDemandCount, jdbcType=INTEGER}
+            </if>
+            <if test="maxDemandCount != null">
+                AND demand_count <![CDATA[ <= ]]> #{maxDemandCount, jdbcType=INTEGER}
+            </if>
+            <if test="auditUserName != null">
+                AND audit_user_name LIKE CONCAT('%', #{auditUserName, jdbcType=INTEGER}, '%')
+            </if>
+            <if test="auditStatus != null">
+                AND audit_status = #{auditStatus, jdbcType=INTEGER}
+            </if>
+            <if test="isValidate != null &amp;&amp; isValidate == 0">
+                AND audit_status <![CDATA[ < ]]> 2
+            </if>
+            <if test="isValidate != null &amp;&amp; isValidate == 1">
+                AND audit_status <![CDATA[ > ]]> 1
+            </if>
+            <if test="isPacker != null">
+                AND is_packer = #{isPacker}
+            </if>
+            <if test="buyerId != null">
+                AND create_by = #{buyerId}
+            </if>
+        </where>
+    </sql>
+
+    <select id="queryForBuyer" parameterType="com.xmyy.product.vo.ManageTourQueryParam" resultType="com.xmyy.product.vo.ManageTourDetailResult">
+        SELECT
+            id_ AS id,
+            tour_no AS tourNo,
+            dest_region_name AS destRegion,
+            audit_status AS auditStatus,
+            demand_count AS demandCount,
+            order_count AS orderCount,
+            amount, status,
+            first_time AS timingStartTime,
+            return_time AS timingEndTime,
+            real_name AS realName, mobile,
+            audit_user_name AS auditUserName,
+            audit_time AS auditTime,
+            check_pic AS checkPic
+        FROM dg_tour
+        <include refid="queryForBuyerFilter"/>
+        ORDER BY id_ ASC
+        LIMIT ${(current-1)*size}, #{size, jdbcType=INTEGER}
+    </select>
+
+    <select id="countForBuyer" parameterType="com.xmyy.product.vo.ManageTourQueryParam" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1)
+        FROM dg_tour
+        <include refid="queryForBuyerFilter"/>
+    </select>
+
+    <select id="countForDestRegion" parameterType="com.xmyy.product.vo.ManageTourQueryParam" resultType="com.xmyy.product.vo.ManageTourDestRegionCountResult">
+        SELECT dest_region_code as destRegionCode, COUNT(dest_region_code) as count
+        FROM dg_tour
+        <include refid="queryForBuyerFilter"/>
+        GROUP BY dest_region_code
+        ORDER BY COUNT(dest_region_code) desc
+    </select>
+    <!-- 行程管理列表查询结束 -->
+
+    <!-- queryForValidate 开始 -->
+    <sql id="queryForValidateFilter">
+        <where>
+            t.enable_=1
+            <if test="tourNo != null">
+                and t.tour_no like CONCAT('%', #{tourNo, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="auditUserName != null">
+                AND t.audit_user_name like CONCAT('%', #{auditUserName, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="auditStatus != null">
+                AND t.audit_status = #{auditStatus, jdbcType=INTEGER}
+            </if>
+            <if test="mobile != null">
+                AND t.mobile LIKE CONCAT('%', #{mobile, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="startAuditTime != null &amp;&amp; endAuditTime != null">
+                AND (t.audit_time <![CDATA[ >= ]]> #{startAuditTime, jdbcType=TIMESTAMP} AND t.audit_time <![CDATA[ <= ]]> #{endAuditTime, jdbcType=TIMESTAMP})
+            </if>
+            and t.audit_status&lt;&gt;0
+        </where>
+    </sql>
+    <select id="queryForValidate" parameterType="com.xmyy.product.vo.ManageTourGetValidateParam" resultType="com.xmyy.product.vo.ManageTourValidateDetailResult">
+        SELECT
+            t.id_ as id,
+            t.tour_no as tourNo,
+            t.mobile,
+            t.first_time as timingStartTime,
+            t.return_time as timingEndTime,
+            t.audit_user_name as auditUserName,
+            t.audit_time as auditTime,
+            t.audit_status as auditStatus,
+            t.check_pic as checkPic,
+            t.create_time as createTime,
+            t.is_top as isTop,
+            t.real_name as realName,
+            t.dest_region_name as destRegion
+        FROM dg_tour t
+        <include refid="queryForValidateFilter"/>
+        order by t.create_time desc
+        LIMIT ${(current-1)*size}, #{size, jdbcType=INTEGER}
+    </select>
+
+    <select id="countForValidate" parameterType="com.xmyy.product.vo.ManageTourGetValidateParam" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM dg_tour t
+        <include refid="queryForValidateFilter"/>
+    </select>
+
+    <select id="queryValidateCount" parameterType="com.xmyy.product.vo.ManageTourGetValidateParam" resultType="java.util.Map">
+        SELECT audit_status as auditStatus, count(audit_status) as count
+        FROM dg_tour t
+        <include refid="queryForValidateFilter"/>
+        GROUP BY audit_status
+    </select>
+    <!-- queryForValidate 结束 -->
+
+    <select id="queryForTop" resultType="com.xmyy.product.vo.ManageTourTopResult">
+        SELECT
+            id_ as id,
+            tour_no as tourNo,
+            first_region_name as firstRegion,
+            dest_region_name as destRegion,
+            first_time as firstTime,
+            return_time as returnTime,
+            toper_name as toperName,
+            top_begin_time as topBeginTime,
+            top_end_time as topEndTime
+        FROM dg_tour
+        WHERE is_top = 1 and enable_=1
+        ORDER BY top_begin_time
+        LIMIT 0, 5
+    </select>
+
+</mapper>

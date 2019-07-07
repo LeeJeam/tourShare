@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.dao.PtProductDao">
+
+    <select id="selectIdByKeyword" resultType="com.xmyy.product.vo.ApiProductSearchListResult">
+		select id_ as id,title,cover,min_price as price from pt_product
+		<where>
+			enable_ = 1 and (
+			<if test="productIds != null">
+				id_ in
+				<foreach collection="productIds" index="index" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="categoryIds != null">
+				<if test="productIds != null">or</if>
+				pt_category_id in
+				<foreach collection="categoryIds" index="index" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+				or pt_category_id2 in
+				<foreach collection="categoryIds" index="index" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="brandIds != null">
+				<if test="productIds != null or categoryIds != null">or</if>
+				pt_brand_id in
+				<foreach collection="brandIds" index="index" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="keyword != null and keyword !=''">
+				<if test="productIds != null or categoryIds != null or brandIds != null">or</if>
+				name like CONCAT('%',#{keyword},'%')
+				or title like CONCAT('%',#{keyword},'%')
+			</if>
+			)
+		</where>
+		order by is_top desc
+	</select>
+
+	<!-- getList 接口 -->
+    <select id="getProductPageCount" parameterType="com.xmyy.product.vo.ApiProductListParam" resultType="java.lang.Integer">
+		select count(*) from pt_product p left join uc_seller s on p.create_by = s.id_
+		<include refid="WhereSqlCommon" />
+	</select>
+
+	<select id="getProductPageList" parameterType="com.xmyy.product.vo.ApiProductListParam" resultType="com.xmyy.product.vo.ApiProductListResult">
+		select p.id_ as id,p.title,p.cover,p.min_price as price,p.buy_region as buyRegion,p.product_type as productType,
+		p.expires_time as expiresTime,p.order_count as orderCount,p.shop_name as shopName,p.dg_tour_id as tourId,
+		p.buy_region_logo as buyRegionLogo,p.buy_region_currency as buyRegionCurrency,p.buy_region_currency_code as buyRegionCurrencyCode,
+		p.currency as currency,p.currency_code as currencyCode,
+		s.avatar_rsurl as avatarRsurl,s.nick_name as nickName
+		from pt_product p left join uc_seller s on p.create_by = s.id_
+		<include refid="WhereSqlCommon" />
+	</select>
+
+	<sql id="WhereSqlCommon">
+		where p.enable_ = 1
+		<if test="isSale == 0">
+			and p.is_sale = 0
+		</if>
+		<if test="isSale != 0">
+			and p.is_sale = 1
+		</if>
+		<if test="sellerId != null">
+			and p.create_by = #{sellerId}
+		</if>
+		<if test="productType != null">
+			and p.product_type = #{productType}
+		</if>
+		<if test="categoryId != null">
+			and p.pt_category_id = #{categoryId}
+		</if>
+		<choose>
+			<when test="continentCode != null and continentCode !=''">
+				and p.buy_region_short_code in
+				<foreach collection="shortCodes" index="index" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</when>
+			<otherwise>
+				<if test="buyRegionShortCode != null and buyRegionShortCode !=''">
+					and p.buy_region_short_code = #{buyRegionShortCode}
+				</if>
+			</otherwise>
+		</choose>
+			order by p.is_top desc
+		<if test="sort == 1">
+			,p.update_time desc
+		</if>
+		<if test="sort == 2">
+			,p.update_time asc
+		</if>
+		<if test="sort == 3">
+			,p.order_count desc
+		</if>
+		<if test="sort == 4">
+			,p.order_count asc
+		</if>
+		<if test="sort == 5">
+			,p.min_price asc
+		</if>
+		<if test="sort == 6">
+			,p.max_price desc
+		</if>
+	</sql>
+
+	<select id="getStatisticByCategory" resultType="com.xmyy.product.dto.ProductStatisticDto">
+		SELECT
+			pt_category_id AS categoryId,
+			count(id_) AS num
+		FROM pt_product
+		WHERE enable_ = 1
+		GROUP BY pt_category_id
+	</select>
+
+	<!-- 后台商品列表开始 -->
+	<select id="queryProductListCount" resultType="java.lang.Integer">
+		SELECT COUNT(id_)
+		FROM pt_product p
+		LEFT JOIN uc_seller u
+	    ON p.create_by = u.id_
+		<include refid="queryProductList_condition"/>
+	</select>
+
+	<select id="queryProductListPage" resultType="com.xmyy.product.vo.ManageProductListResult">
+		SELECT
+			p.id_ AS id,
+			p.cover, p.title,
+			p.min_price AS price,
+			p.order_count AS orderCount,
+			p.create_time AS createTime,
+			u.nick_name AS nickName
+		FROM pt_product p LEFT JOIN uc_seller u
+	    ON p.create_by = u.id_
+	    <include refid="queryProductList_condition"/>
+	</select>
+
+	<sql id="queryProductList_condition">
+		WHERE p.enable_ = 1
+		<if test="title != null and title !=''">
+			AND p.title LIKE CONCAT('%',#{title},'%')
+		</if>
+		<if test="orderCountMin != null and orderCountMin > 0">
+			AND p,order_count &gt;= #{orderCountMin}
+		</if>
+		<if test="orderCountMax != null and orderCountMax > 0">
+			AND p.order_count &lt;= #{orderCountMax}
+		</if>
+		<if test="expiresTime != null">
+			AND p.expires_time &lt;= #{expiresTime}
+		</if>
+		<if test="nickName != null and nickName !=''">
+			AND u.nick_name LIKE CONCAT('%',#{nickName},'%')
+		</if>
+		ORDER BY p.create_time DESC
+	</sql>
+	<!-- 后台商品列表结束 -->
+
+	<update id="stopProductsByTourId">
+		update pt_product set is_sale=#{isSale} where dg_tour_id=#{tourId}
+	</update>
+
+    <update id="increaseVideoClick">
+        update pt_product set video_click_count = video_click_count + 1
+        where enable_ = 1 and id_ = #{id}
+    </update>
+
+	<!--后台预售商品列表开始-->
+	<select id="queryManagePresellProductCount" resultType="java.lang.Integer">
+		SELECT COUNT(id_) FROM pt_product
+		<include refid="queryManagePresellProduct"/>
+	</select>
+
+	<select id="queryManagePresellProductList" resultType="com.xmyy.product.vo.ManagePresellProductResult">
+		SELECT
+			id_ AS id,
+			pt_category_id2 AS categoryId2,
+			title, cover,
+			min_price AS price,
+			order_count AS orderCount
+		FROM pt_product
+		<include refid="queryManagePresellProduct"/>
+	</select>
+
+	<sql id="queryManagePresellProduct">
+		WHERE enable_ = 1
+		<if test="categoryId != null">
+			AND pt_category_id = #{categoryId}
+		</if>
+		<if test="categoryId2 != null">
+			AND pt_category_id2 = #{categoryId2}
+		</if>
+		<if test="brandId != null">
+			AND pt_brand_id = #{brandId}
+		</if>
+		<if test="keyword != null and keyword !=''">
+			AND title LIKE CONCAT('%',#{keyword},'%')
+		</if>
+		ORDER BY create_time DESC
+	</sql>
+	<!--后台预售商品列表结束-->
+
+</mapper>

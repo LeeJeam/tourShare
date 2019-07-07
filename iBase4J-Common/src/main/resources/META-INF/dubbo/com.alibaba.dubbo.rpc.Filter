@@ -1,0 +1,1 @@
+dataSourceAspect=top.ibase4j.core.support.dbcp.DubboDataSourceAspectFilter

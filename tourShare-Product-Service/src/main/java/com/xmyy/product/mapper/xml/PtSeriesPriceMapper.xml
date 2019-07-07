@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.mapper.PtSeriesPriceMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from pt_series_price
+		<where>
+			<if test="cm.ptSeriesId != null and cm.ptSeriesId != ''">
+					and pt_series_id=#{cm.ptSeriesId}
+			</if>
+			<if test="cm.region != null and cm.region != ''">
+					and region=#{cm.region}
+			</if>
+			<if test="cm.shop != null and cm.shop != ''">
+					and shop=#{cm.shop}
+			</if>
+			<if test="cm.price != null and cm.price != ''">
+					and price=#{cm.price}
+			</if>
+			<if test="cm.unit != null and cm.unit != ''">
+					and unit=#{cm.unit}
+			</if>
+			<if test="cm.descript != null and cm.descript != ''">
+					and descript=#{cm.descript}
+			</if>
+			<if test="cm.symbol != null and cm.symbol != ''">
+					and symbol=#{cm.symbol}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or pt_series_id like CONCAT('%',#{cm.keyword},'%')
+					or region like CONCAT('%',#{cm.keyword},'%')
+					or shop like CONCAT('%',#{cm.keyword},'%')
+					or price like CONCAT('%',#{cm.keyword},'%')
+					or unit like CONCAT('%',#{cm.keyword},'%')
+					or descript like CONCAT('%',#{cm.keyword},'%')
+					or symbol like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

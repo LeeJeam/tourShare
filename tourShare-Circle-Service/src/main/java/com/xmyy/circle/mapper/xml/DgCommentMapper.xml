@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.DgCommentMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_comment
+		<where>
+			<if test="cm.parentId != null and cm.parentId != ''">
+					and parent_id_=#{cm.parentId}
+			</if>
+			<if test="cm.circleId != null and cm.circleId != ''">
+					and circle_id_=#{cm.circleId}
+			</if>
+			<if test="cm.typeId != null and cm.typeId != ''">
+					and type_id=#{cm.typeId}
+			</if>
+			<if test="cm.content != null and cm.content != ''">
+					and content=#{cm.content}
+			</if>
+			<if test="cm.praiseCount != null and cm.praiseCount != ''">
+					and praise_count=#{cm.praiseCount}
+			</if>
+			<if test="cm.memberId != null and cm.memberId != ''">
+					and member_id=#{cm.memberId}
+			</if>
+			<if test="cm.memberType != null and cm.memberType != ''">
+					and member_type=#{cm.memberType}
+			</if>
+			<if test="cm.toMemberId != null and cm.toMemberId != ''">
+					and to_member_id=#{cm.toMemberId}
+			</if>
+			<if test="cm.toMemberType != null and cm.toMemberType != ''">
+					and to_member_type=#{cm.toMemberType}
+			</if>
+			<if test="cm.avatarRsurl != null and cm.avatarRsurl != ''">
+					and avatar_rsurl=#{cm.avatarRsurl}
+			</if>
+			<if test="cm.toNickName != null and cm.toNickName != ''">
+					and to_nick_name=#{cm.toNickName}
+			</if>
+			<if test="cm.toAvatarRsurl != null and cm.toAvatarRsurl != ''">
+					and to_avatar_rsurl=#{cm.toAvatarRsurl}
+			</if>
+			<if test="cm.nickName != null and cm.nickName != ''">
+					and nick_name=#{cm.nickName}
+			</if>
+			<if test="cm.jsonContent != null and cm.jsonContent != ''">
+					and json_content=#{cm.jsonContent}
+			</if>
+			<if test="cm.commentCount != null and cm.commentCount != ''">
+					and comment_count=#{cm.commentCount}
+			</if>
+			<if test="cm.commentId != null and cm.commentId != ''">
+					and comment_id=#{cm.commentId}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or parent_id_ like CONCAT('%',#{cm.keyword},'%')
+					or circle_id_ like CONCAT('%',#{cm.keyword},'%')
+					or type_id like CONCAT('%',#{cm.keyword},'%')
+					or content like CONCAT('%',#{cm.keyword},'%')
+					or praise_count like CONCAT('%',#{cm.keyword},'%')
+					or member_id like CONCAT('%',#{cm.keyword},'%')
+					or member_type like CONCAT('%',#{cm.keyword},'%')
+					or to_member_id like CONCAT('%',#{cm.keyword},'%')
+					or to_member_type like CONCAT('%',#{cm.keyword},'%')
+					or avatar_rsurl like CONCAT('%',#{cm.keyword},'%')
+					or to_nick_name like CONCAT('%',#{cm.keyword},'%')
+					or to_avatar_rsurl like CONCAT('%',#{cm.keyword},'%')
+					or nick_name like CONCAT('%',#{cm.keyword},'%')
+					or json_content like CONCAT('%',#{cm.keyword},'%')
+					or comment_count like CONCAT('%',#{cm.keyword},'%')
+					or comment_id like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

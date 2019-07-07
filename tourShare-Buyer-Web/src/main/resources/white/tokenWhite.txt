@@ -1,0 +1,13 @@
+/swagger-ui.html
+/webjars/
+/v2/
+/swagger-resources
+
+/api/buyer/add
+/api/buyer/resetpwd
+/api/buyer/login
+/api/buyer/quicklogin
+/api/buyer/wxlogin
+/api/buyer/logout
+/api/buyer/getPackInfo
+/api/buyer/topList

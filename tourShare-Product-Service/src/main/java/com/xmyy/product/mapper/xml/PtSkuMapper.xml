@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.mapper.PtSkuMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from pt_sku
+		<where>
+			<if test="cm.ptProductId != null and cm.ptProductId != ''">
+					and pt_product_id=#{cm.ptProductId}
+			</if>
+			<if test="cm.price != null and cm.price != ''">
+					and price=#{cm.price}
+			</if>
+			<if test="cm.stock != null and cm.stock != ''">
+					and stock=#{cm.stock}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or pt_product_id like CONCAT('%',#{cm.keyword},'%')
+					or price like CONCAT('%',#{cm.keyword},'%')
+					or stock like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.mapper.PtSeriesAttrMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from pt_series_attr
+		<where>
+			<if test="cm.ptSeriesId != null and cm.ptSeriesId != ''">
+					and pt_series_id=#{cm.ptSeriesId}
+			</if>
+			<if test="cm.ptAttrValueId != null and cm.ptAttrValueId != ''">
+					and pt_attr_value_id=#{cm.ptSeriesAttrValueId}
+			</if>
+			<if test="cm.ptAttrTypeId != null and cm.ptAttrTypeId != ''">
+					and pt_attr_type_id=#{cm.ptSeriesAttrTypeId}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or pt_series_id like CONCAT('%',#{cm.keyword},'%')
+					or pt_attr_value_id like CONCAT('%',#{cm.keyword},'%')
+					or pt_attr_type_id like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+
+</mapper>

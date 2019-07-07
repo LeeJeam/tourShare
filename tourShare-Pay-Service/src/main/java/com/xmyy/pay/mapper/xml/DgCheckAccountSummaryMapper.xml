@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.pay.mapper.DgCheckAccountSummaryMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_check_account_summary
+		<where>
+			<if test="cm.orderTotal != null and cm.orderTotal != ''">
+					and order_total=#{cm.orderTotal}
+			</if>
+			<if test="cm.orderAmount != null and cm.orderAmount != ''">
+					and order_amount=#{cm.orderAmount}
+			</if>
+			<if test="cm.depositTotal != null and cm.depositTotal != ''">
+					and deposit_total=#{cm.depositTotal}
+			</if>
+			<if test="cm.depositAmount != null and cm.depositAmount != ''">
+					and deposit_amount=#{cm.depositAmount}
+			</if>
+			<if test="cm.consumeTotal != null and cm.consumeTotal != ''">
+					and consume_total=#{cm.consumeTotal}
+			</if>
+			<if test="cm.consumeAmount != null and cm.consumeAmount != ''">
+					and consume_amount=#{cm.consumeAmount}
+			</if>
+			<if test="cm.protocolConsumeTotal != null and cm.protocolConsumeTotal != ''">
+					and protocol_consume_total=#{cm.protocolConsumeTotal}
+			</if>
+			<if test="cm.protocolConsumeAmount != null and cm.protocolConsumeAmount != ''">
+					and protocol_consume_amount=#{cm.protocolConsumeAmount}
+			</if>
+			<if test="cm.withdrawTotal != null and cm.withdrawTotal != ''">
+					and withdraw_total=#{cm.withdrawTotal}
+			</if>
+			<if test="cm.withdrawAmount != null and cm.withdrawAmount != ''">
+					and withdraw_amount=#{cm.withdrawAmount}
+			</if>
+			<if test="cm.transTotal != null and cm.transTotal != ''">
+					and trans_total=#{cm.transTotal}
+			</if>
+			<if test="cm.transAmount != null and cm.transAmount != ''">
+					and trans_amount=#{cm.transAmount}
+			</if>
+			<if test="cm.agentCollectTotal != null and cm.agentCollectTotal != ''">
+					and agent_collect_total=#{cm.agentCollectTotal}
+			</if>
+			<if test="cm.agentCollectAmount != null and cm.agentCollectAmount != ''">
+					and agent_collect_amount=#{cm.agentCollectAmount}
+			</if>
+			<if test="cm.protocolAgentCollectTotal != null and cm.protocolAgentCollectTotal != ''">
+					and protocol_agent_collect_total=#{cm.protocolAgentCollectTotal}
+			</if>
+			<if test="cm.protocolAgentCollectAmount != null and cm.protocolAgentCollectAmount != ''">
+					and protocol_agent_collect_amount=#{cm.protocolAgentCollectAmount}
+			</if>
+			<if test="cm.signalAgentPayTotal != null and cm.signalAgentPayTotal != ''">
+					and signal_agent_pay_total=#{cm.signalAgentPayTotal}
+			</if>
+			<if test="cm.signalAgentPayAmount != null and cm.signalAgentPayAmount != ''">
+					and signal_agent_pay_amount=#{cm.signalAgentPayAmount}
+			</if>
+			<if test="cm.batchAgentPayTotal != null and cm.batchAgentPayTotal != ''">
+					and batch_agent_pay_total=#{cm.batchAgentPayTotal}
+			</if>
+			<if test="cm.batchAgentPayAmount != null and cm.batchAgentPayAmount != ''">
+					and batch_agent_pay_amount=#{cm.batchAgentPayAmount}
+			</if>
+			<if test="cm.crossAppTransTotal != null and cm.crossAppTransTotal != ''">
+					and cross_app_trans_total=#{cm.crossAppTransTotal}
+			</if>
+			<if test="cm.crossAppTransAmount != null and cm.crossAppTransAmount != ''">
+					and cross_app_trans_amount=#{cm.crossAppTransAmount}
+			</if>
+			<if test="cm.transCreditorRightTotal != null and cm.transCreditorRightTotal != ''">
+					and trans_creditor_right_total=#{cm.transCreditorRightTotal}
+			</if>
+			<if test="cm.transCreditorRightAmount != null and cm.transCreditorRightAmount != ''">
+					and trans_creditor_right_amount=#{cm.transCreditorRightAmount}
+			</if>
+			<if test="cm.refundTotal != null and cm.refundTotal != ''">
+					and refund_total=#{cm.refundTotal}
+			</if>
+			<if test="cm.refundAmount != null and cm.refundAmount != ''">
+					and refund_amount=#{cm.refundAmount}
+			</if>
+			<if test="cm.noBiddersRefundTotal != null and cm.noBiddersRefundTotal != ''">
+					and no_bidders_refund_total=#{cm.noBiddersRefundTotal}
+			</if>
+			<if test="cm.noBiddersRefundAmount != null and cm.noBiddersRefundAmount != ''">
+					and no_bidders_refund_amount=#{cm.noBiddersRefundAmount}
+			</if>
+			<if test="cm.startOrderNo != null and cm.startOrderNo != ''">
+					and start_order_no=#{cm.startOrderNo}
+			</if>
+			<if test="cm.endOrderNo != null and cm.endOrderNo != ''">
+					and end_order_no=#{cm.endOrderNo}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or order_total like CONCAT('%',#{cm.keyword},'%')
+					or order_amount like CONCAT('%',#{cm.keyword},'%')
+					or deposit_total like CONCAT('%',#{cm.keyword},'%')
+					or deposit_amount like CONCAT('%',#{cm.keyword},'%')
+					or consume_total like CONCAT('%',#{cm.keyword},'%')
+					or consume_amount like CONCAT('%',#{cm.keyword},'%')
+					or protocol_consume_total like CONCAT('%',#{cm.keyword},'%')
+					or protocol_consume_amount like CONCAT('%',#{cm.keyword},'%')
+					or withdraw_total like CONCAT('%',#{cm.keyword},'%')
+					or withdraw_amount like CONCAT('%',#{cm.keyword},'%')
+					or trans_total like CONCAT('%',#{cm.keyword},'%')
+					or trans_amount like CONCAT('%',#{cm.keyword},'%')
+					or agent_collect_total like CONCAT('%',#{cm.keyword},'%')
+					or agent_collect_amount like CONCAT('%',#{cm.keyword},'%')
+					or protocol_agent_collect_total like CONCAT('%',#{cm.keyword},'%')
+					or protocol_agent_collect_amount like CONCAT('%',#{cm.keyword},'%')
+					or signal_agent_pay_total like CONCAT('%',#{cm.keyword},'%')
+					or signal_agent_pay_amount like CONCAT('%',#{cm.keyword},'%')
+					or batch_agent_pay_total like CONCAT('%',#{cm.keyword},'%')
+					or batch_agent_pay_amount like CONCAT('%',#{cm.keyword},'%')
+					or cross_app_trans_total like CONCAT('%',#{cm.keyword},'%')
+					or cross_app_trans_amount like CONCAT('%',#{cm.keyword},'%')
+					or trans_creditor_right_total like CONCAT('%',#{cm.keyword},'%')
+					or trans_creditor_right_amount like CONCAT('%',#{cm.keyword},'%')
+					or refund_total like CONCAT('%',#{cm.keyword},'%')
+					or refund_amount like CONCAT('%',#{cm.keyword},'%')
+					or no_bidders_refund_total like CONCAT('%',#{cm.keyword},'%')
+					or no_bidders_refund_amount like CONCAT('%',#{cm.keyword},'%')
+					or start_order_no like CONCAT('%',#{cm.keyword},'%')
+					or end_order_no like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

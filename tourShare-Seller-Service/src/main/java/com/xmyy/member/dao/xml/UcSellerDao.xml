@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.member.dao.UcSellerDao">
+    <resultMap id="memberInfoMap" type="com.xmyy.common.vo.MemberInfo">
+        <result property="id" javaType="java.lang.Long" column="id_" jdbcType="BIGINT"/>
+        <result property="uuid" javaType="java.lang.String" column="uuid" jdbcType="VARCHAR"/>
+        <result property="realName" javaType="java.lang.String" column="real_name" jdbcType="VARCHAR"/>
+        <result property="nickName" javaType="java.lang.String" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="avatarRsurl" javaType="java.lang.String" column="avatar_rsurl" jdbcType="VARCHAR"/>
+        <result property="oftenPlace" javaType="java.lang.String" column="often_place" jdbcType="VARCHAR"/>
+        <result property="realState" javaType="java.lang.Integer" column="real_state" jdbcType="INTEGER"/>
+        <result property="mobile" javaType="java.lang.String" column="mobile" jdbcType="VARCHAR"/>
+        <result property="isPack" javaType="java.lang.Integer" column="is_pack" jdbcType="INTEGER"/>
+        <result property="isSelf" javaType="java.lang.Integer" column="is_self" jdbcType="INTEGER"/>
+        <result property="isPassIdentity" javaType="java.lang.Integer" column="is_pass_identity" jdbcType="INTEGER"/>
+        <result property="isPassPassport" javaType="java.lang.Integer" column="is_pass_passport" jdbcType="INTEGER"/>
+        <result property="isPassZhima" javaType="java.lang.Integer" column="is_pass_zhima" jdbcType="INTEGER"/>
+        <result property="idCardNumber" javaType="java.lang.String" column="id_card_number" jdbcType="VARCHAR"/>
+        <result property="loginSource" javaType="java.lang.Integer" column="login_source" jdbcType="INTEGER"/>
+        <result property="bindPhone" javaType="java.lang.String" column="bind_phone" jdbcType="VARCHAR"/>
+        <result property="payPasswordId" javaType="java.lang.String" column="pay_password_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getManySellerInfos" parameterType="collection" resultMap="memberInfoMap">
+        SELECT
+            id_,uuid,real_name,nick_name,avatar_rsurl,often_place,
+            real_state,mobile,is_self,is_pass_identity,
+            is_pass_passport,is_pass_zhima,id_card_number,
+            login_source,bind_phone,pay_password_id
+        FROM
+            uc_seller
+        <where>
+            <if test="ids!=null and ids.size>0">
+                and id_ in
+                <foreach collection="ids" item="id" index="index" open="(" separator="," close=")" >
+                    #{id}
+                </foreach>
+            </if>
+            and enable_=1
+        </where>
+
+    </select>
+
+</mapper>

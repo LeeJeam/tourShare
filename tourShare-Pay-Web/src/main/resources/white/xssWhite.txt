@@ -1,0 +1,8 @@
+/swagger-ui.html
+/webjars/
+/v2/
+/swagger-resources
+
+/api/pay/paytest
+/api/pay/callBack/order
+/api/pay/callBack/signContract

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.dao.ManageCircleDao">
+
+	<select id="countCircleTopPage"  resultType="java.lang.Integer"
+			parameterType="com.xmyy.circle.vo.CircleTopPageParam">
+		select count(dc.id_) from uc_dynamic_circle dc
+		<include refid="WhereSqlCommon"></include>
+	</select>
+	<select id="listCircleTopPage"  resultType="com.xmyy.circle.vo.CircleTopPageResult"
+			parameterType="com.xmyy.circle.vo.CircleTopPageParam">
+
+		SELECT
+		dc.content,
+		dc.id_ id,
+		dc.title,
+		dc.update_time updateTime,
+		dc.type_id typeId,
+		dc.praise_count praiseCount,
+		dc.comment_count commentCount,
+		dc.video_rsurl videoRsurl,
+		dc.read_count readCount,
+		dc.cover_rsurl coverRsurl,
+		dc.classify_tags classifyTags,
+		dc.state,
+		dc.is_top isTop,
+		dc.top_time topTime,
+		dc.top_end_time topEndTime,
+		dc.title,
+		dc.video_times videoTimes,
+		s.nick_name nickName,
+		u.user_name  toperName
+		from uc_dynamic_circle dc
+		LEFT JOIN  uc_seller s on s.id_ = dc.seller_id_
+		left join admin_user u on u.id_ = dc.top_op_id
+
+		<include refid="WhereSqlCommon"></include>
+		order by dc.is_top, dc.top_time desc
+	</select>
+
+	<sql id="WhereSqlCommon">
+		where dc.enable_ = 1
+		<if test="keywords != null and keywords != ''">
+			and (
+			or dc.content like CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+			or dc.title like CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+			)
+		</if>
+		<if test="memberName != null and memberName != ''">
+			and EXISTS (select 1 from uc_seller m where m.id_ = dc.seller_id_
+			and (m.real_name like CONCAT('%',#{memberName,jdbcType=VARCHAR},'%')
+			or m.nick_name like CONCAT('%',#{memberName,jdbcType=VARCHAR},'%')))
+		</if>
+
+		<if test="typeId != null">
+			and dc.type_id=#{typeId,jdbcType=DECIMAL}
+		</if>
+		<if test="sellerId!=null">
+			and dc.seller_id_ = #{sellerId,jdbcType=DECIMAL}
+		</if>
+		<if test="state!=null">
+			and dc.state = #{state,jdbcType=DECIMAL}
+		</if>
+		<if test="classifyTags != null and classifyTags != ''">
+			and dc.classify_tags REGEXP replace(#{classifyTags,jdbcType=VARCHAR}, ',', '|')
+		</if>
+		<if test="topTimeBegin!=null">
+			and dc.top_time &gt;= str_to_date(concat(date_format(#{topTimeBegin,jdbcType=TIMESTAMP}, '%Y-%m-%d'), ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+		</if>
+
+		<if test="topTimeEnd!=null">
+			and dc.top_time &lt;= str_to_date(concat(date_format(#{topTimeEnd,jdbcType=TIMESTAMP}, '%Y-%m-%d'), ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="isTop!=null">
+			and dc.is_top = #{isTop,jdbcType=DECIMAL}
+		</if>
+
+
+	</sql>
+</mapper>

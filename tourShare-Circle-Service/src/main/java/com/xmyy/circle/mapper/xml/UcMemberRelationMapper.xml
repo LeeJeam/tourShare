@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.UcMemberRelationMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from uc_member_relation
+		<where>
+			<if test="cm.memberId != null and cm.memberId != ''">
+					and member_id=#{cm.memberId}
+			</if>
+			<if test="cm.toMemberId != null and cm.toMemberId != ''">
+					and to_member_id=#{cm.toMemberId}
+			</if>
+			<if test="cm.toMemberType != null and cm.toMemberType != ''">
+					and to_member_type=#{cm.toMemberType}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or member_id like CONCAT('%',#{cm.keyword},'%')
+					or to_member_id like CONCAT('%',#{cm.keyword},'%')
+					or to_member_type like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

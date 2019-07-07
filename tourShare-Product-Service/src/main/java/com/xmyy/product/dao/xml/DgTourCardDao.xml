@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.product.dao.DgTourCardDao">
+
+	<resultMap id="cardSimpleMap" type="com.xmyy.product.vo.ApiTourCardMatchResult">
+		<result property="cardCode" column="card_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="imgUrl" column="img_url" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	</resultMap>
+	<select id="getTourCardsMapList" parameterType="com.xmyy.product.vo.ApiTourCardMatchParam" resultMap="cardSimpleMap">
+		select card_code, img_url from dg_tour_card
+		<where>
+			<if test="cardCodes!=null">
+				and card_code in
+				<foreach collection="cardCodes" index="index" item="cardCode" separator="," open="(" close=")">
+					#{cardCode}
+				</foreach>
+			</if>
+			<if test="skinType!=null">
+			    and skin_type=#{skinType}
+			</if>
+			<if test="cardType!=null">
+				and card_type=#{cardType}
+			</if>
+			<if test="cardSize!=null">
+				and card_size=#{cardSize}
+			</if>
+			<if test="deviceType!=null">
+				and device_type=#{deviceType}
+			</if>
+				and enable_=1
+		</where>
+	</select>
+
+	<resultMap id="cardDetailMap" type="com.xmyy.product.dto.ApiTourCardDto">
+		<result property="id" column="id_" javaType="java.lang.Long" jdbcType="BIGINT"/>
+		<result property="cardCode" column="card_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="cardName" column="card_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="cardSize" column="card_size" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="deviceType" column="device_type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+		<result property="cardType" column="card_type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+		<result property="skinType" column="skin_type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+		<result property="imgUrl" column="img_url" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	</resultMap>
+	<select id="getAllList" resultMap="cardDetailMap">
+		SELECT
+			id_,
+			card_code,
+			card_name,
+			card_size,
+			device_type,
+			card_type,
+			skin_type,
+			img_url
+		FROM
+			dg_tour_card where enable_=1
+	</select>
+
+</mapper>

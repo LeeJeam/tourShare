@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.WsAdvertPositionMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from ws_advert_position
+		<where>
+			<if test="cm.name != null and cm.name != ''">
+					and name=#{cm.name}
+			</if>
+			<if test="cm.code != null and cm.code != ''">
+					and code=#{cm.code}
+			</if>
+			<if test="cm.type != null and cm.type != ''">
+					and type=#{cm.type}
+			</if>
+			<if test="cm.playType != null and cm.playType != ''">
+					and play_type=#{cm.playType}
+			</if>
+			<if test="cm.playTimer != null and cm.playTimer != ''">
+					and play_timer=#{cm.playTimer}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or name like CONCAT('%',#{cm.keyword},'%')
+					or code like CONCAT('%',#{cm.keyword},'%')
+					or type like CONCAT('%',#{cm.keyword},'%')
+					or play_type like CONCAT('%',#{cm.keyword},'%')
+					or play_timer like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.pay.mapper.DgPayLogMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_pay_log
+		<where>
+			<if test="cm.orderIds != null and cm.orderIds != ''">
+					and order_ids=#{cm.orderIds}
+			</if>
+			<if test="cm.bizOrderNo != null and cm.bizOrderNo != ''">
+					and biz_order_no=#{cm.bizOrderNo}
+			</if>
+			<if test="cm.bizUserId != null and cm.bizUserId != ''">
+					and biz_user_id=#{cm.bizUserId}
+			</if>
+			<if test="cm.serviceType != null and cm.serviceType != ''">
+					and service_type=#{cm.serviceType}
+			</if>
+			<if test="cm.status != null and cm.status != ''">
+					and status=#{cm.status}
+			</if>
+			<if test="cm.amount != null and cm.amount != ''">
+					and amount=#{cm.amount}
+			</if>
+			<if test="cm.fee != null and cm.fee != ''">
+					and fee=#{cm.fee}
+			</if>
+			<if test="cm.payMethod != null and cm.payMethod != ''">
+					and pay_method=#{cm.payMethod}
+			</if>
+			<if test="cm.recieverList != null and cm.recieverList != ''">
+					and reciever_list=#{cm.recieverList}
+			</if>
+			<if test="cm.bankCardNo != null and cm.bankCardNo != ''">
+					and bank_card_no=#{cm.bankCardNo}
+			</if>
+			<if test="cm.tradeNo != null and cm.tradeNo != ''">
+					and trade_no=#{cm.tradeNo}
+			</if>
+			<if test="cm.payInfo != null and cm.payInfo != ''">
+					and pay_info=#{cm.payInfo}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or order_ids like CONCAT('%',#{cm.keyword},'%')
+					or biz_order_no like CONCAT('%',#{cm.keyword},'%')
+					or biz_user_id like CONCAT('%',#{cm.keyword},'%')
+					or service_type like CONCAT('%',#{cm.keyword},'%')
+					or status like CONCAT('%',#{cm.keyword},'%')
+					or amount like CONCAT('%',#{cm.keyword},'%')
+					or fee like CONCAT('%',#{cm.keyword},'%')
+					or pay_method like CONCAT('%',#{cm.keyword},'%')
+					or reciever_list like CONCAT('%',#{cm.keyword},'%')
+					or bank_card_no like CONCAT('%',#{cm.keyword},'%')
+					or trade_no like CONCAT('%',#{cm.keyword},'%')
+					or pay_info like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

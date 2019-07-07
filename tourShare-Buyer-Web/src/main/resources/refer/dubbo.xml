@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- Member -->
+	<dubbo:reference id="ucBuyerService" interface="com.xmyy.member.service.UcBuyerService" check="false" />
+	<dubbo:reference id="ucMemberAddressService" interface="com.xmyy.member.service.UcMemberAddressService" check="false" />
+	<dubbo:reference id="ucMemberLoginService" interface="com.xmyy.member.service.UcMemberLoginService" check="false" />
+
+	<!-- Manage -->
+	<dubbo:reference id="sysEventService" interface="com.xmyy.manage.service.SysEventService" check="false" />
+
+</beans>

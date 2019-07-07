@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.order.mapper.DgOrderReturnMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_order_return
+		<where>
+			<if test="cm.productOrderId != null and cm.productOrderId != ''">
+					and product_order_id_=#{cm.productOrderId}
+			</if>
+			<if test="cm.orderId != null and cm.orderId != ''">
+					and order_id_=#{cm.orderId}
+			</if>
+			<if test="cm.returnNo != null and cm.returnNo != ''">
+					and return_no=#{cm.returnNo}
+			</if>
+			<if test="cm.orderType != null and cm.orderType != ''">
+					and order_type=#{cm.orderType}
+			</if>
+			<if test="cm.productId != null and cm.productId != ''">
+					and product_id=#{cm.productId}
+			</if>
+			<if test="cm.productTitle != null and cm.productTitle != ''">
+					and product_title=#{cm.productTitle}
+			</if>
+			<if test="cm.productCover != null and cm.productCover != ''">
+					and product_cover=#{cm.productCover}
+			</if>
+			<if test="cm.productPrice != null and cm.productPrice != ''">
+					and product_price=#{cm.productPrice}
+			</if>
+			<if test="cm.productNum != null and cm.productNum != ''">
+					and product_num=#{cm.productNum}
+			</if>
+			<if test="cm.specParams != null and cm.specParams != ''">
+					and spec_params=#{cm.specParams}
+			</if>
+			<if test="cm.deliveryTime != null and cm.deliveryTime != ''">
+					and delivery_time=#{cm.deliveryTime}
+			</if>
+			<if test="cm.returnMoney != null and cm.returnMoney != ''">
+					and return_money=#{cm.returnMoney}
+			</if>
+			<if test="cm.reasonText != null and cm.reasonText != ''">
+					and reason_text=#{cm.reasonText}
+			</if>
+			<if test="cm.returnReason != null and cm.returnReason != ''">
+					and return_reason=#{cm.returnReason}
+			</if>
+			<if test="cm.returnSubmitTime != null and cm.returnSubmitTime != ''">
+					and return_submit_time=#{cm.returnSubmitTime}
+			</if>
+			<if test="cm.buyerId != null and cm.buyerId != ''">
+					and buyer_id=#{cm.buyerId}
+			</if>
+			<if test="cm.isPacker != null and cm.isPacker != ''">
+					and is_packer=#{cm.isPacker}
+			</if>
+			<if test="cm.sellerId != null and cm.sellerId != ''">
+					and seller_id=#{cm.sellerId}
+			</if>
+			<if test="cm.returnWaybill != null and cm.returnWaybill != ''">
+					and return_waybill=#{cm.returnWaybill}
+			</if>
+			<if test="cm.returnStatus != null and cm.returnStatus != ''">
+					and return_status=#{cm.returnStatus}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or product_order_id_ like CONCAT('%',#{cm.keyword},'%')
+					or order_id_ like CONCAT('%',#{cm.keyword},'%')
+					or return_no like CONCAT('%',#{cm.keyword},'%')
+					or order_type like CONCAT('%',#{cm.keyword},'%')
+					or product_id like CONCAT('%',#{cm.keyword},'%')
+					or product_title like CONCAT('%',#{cm.keyword},'%')
+					or product_cover like CONCAT('%',#{cm.keyword},'%')
+					or product_price like CONCAT('%',#{cm.keyword},'%')
+					or product_num like CONCAT('%',#{cm.keyword},'%')
+					or spec_params like CONCAT('%',#{cm.keyword},'%')
+					or delivery_time like CONCAT('%',#{cm.keyword},'%')
+					or return_money like CONCAT('%',#{cm.keyword},'%')
+					or reason_text like CONCAT('%',#{cm.keyword},'%')
+					or return_reason like CONCAT('%',#{cm.keyword},'%')
+					or return_submit_time like CONCAT('%',#{cm.keyword},'%')
+					or buyer_id like CONCAT('%',#{cm.keyword},'%')
+					or is_packer like CONCAT('%',#{cm.keyword},'%')
+					or seller_id like CONCAT('%',#{cm.keyword},'%')
+					or return_waybill like CONCAT('%',#{cm.keyword},'%')
+					or return_status like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

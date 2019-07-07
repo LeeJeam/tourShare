@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmyy.circle.mapper.DgCountryMapper">
+	<select id="selectIdPage" resultType="java.lang.Long" useCache="false">
+		select id_ from dg_country
+		<where>
+			<if test="cm.code != null and cm.code != ''">
+				and code=#{cm.code}
+			</if>
+			<if test="cm.shortCode != null and cm.shortCode != ''">
+				and short_code=#{cm.shortCode}
+			</if>
+			<if test="cm.name != null and cm.name != ''">
+					and name=#{cm.name}
+			</if>
+			<if test="cm.enName != null and cm.enName != ''">
+					and en_name=#{cm.enName}
+			</if>
+			<if test="cm.logo != null and cm.logo != ''">
+					and logo=#{cm.logo}
+			</if>
+			<if test="cm.currency != null and cm.currency != ''">
+					and currency=#{cm.currency}
+			</if>
+			<if test="cm.currencyCode != null and cm.currencyCode != ''">
+					and currency_code=#{cm.currencyCode}
+			</if>
+			<if test="cm.initial != null and cm.initial != ''">
+					and initial=#{cm.initial}
+			</if>
+			<if test="cm.prefixPhone != null and cm.prefixPhone != ''">
+					and prefix_phone=#{cm.prefixPhone}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					or code like CONCAT('%',#{cm.keyword},'%')
+				    or short_code like CONCAT('%',#{cm.keyword},'%')
+					or name like CONCAT('%',#{cm.keyword},'%')
+					or en_name like CONCAT('%',#{cm.keyword},'%')
+					or logo like CONCAT('%',#{cm.keyword},'%')
+					or currency like CONCAT('%',#{cm.keyword},'%')
+					or currency_code like CONCAT('%',#{cm.keyword},'%')
+					or initial like CONCAT('%',#{cm.keyword},'%')
+					or prefix_phone like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by ${cm.orderBy}
+		</if>
+		<if test="cm.sortAsc != null and cm.sortAsc != ''">
+			${cm.sortAsc}
+		</if>
+	</select>
+</mapper>

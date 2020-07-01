@@ -60,7 +60,7 @@
 		<jsch.version>0.1.54</jsch.version>
 		<!-- 二维码相关 -->
 		<zxing.version>3.3.1</zxing.version>
-		<quartz.version>2.3.0</quartz.version>
+		<quartz.version>2.3.2</quartz.version>
         <!-- shiro -->
 		<shiro.version>1.4.0</shiro.version>
 		<!-- swagger -->

@@ -62,7 +62,7 @@
 		<zxing.version>3.3.1</zxing.version>
 		<quartz.version>2.3.0</quartz.version>
         <!-- shiro -->
-		<shiro.version>1.4.0</shiro.version>
+		<shiro.version>1.7.1</shiro.version>
 		<!-- swagger -->
 		<springfox.version>2.6.1</springfox.version>
 		<swagger.version>1.5.18</swagger.version>

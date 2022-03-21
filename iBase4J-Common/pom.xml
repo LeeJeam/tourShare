@@ -37,7 +37,7 @@
 		<slf4j.version>1.7.25</slf4j.version>
 		<log4j.version>2.9.1</log4j.version>
 		<!-- rpc相关 -->
-		<dubbo.version>2.5.8</dubbo.version>
+		<dubbo.version>2.6.9</dubbo.version>
 		<javassist.version>3.22.0-GA</javassist.version>
 		<zookeeper.version>3.4.11</zookeeper.version>
 		<okhttp.version>3.9.1</okhttp.version>

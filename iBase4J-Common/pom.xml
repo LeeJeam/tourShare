@@ -52,7 +52,7 @@
 		<!-- aop相关 -->
 		<aspectj.version>1.8.13</aspectj.version>
 		<!-- poi相关 -->
-		<poi.version>3.17</poi.version>
+		<poi.version>4.1.1</poi.version>
 		<jxl.version>2.6.12</jxl.version>
 		<!-- java使用xfire调用webservice -->
 		<xfire.version>1.2.6</xfire.version>
